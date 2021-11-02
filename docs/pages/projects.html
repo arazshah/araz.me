@@ -9,7 +9,7 @@
 <meta property="og:title" content="/Araz Shah / araz.me" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="The Official web site of Araz Shah" />
-<link rel="stylesheet" type="text/css" href="assets/style.css"></head>
+<link rel="stylesheet" type="text/css" href="../assets/style.css"></head>
 <body>
     <div class="container"><header>
   <div class="menu">
@@ -22,33 +22,37 @@
   </div>
 </header>
 <main>
-  <p><br /><br />python:</p>
+  <p>python:</p>
 
-  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
-       <span class="c1"># function body
-  </span>     <span class="k">print</span><span class="p">(</span><span class="s">"hello world!"</span><span class="p">)</span>
-  
-       <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
-           <span class="c1"># enable Pygments json lexer
-  </span>         <span class="k">try</span><span class="p">:</span>
-               <span class="kn">import</span> <span class="nn">pygments</span>
-               <span class="k">if</span> <span class="n">pygments</span><span class="p">.</span><span class="n">__version__</span> <span class="o">&gt;=</span> <span class="s">'1.5'</span><span class="p">:</span>
-                   <span class="c1"># use JSON lexer included in recent versions of Pygments
-  </span>                 <span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">JsonLexer</span>
-               <span class="k">else</span><span class="p">:</span>
-                   <span class="c1"># use JSON lexer from pygments-json if installed
-  </span>                 <span class="kn">from</span> <span class="nn">pygson.json_lexer</span> <span class="kn">import</span> <span class="n">JSONLexer</span> <span class="k">as</span> <span class="n">JsonLexer</span>
-           <span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
-               <span class="k">pass</span>  <span class="c1"># not fatal if we have old (or no) Pygments and no pygments-json
-  </span>         <span class="k">else</span><span class="p">:</span>
-               <span class="n">app</span><span class="p">.</span><span class="n">add_lexer</span><span class="p">(</span><span class="s">'json'</span><span class="p">,</span> <span class="n">JsonLexer</span><span class="p">())</span>
-  
-           <span class="k">return</span> <span class="p">{</span><span class="s">"parallel_read_safe"</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
-  
-  <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s">'cat'</span><span class="p">,</span> <span class="s">'window'</span><span class="p">,</span> <span class="s">'defenestrate'</span><span class="p">]</span>
-  <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
-     <span class="k">print</span> <span class="n">w</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span></code></pre></figure>
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">imagesProccessing</span><span class="p">():</span>
+       <span class="c1"># Data Gathering about Satellite and geo processing</span>     
+  <span class="k">print</span><span class="p">(</span><span class="s">"satellite imagery"</span><span class="p">)</span>  
 
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">WebScraping</span><span class="p">():</span>
+    <span class="c1"># a crawler about text Gathering</span>     
+  <span class="k">print</span><span class="p">(</span><span class="s">"WebScraping-BeautifulSoup-Automation-generate-csv-file"</span><span class="p">)</span>  
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">Tools</span><span class="p">():</span>
+    <span class="c1"># Custom Tools</span>     
+  <span class="k">print</span><span class="p">(</span><span class="s">"I made practical tools for everything "</span><span class="p">)</span>  
+  <hr>
+  <p>C#:</p> <figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">class</span> <span class="nc">ETLProjects</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">ETL</span> <span class="n">Projects</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">explicit</span> <span class="k">Extract</span> <span class="nf">ETLProjects</span><span class="p">(</span><span class="kt">String</span> <span class="k">SQL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">ETLProjects</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1"># Extract Transfer Load Projects with msSQL  </span>   
+<hr>
+<p>ArcGIS & WebMapping:</p> 
+<figure class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">Make Tile server</span> <span class="nc">Offline WebMap</span>
+<span class="c1"># implementation offile WebMap via leaflet&postgres&tile-Mod  </span> 
+<hr>
+<p>MachineLearning:</p>
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">Prediction</span><span class="p">():</span>
+       <span class="c1"># Data Gathering then predicting</span>     
+  <span class="k">print</span><span class="p">(</span><span class="s">"Regression-Classification-clustering-SVM"</span><span class="p">)</span>  
+  
     </main>
     <footer>
   follow us on <a href="https://www.instagram.com/araz.me/">instagram</a>

@@ -1,1443 +1,1564 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Araz Shahkarami — Geospatial AI Engineer</title>
+    <title>Araz Shahkarami · Geospatial AI Engineer</title>
+    <meta name="description" content="Araz Shahkarami – Geospatial AI Engineer, 13+ years in IT & GIS, Master's in GIS & Remote Sensing, OSGeo advocate.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e17'/%3E%3Ctext x='16' y='22' font-family='Inter,sans-serif' font-weight='700' font-size='16' fill='%2310b981' text-anchor='middle'%3EAM%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         /* ===== RESET & BASE ===== */
-        * {
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         :root {
-            --primary: #0f172a;
-            --secondary: #1e293b;
-            --accent: #3b82f6;
-            --accent-dark: #2563eb;
-            --accent-light: #60a5fa;
-            --green: #10b981;
-            --purple: #8b5cf6;
-            --text: #e2e8f0;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --card: #1e293b;
-            --card-hover: #263349;
-            --gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --bg-dark: #0a0e17;
+            --bg-card: #111827;
+            --bg-surface: #1a2234;
+            --bg-elevated: #1f2a3e;
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-subtle: rgba(148, 163, 184, 0.08);
+            --radius: 12px;
+            --radius-lg: 20px;
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --nav-height: 68px;
+            --section-gap: 6rem;
         }
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: var(--nav-height);
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--primary);
-            color: var(--text);
+            font-family: var(--font);
+            background: var(--bg-dark);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--primary); }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
-
-        /* ===== NAVBAR ===== */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-        }
-
-        .nav-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-
-        .nav-logo {
-            font-size: 1.2rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        a {
+            color: var(--accent);
             text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        a:hover {
+            color: var(--accent-dark);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-light);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
-        }
-
-        .hamburger span {
+        img {
+            max-width: 100%;
             display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--text);
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        /* ===== HERO ===== */
-        #hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding: 6rem 2rem 4rem;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
-                        radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
-        }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            color: var(--accent-light);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-            animation: fadeInDown 0.6s ease;
-        }
-
-        .hero-badge .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--green);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        .hero-name {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.6s ease 0.1s both;
-        }
-
-        .hero-name .highlight {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-title {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.6s ease 0.2s both;
-        }
-
-        .hero-desc {
-            font-size: 1rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            animation: fadeInUp 0.6s ease 0.3s both;
-        }
-
-        .hero-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 2.5rem;
-            animation: fadeInUp 0.6s ease 0.4s both;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--accent-light);
-            transform: translateY(-2px);
-        }
-
-        .hero-contacts {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.6s ease 0.5s both;
-        }
-
-        .hero-contact-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .hero-contact-item:hover {
-            color: var(--accent-light);
-        }
-
-        .hero-contact-item svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* ===== SECTIONS ===== */
-        section {
-            padding: 5rem 2rem;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
+        section {
+            padding: var(--section-gap) 0;
         }
 
-        .section-tag {
+        .section-label {
             display: inline-block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--accent);
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            color: var(--accent);
             margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 2rem;
         }
-
-        .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .section-line {
-            width: 50px;
-            height: 3px;
-            background: var(--gradient);
-            margin: 1rem auto 0;
+        .section-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.25rem;
+            height: 2px;
+            background: var(--accent);
             border-radius: 2px;
         }
 
-        /* ===== ABOUT ===== */
-        #about {
-            background: var(--secondary);
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .section-title .highlight {
+            color: var(--accent);
         }
 
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+        .reveal-delay-4 {
+            transition-delay: 0.4s;
+        }
+        .reveal-delay-5 {
+            transition-delay: 0.5s;
+        }
+
+        /* ===== BACKGROUND DECORATIVE ===== */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(16, 185, 129, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-particles span {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float-particle 12s infinite ease-in-out;
+        }
+
+        @keyframes float-particle {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.15;
+            }
+            50% {
+                transform: translateY(-80px) scale(1.4);
+                opacity: 0.4;
+            }
+        }
+
+        .bg-topo {
+            position: fixed;
+            top: 10%;
+            right: -5%;
+            width: 500px;
+            height: 500px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            filter: blur(1px);
+        }
+        .bg-topo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: var(--nav-height);
+            background: rgba(10, 14, 23, 0.75);
+            backdrop-filter: blur(18px) saturate(1.8);
+            -webkit-backdrop-filter: blur(18px) saturate(1.8);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: background 0.3s ease;
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .nav-logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-logo .logo-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: #0a0e17;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+        }
+        .nav-links a {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.25s ease;
+            position: relative;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .nav-hamburger:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        .nav-hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .nav-hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .nav-hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            padding-top: var(--nav-height);
+            overflow: hidden;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        .hero-content {
+            max-width: 820px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-glow);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            padding: 0.4rem 1rem 0.4rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.01em;
+        }
+        .hero-badge i {
+            font-size: 0.65rem;
+        }
+        .hero-badge .dot-pulse {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 10vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.03;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-sub {
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            min-height: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .hero-sub .typing-text {
+            color: var(--accent);
+            font-weight: 600;
+            position: relative;
+        }
+        .hero-sub .typing-text::after {
+            content: '|';
+            animation: blink-caret 0.8s step-end infinite;
+            font-weight: 300;
+            color: var(--accent);
+        }
+        @keyframes blink-caret {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .hero-meta a {
+            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+        .hero-meta a:hover {
+            color: var(--accent);
+        }
+        .hero-meta i {
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #0a0e17;
+            box-shadow: 0 4px 24px rgba(16, 185, 129, 0.3);
+        }
+        .btn-primary:hover {
+            background: #0ea272;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4);
+            color: #0a0e17;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero decorative globe */
+        .hero-globe {
+            position: absolute;
+            right: -8%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 600px;
+            height: 600px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.08;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--accent), transparent 70%);
+            filter: blur(40px);
+        }
+        .hero-coords {
+            position: absolute;
+            left: 5%;
+            bottom: 12%;
+            font-family: 'Inter', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.25;
+            letter-spacing: 0.1em;
+            line-height: 1.8;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-coords span {
+            display: block;
+        }
+
+        /* ===== ABOUT ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            gap: 3rem;
+            align-items: start;
         }
-
         .about-text p {
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
         }
-
         .about-text p strong {
-            color: var(--text);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .about-highlight-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .about-highlight-item:hover {
+            border-color: rgba(16, 185, 129, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .about-highlight-item i {
+            font-size: 1.2rem;
+            color: var(--accent);
+            width: 28px;
+            text-align: center;
+        }
+        .about-highlight-item span {
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .about-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 1rem;
         }
-
-        .stat-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+        .about-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
             padding: 1.5rem;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-
-        .stat-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
+        .about-stat:hover {
+            border-color: rgba(16, 185, 129, 0.15);
+            transform: translateY(-3px);
         }
-
-        .stat-number {
-            font-size: 2rem;
+        .about-stat .num {
+            font-size: 2.2rem;
             font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent);
+            line-height: 1.2;
         }
-
-        .stat-label {
+        .about-stat .label {
             font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
         }
 
-        /* ===== SKILLS ===== */
-        .skills-grid {
+        /* ===== EXPERTISE ===== */
+        .expertise-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
         }
-
-        .skill-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .skill-card:hover {
-            border-color: var(--accent);
-            background: var(--card-hover);
-            transform: translateY(-4px);
-        }
-
-        .skill-card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 1rem;
-        }
-
-        .skill-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .skill-card-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .skill-tag {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            color: var(--accent-light);
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 500;
-        }
-
-        /* ===== EXPERIENCE ===== */
-        #experience {
-            background: var(--secondary);
-        }
-
-        .timeline {
+        .expertise-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 1.5rem 1.5rem 1.8rem;
+            transition: all 0.35s ease;
             position: relative;
-            padding-left: 2rem;
+            overflow: hidden;
         }
-
-        .timeline::before {
+        .expertise-card::before {
             content: '';
             position: absolute;
-            left: 0;
             top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent), var(--purple), transparent);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2.5rem;
-            padding-left: 1.5rem;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -2.55rem;
-            top: 6px;
-            width: 14px;
-            height: 14px;
-            background: var(--accent);
-            border: 3px solid var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        }
-
-        .timeline-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .timeline-card:hover {
-            border-color: var(--accent);
-            transform: translateX(4px);
-        }
-
-        .timeline-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--accent-light);
-        }
-
-        .timeline-date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            background: rgba(59, 130, 246, 0.1);
-            padding: 3px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-        }
-
-        .timeline-company {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-location {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .timeline-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .timeline-list li {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            padding: 3px 0 3px 16px;
-            position: relative;
-        }
-
-        .timeline-list li::before {
-            content: '▸';
-            position: absolute;
             left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .expertise-card:hover::before {
+            opacity: 1;
+        }
+        .expertise-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .expertise-card .cat-icon {
+            font-size: 1.4rem;
             color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        .expertise-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+        .expertise-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .expertise-card .tag {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--accent);
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.25rem 0.65rem;
+            border-radius: 100px;
+            border: 1px solid rgba(16, 185, 129, 0.08);
+            letter-spacing: 0.01em;
         }
 
         /* ===== PROJECTS ===== */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
+            margin-top: 2rem;
         }
-
         .project-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.8rem 1.5rem 1.5rem;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
         }
-
+        .project-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .project-card:hover::after {
+            opacity: 1;
+        }
         .project-card:hover {
-            border-color: var(--accent);
-            background: var(--card-hover);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .project-icon {
-            font-size: 2rem;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 8px;
-        }
-
-        .project-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-            font-size: 0.85rem;
-        }
-
-        .project-link:hover {
-            color: var(--accent-light);
-        }
-
-        .project-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .project-desc {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.6;
-            flex: 1;
-            margin-bottom: 1rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .tech-tag {
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            color: #a78bfa;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-        }
-
-        /* ===== EDUCATION ===== */
-        #education {
-            background: var(--secondary);
-        }
-
-        .education-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .edu-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            transition: all 0.3s;
-        }
-
-        .edu-card:hover {
-            border-color: var(--accent);
             transform: translateY(-4px);
+            border-color: rgba(16, 185, 129, 0.12);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+        }
+        .project-card .p-icon {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+        .project-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+        }
+        .project-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
-        .edu-icon {
-            font-size: 2.5rem;
+        /* ===== BLOG ===== */
+        .blog-card-featured {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+            transition: all 0.35s ease;
+            margin-top: 2rem;
+        }
+        .blog-card-featured:hover {
+            border-color: rgba(16, 185, 129, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        .blog-card-featured .left h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .blog-card-featured .left p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 400px;
+        }
+        .blog-card-featured .right {
             flex-shrink: 0;
         }
 
-        .edu-degree {
-            font-weight: 700;
-            color: var(--accent-light);
-            margin-bottom: 0.25rem;
-        }
-
-        .edu-school {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.25rem;
-        }
-
-        .edu-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* ===== CERTIFICATIONS ===== */
-        .certs-grid {
+        .blog-posts {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
         }
-
-        .cert-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.2rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            transition: all 0.3s;
+        .blog-post-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
         }
-
-        .cert-card:hover {
-            border-color: var(--green);
+        .blog-post-item:hover {
+            border-color: rgba(16, 185, 129, 0.1);
             transform: translateY(-3px);
         }
-
-        .cert-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
+        .blog-post-item .b-date {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.4rem;
         }
-
-        .cert-title {
-            font-size: 0.88rem;
+        .blog-post-item h4 {
+            font-size: 0.95rem;
             font-weight: 600;
-            color: var(--text);
-            margin-bottom: 4px;
+            margin-bottom: 0.3rem;
+            line-height: 1.4;
         }
-
-        .cert-issuer {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        /* ===== COMMUNITY ===== */
-        #community {
-            background: var(--secondary);
-        }
-
-        .community-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .community-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .community-card:hover {
-            border-color: var(--purple);
-            transform: translateY(-4px);
-        }
-
-        .community-emoji {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .community-title {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .community-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        .blog-post-item p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
         }
 
         /* ===== CONTACT ===== */
-        .contact-wrapper {
-            max-width: 600px;
-            margin: 0 auto;
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .contact-info h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        .contact-info .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.05rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
+            margin-bottom: 0.75rem;
+            width: fit-content;
+        }
+        .contact-info .contact-link i {
+            color: var(--accent);
+        }
+        .contact-info .contact-link:hover {
+            border-color: rgba(16, 185, 129, 0.2);
+            transform: translateX(4px);
+        }
+
+        .contact-socials {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .contact-socials a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .contact-socials a:hover {
+            color: var(--accent);
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .contact-card-alt {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
             text-align: center;
         }
-
-        .contact-desc {
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
+        .contact-card-alt .big-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
         }
-
-        .contact-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .contact-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.2rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .contact-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
-        }
-
-        .contact-card-icon {
-            font-size: 1.5rem;
-        }
-
-        .contact-card-label {
-            font-size: 0.8rem;
+        .contact-card-alt h4 {
+            font-size: 1.1rem;
             font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
         }
-
-        .contact-card-value {
-            font-size: 0.85rem;
-            color: var(--accent-light);
+        .contact-card-alt .domain {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.2rem;
         }
 
         /* ===== FOOTER ===== */
         footer {
-            background: var(--primary);
-            border-top: 1px solid var(--border);
-            padding: 2rem;
-            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+            padding: 2rem 0;
+            margin-top: 2rem;
         }
-
-        .footer-text {
+        footer .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        footer p {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
-
-        .footer-text span {
-            color: var(--accent-light);
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font);
         }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .back-to-top:hover {
+            color: var(--accent);
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 64px;
-                left: 0;
-                right: 0;
-                background: rgba(15, 23, 42, 0.98);
-                flex-direction: column;
-                padding: 1.5rem 2rem;
-                gap: 1.2rem;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .nav-links.open {
-                display: flex;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
+        @media (max-width: 900px) {
             .about-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
+            .contact-wrap {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hero-globe {
+                width: 400px;
+                height: 400px;
+                right: -20%;
+            }
+        }
 
-            .education-grid {
+        @media (max-width: 768px) {
+            :root {
+                --section-gap: 4rem;
+            }
+            .nav-links {
+                position: fixed;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background: rgba(10, 14, 23, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1.5rem 1.5rem 2.5rem;
+                gap: 0.15rem;
+                transform: translateY(-110%);
+                opacity: 0;
+                transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                border-bottom: 1px solid var(--border-subtle);
+                pointer-events: none;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            }
+            .nav-links.open {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+            .nav-links a {
+                padding: 0.8rem 1rem;
+                font-size: 1rem;
+                width: 100%;
+                border-radius: 8px;
+            }
+            .nav-hamburger {
+                display: flex;
+            }
+            .hero h1 {
+                font-size: clamp(2.2rem, 12vw, 3.6rem);
+            }
+            .about-highlights {
                 grid-template-columns: 1fr;
             }
-
-            .hero-links {
-                flex-direction: column;
-                align-items: center;
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
             }
+            .hero-coords {
+                display: none;
+            }
+            .blog-card-featured {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.8rem 1.5rem;
+            }
+            .blog-card-featured .left p {
+                max-width: 100%;
+            }
+            section {
+                padding: var(--section-gap) 0;
+            }
+            .contact-info .contact-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hero-cta .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .blog-posts {
+                grid-template-columns: 1fr;
+            }
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-socials {
+                justify-content: center;
+            }
+            footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* selection */
+        ::selection {
+            background: var(--accent);
+            color: #0a0e17;
+        }
+
+        /* scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3a5a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a4a6a;
+        }
+
+        /* map coordinate watermark */
+        .map-watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: 'Inter', monospace;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            opacity: 0.12;
+            letter-spacing: 0.08em;
+            pointer-events: none;
+            z-index: 0;
+            line-height: 1.6;
+            text-align: right;
         }
     </style>
 </head>
 <body>
 
-<!-- ===== NAVBAR ===== -->
-<nav>
-    <div class="nav-inner">
-        <a href="#hero" class="nav-logo">Araz.me</a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
+    <!-- ===== BACKGROUND DECOR ===== -->
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-particles" id="particles" aria-hidden="true"></div>
+    <div class="bg-topo" aria-hidden="true">
+        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 250 Q50 200 100 250 T200 250 T300 250 T400 250 T500 250" stroke="white" stroke-width="1.5" stroke-dasharray="4 6"/>
+            <path d="M0 200 Q50 150 100 200 T200 200 T300 200 T400 200 T500 200" stroke="white" stroke-width="1" stroke-dasharray="3 8"/>
+            <path d="M0 300 Q50 350 100 300 T200 300 T300 300 T400 300 T500 300" stroke="white" stroke-width="1" stroke-dasharray="3 8"/>
+            <path d="M0 160 Q50 120 100 160 T200 160 T300 160 T400 160 T500 160" stroke="white" stroke-width="0.6" stroke-dasharray="2 10" opacity="0.5"/>
+            <path d="M0 340 Q50 380 100 340 T200 340 T300 340 T400 340 T500 340" stroke="white" stroke-width="0.6" stroke-dasharray="2 10" opacity="0.5"/>
+            <circle cx="250" cy="250" r="80" stroke="white" stroke-width="0.8" stroke-dasharray="4 8" opacity="0.4"/>
+            <circle cx="250" cy="250" r="140" stroke="white" stroke-width="0.5" stroke-dasharray="3 12" opacity="0.25"/>
+        </svg>
     </div>
-</nav>
+    <div class="map-watermark">35.6892° N &nbsp; 51.3890° E<br>urn:ogc:def:crs:EPSG::4326</div>
 
-<!-- ===== HERO ===== -->
-<section id="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-content">
-        <div class="hero-badge">
-            <span class="dot"></span>
-            Available for new opportunities
-        </div>
-        <h1 class="hero-name">
-            Hi, I'm <span class="highlight">Araz Shahkarami</span>
-        </h1>
-        <p class="hero-title">
-            Geospatial AI Engineer · Backend Developer · OSGeo Advocate
-        </p>
-        <p class="hero-desc">
-            Bridging the gap between <strong>Geographic Information Systems</strong> and
-            modern <strong>Artificial Intelligence</strong>. Building scalable geospatial
-            APIs, GeoAI pipelines, and pioneering LLM integration with spatial systems
-            via Model Context Protocol.
-        </p>
-        <div class="hero-links">
-            <a href="#projects" class="btn btn-primary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
-                View Projects
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a href="#hero" class="nav-logo" aria-label="Araz Shahkarami Home">
+                <span class="logo-icon">AM</span>
+                <span>ARAZ</span>
             </a>
-            <a href="#contact" class="btn btn-outline">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                Get In Touch
-            </a>
-            <a href="https://github.com/araz-shahkarami" target="_blank" class="btn btn-outline">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                GitHub
-            </a>
+            <ul class="nav-links" id="navLinks" role="menubar">
+                <li role="none"><a href="#hero" role="menuitem" class="active">Home</a></li>
+                <li role="none"><a href="#about" role="menuitem">About</a></li>
+                <li role="none"><a href="#expertise" role="menuitem">Expertise</a></li>
+                <li role="none"><a href="#projects" role="menuitem">Projects</a></li>
+                <li role="none"><a href="#blog" role="menuitem">Blog</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-        <div class="hero-contacts">
-            <a href="mailto:araz.shah@gmail.com" class="hero-contact-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                araz.shah@gmail.com
-            </a>
-            <a href="https://www.linkedin.com/in/araz-shahkarami" target="_blank" class="hero-contact-item">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                LinkedIn
-            </a>
-            <span class="hero-contact-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Urmia, Iran
-            </span>
-        </div>
-    </div>
-</section>
+    </nav>
 
-<!-- ===== ABOUT ===== -->
-<section id="about">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-tag">About Me</span>
-            <h2 class="section-title">Who I Am</h2>
-            <div class="section-line"></div>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-globe" aria-hidden="true"></div>
+        <div class="hero-coords" aria-hidden="true">
+            <span>LAT: 35.6892° N</span>
+            <span>LON: 51.3890° E</span>
+            <span>ZOOM: 12</span>
         </div>
-        <div class="about-grid">
-            <div class="about-text reveal">
-                <p>I'm a <strong>Geospatial AI Engineer and Backend Developer</strong> with over 8 years of experience at the intersection of Geographic Information Systems and modern software engineering.</p>
-                <p>My passion lies in <strong>automating complex GIS workflows</strong>, building robust spatial data infrastructure, and pioneering the next generation of GeoAI applications that leverage large language models to understand and interact with spatial data.</p>
-                <p>As an <strong>official OSGeo Advocate</strong>, I'm deeply committed to the open-source geospatial ecosystem. I actively contribute to FOSS4G communities and believe that open tools are the foundation of scalable, accessible spatial technology.</p>
-                <p>Currently, I'm pioneering the integration of <strong>LLMs with GIS systems</strong> through the Model Context Protocol (MCP), working on GeoChat — a framework that bridges the semantic gap between traditional GIS and AI agents.</p>
-            </div>
-            <div class="about-stats reveal">
-                <div class="stat-card">
-                    <div class="stat-number">8+</div>
-                    <div class="stat-label">Years of Experience</div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="dot-pulse"></span>
+                    Available for collaboration
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Active Roles</div>
+                <h1>
+                    Araz<br>
+                    <span class="highlight">Shahkarami</span>
+                </h1>
+                <div class="hero-sub">
+                    <span class="typing-text" id="typingText">Geospatial AI Engineer</span>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">90%</div>
-                    <div class="stat-label">GIS Automation Rate</div>
+                <div class="hero-meta">
+                    <a href="mailto:mail@araz.me"><i class="fas fa-envelope"></i> mail@araz.me</a>
+                    <a href="https://araz.me" target="_blank" rel="noopener"><i class="fas fa-globe"></i> araz.me</a>
+                    <a href="https://github.com/arazshah" target="_blank" rel="noopener"><i class="fab fa-github"></i> arazshah</a>
+                    <a href="https://linkedin.com/in/araz-shahkarami" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> in/araz-shahkarami</a>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">OSGeo</div>
-                    <div class="stat-label">Official Advocate</div>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary"><i class="fas fa-arrow-down"></i> View Projects</a>
+                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> Get in Touch</a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ===== SKILLS ===== -->
-<section id="skills">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-tag">Expertise</span>
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="skills-grid">
-            <div class="skill-card reveal">
-                <div class="skill-card-header">
-                    <div class="skill-icon" style="background:rgba(59,130,246,0.1)">🗺️</div>
-                    <span class="skill-card-title">Geospatial Technologies</span>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag">QGIS</span>
-                    <span class="skill-tag">GeoServer</span>
-                    <span class="skill-tag">PostGIS</span>
-                    <span class="skill-tag">GeoPandas</span>
-                    <span class="skill-tag">Rasterio</span>
-                    <span class="skill-tag">Shapely</span>
-                    <span class="skill-tag">GDAL/OGR</span>
-                    <span class="skill-tag">OpenLayers</span>
-                    <span class="skill-tag">Leaflet</span>
-                    <span class="skill-tag">Fiona</span>
-                </div>
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">About</span>
+                <h2 class="section-title">Mapping the world through <span class="highlight">code &amp; data</span></h2>
             </div>
-            <div class="skill-card reveal">
-                <div class="skill-card-header">
-                    <div class="skill-icon" style="background:rgba(139,92,246,0.1)">🤖</div>
-                    <span class="skill-card-title">AI & Machine Learning</span>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag">GeoAI</span>
-                    <span class="skill-tag">LLMs</span>
-                    <span class="skill-tag">MCP</span>
-                    <span class="skill-tag">Scikit-learn</span>
-                    <span class="skill-tag">TensorFlow</span>
-                    <span class="skill-tag">NLP</span>
-                    <span class="skill-tag">AI Agents</span>
-                </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-card-header">
-                    <div class="skill-icon" style="background:rgba(16,185,129,0.1)">⚙️</div>
-                    <span class="skill-card-title">Backend Development</span>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">Django</span>
-                    <span class="skill-tag">FastAPI</span>
-                    <span class="skill-tag">Flask</span>
-                    <span class="skill-tag">C#</span>
-                    <span class="skill-tag">.NET</span>
-                    <span class="skill-tag">REST APIs</span>
-                    <span class="skill-tag">OpenAPI</span>
-                </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-card-header">
-                    <div class="skill-icon" style="background:rgba(245,158,11,0.1)">🗄️</div>
-                    <span class="skill-card-title">Databases</span>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag">PostgreSQL</span>
-                    <span class="skill-tag">PostGIS</span>
-                    <span class="skill-tag">MS SQL Server</span>
-                    <span class="skill-tag">Redis</span>
-                    <span class="skill-tag">SpatiaLite</span>
-                    <span class="skill-tag">SQLite</span>
-                </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-card-header">
-                    <div class="skill-icon" style="background:rgba(239,68,68,0.1)">🚀</div>
-                    <span class="skill-card-title">DevOps & Tools</span>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag">Linux</span>
-                    <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">Git</span>
-                    <span class="skill-tag">GitHub Actions</span>
-                    <span class="skill-tag">Nginx</span>
-                    <span class="skill-tag">CI/CD</span>
-                </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-card-header">
-                    <div class="skill-icon" style="background:rgba(6,182,212,0.1)">📊</div>
-                    <span class="skill-card-title">Data Science & Standards</span>
-                </div>
-                <div class="skill-tags">
-                    <span class="skill-tag">Pandas</span>
-                    <span class="skill-tag">NumPy</span>
-                    <span class="skill-tag">Matplotlib</span>
-                    <span class="skill-tag">OGC/WMS</span>
-                    <span class="skill-tag">WFS/WCS</span>
-                    <span class="skill-tag">GeoJSON</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== EXPERIENCE ===== -->
-<section id="experience">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-tag">Career</span>
-            <h2 class="section-title">Professional Experience</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="timeline">
-            <div class="timeline-item reveal">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <span class="timeline-title">Geospatial Backend Developer</span>
-                        <span class="timeline-date">Nov 2025 — Present</span>
-                    </div>
-                    <div class="timeline-company">Spatial Science Innovators</div>
-                    <div class="timeline-location">📍 Tehran, Iran</div>
-                    <ul class="timeline-list">
-                        <li>Design scalable geospatial backend services and RESTful APIs using Python, FastAPI, and PostGIS</li>
-                        <li>Implement GeoAI pipelines integrating ML models with geospatial datasets for predictive analytics</li>
-                        <li>Develop MCP servers enabling AI agents to interact meaningfully with geospatial tools and resources</li>
-                        <li>Architect microservice-based geospatial platforms for enterprise-grade spatial data infrastructure</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="timeline-item reveal">
-                <div class="timeline-dot" style="background: var(--purple)"></div>
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <span class="timeline-title">GIS Developer & Geospatial Consultant</span>
-                        <span class="timeline-date">Jan 2018 — Present</span>
-                    </div>
-                    <div class="timeline-company">Araz.me — Independent Consultancy</div>
-                    <div class="timeline-location">📍 Remote</div>
-                    <ul class="timeline-list">
-                        <li>Built full-stack geospatial web applications using Django, Flask, and JavaScript mapping libraries</li>
-                        <li>Developed automated ETL pipelines for spatial data ingestion and transformation</li>
-                        <li>Created custom QGIS plugins and GeoServer configurations for enterprise data distribution</li>
-                        <li>Delivered Python for GIS training programs; reduced client processing time by 90%+</li>
-                        <li>Contributed to open-source geospatial projects and promoted FOSS4G in the regional community</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="timeline-item reveal">
-                <div class="timeline-dot" style="background: var(--green)"></div>
-                <div class="timeline-card">
-                    <div class="timeline-header">
-                        <span class="timeline-title">Backend Developer</span>
-                        <span class="timeline-date">Aug 2016 — Present</span>
-                    </div>
-                    <div class="timeline-company">Alborz Insurance Company</div>
-                    <div class="timeline-location">📍 Tehran, Iran</div>
-                    <ul class="timeline-list">
-                        <li>Developed enterprise backend services using Python and C# for insurance management systems</li>
-                        <li>Designed RESTful APIs with Flask and Django serving thousands of daily requests</li>
-                        <li>Built ETL applications with MS SQL Server for data migration and business intelligence</li>
-                        <li>Managed Linux servers and implemented CI/CD pipelines using Git-based workflows</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== PROJECTS ===== -->
-<section id="projects">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-tag">Portfolio</span>
-            <h2 class="section-title">Key Projects</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="projects-grid">
-            <div class="project-card reveal">
-                <div class="project-header">
-                    <span class="project-icon">🌍</span>
-                    <div class="project-links">
-                        <a href="https://github.com/araz-shahkarami" target="_blank" class="project-link">↗ GitHub</a>
+            <div class="about-grid">
+                <div class="about-text reveal reveal-delay-1">
+                    <p>
+                        <strong>13+ years</strong> bridging IT infrastructure with geospatial intelligence. 
+                        Holding a <strong>Master's in GIS &amp; Remote Sensing</strong>, I architect 
+                        systems where location intelligence meets modern software engineering.
+                    </p>
+                    <p>
+                        Based between <strong>Tehran</strong> and <strong>Urmia, Iran</strong>. 
+                        Fluent in <strong>Turkish, Persian, English</strong>. 
+                        Founder of <a href="https://bookane.ir" target="_blank" rel="noopener">bookane.ir</a>, 
+                        writer at <a href="https://blog.araz.me" target="_blank" rel="noopener">blog.araz.me</a>, 
+                        and creator of <strong>geoChat-v2-core</strong>.
+                    </p>
+                    <p>
+                        <strong>OSGeo</strong> advocate. Open source is not just a tool — it's a philosophy 
+                        I embed in every layer of my work.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="about-highlight-item">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>GIS &amp; Remote Sensing</span>
+                        </div>
+                        <div class="about-highlight-item">
+                            <i class="fas fa-code"></i>
+                            <span>Full-Stack Engineer</span>
+                        </div>
+                        <div class="about-highlight-item">
+                            <i class="fas fa-brain"></i>
+                            <span>AI/ML Integration</span>
+                        </div>
+                        <div class="about-highlight-item">
+                            <i class="fas fa-cloud"></i>
+                            <span>Cloud &amp; DevOps</span>
+                        </div>
                     </div>
                 </div>
-                <h3 class="project-title">GeoChat — Spatial MCP Framework</h3>
-                <p class="project-desc">A Model Context Protocol infrastructure enabling AI agents to understand and meaningfully interact with GIS systems. Bridges the semantic gap between traditional GIS and modern AI models using a three-layer architecture: Tools, Resources, and Prompts.</p>
-                <div class="project-tech">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">MCP</span>
-                    <span class="tech-tag">LLMs</span>
-                    <span class="tech-tag">PostGIS</span>
-                    <span class="tech-tag">FastAPI</span>
-                    <span class="tech-tag">GeoAI</span>
-                </div>
-            </div>
-            <div class="project-card reveal">
-                <div class="project-header">
-                    <span class="project-icon">⚡</span>
-                    <div class="project-links">
-                        <a href="https://github.com/araz-shahkarami" target="_blank" class="project-link">↗ GitHub</a>
+                <div class="about-stats reveal reveal-delay-2">
+                    <div class="about-stat">
+                        <div class="num">13+</div>
+                        <div class="label">Years Experience</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="num">25+</div>
+                        <div class="label">Projects Delivered</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="num">3</div>
+                        <div class="label">Languages Spoken</div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="num">∞</div>
+                        <div class="label">Open Source Commits</div>
                     </div>
                 </div>
-                <h3 class="project-title">GIS Workflow Automation Suite</h3>
-                <p class="project-desc">Python-based automation tools that transformed manual GIS workflows into efficient, automated pipelines. Reduced manual processing time by over 90%, enabling geospatial teams to focus on analysis rather than repetitive data tasks.</p>
-                <div class="project-tech">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">GeoPandas</span>
-                    <span class="tech-tag">GDAL</span>
-                    <span class="tech-tag">QGIS</span>
-                    <span class="tech-tag">PostgreSQL</span>
-                </div>
             </div>
-            <div class="project-card reveal">
-                <div class="project-header">
-                    <span class="project-icon">🔌</span>
-                    <div class="project-links">
-                        <a href="https://github.com/araz-shahkarami" target="_blank" class="project-link">↗ GitHub</a>
+        </div>
+    </section>
+
+    <!-- ===== EXPERTISE ===== -->
+    <section id="expertise">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Expertise</span>
+                <h2 class="section-title">Tech stack &amp; <span class="highlight">specializations</span></h2>
+                <p class="section-desc">From geospatial data pipelines to AI-driven analytics — the tools I wield to build spatial systems at scale.</p>
+            </div>
+            <div class="expertise-grid">
+                <div class="expertise-card reveal reveal-delay-1">
+                    <div class="cat-icon"><i class="fas fa-globe-americas"></i></div>
+                    <h4>Geospatial</h4>
+                    <div class="tags">
+                        <span class="tag">GDAL/OGR</span>
+                        <span class="tag">PostGIS</span>
+                        <span class="tag">QGIS</span>
+                        <span class="tag">GeoServer</span>
+                        <span class="tag">GeoDjango</span>
+                        <span class="tag">GeoPandas</span>
+                        <span class="tag">Rasterio</span>
+                        <span class="tag">MapLibre</span>
+                        <span class="tag">Deck.gl</span>
                     </div>
                 </div>
-                <h3 class="project-title">MCP Server for Spatial Sciences</h3>
-                <p class="project-desc">Implemented a complete three-layer Model Context Protocol server for geospatial AI integration. Provides structured access to spatial tools, data resources, and domain-specific prompts for AI agents operating in geospatial contexts.</p>
-                <div class="project-tech">
-                    <span class="tech-tag">MCP</span>
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">OGC</span>
-                    <span class="tech-tag">WMS/WFS</span>
-                    <span class="tech-tag">AI Agents</span>
-                </div>
-            </div>
-            <div class="project-card reveal">
-                <div class="project-header">
-                    <span class="project-icon">🗺️</span>
-                    <div class="project-links">
-                        <a href="https://araz.me" target="_blank" class="project-link">↗ Live</a>
+                <div class="expertise-card reveal reveal-delay-2">
+                    <div class="cat-icon"><i class="fas fa-server"></i></div>
+                    <h4>Backend</h4>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">NestJS</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">REST API</span>
                     </div>
                 </div>
-                <h3 class="project-title">Geospatial API Platform</h3>
-                <p class="project-desc">Architected scalable RESTful APIs for spatial data processing and analytics. Serves enterprise-grade geospatial intelligence to clients, supporting OGC-compliant data services, spatial queries, and real-time geospatial analysis.</p>
-                <div class="project-tech">
-                    <span class="tech-tag">FastAPI</span>
-                    <span class="tech-tag">PostGIS</span>
-                    <span class="tech-tag">Docker</span>
-                    <span class="tech-tag">GeoJSON</span>
-                    <span class="tech-tag">OpenAPI</span>
+                <div class="expertise-card reveal reveal-delay-3">
+                    <div class="cat-icon"><i class="fas fa-robot"></i></div>
+                    <h4>AI / ML</h4>
+                    <div class="tags">
+                        <span class="tag">LLMs</span>
+                        <span class="tag">MCP Protocol</span>
+                        <span class="tag">H3 Indexing</span>
+                    </div>
+                </div>
+                <div class="expertise-card reveal reveal-delay-4">
+                    <div class="cat-icon"><i class="fas fa-code"></i></div>
+                    <h4>Frontend</h4>
+                    <div class="tags">
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Next.js</span>
+                    </div>
+                </div>
+                <div class="expertise-card reveal reveal-delay-5">
+                    <div class="cat-icon"><i class="fas fa-cubes"></i></div>
+                    <h4>DevOps</h4>
+                    <div class="tags">
+                        <span class="tag">Docker</span>
+                        <span class="tag">Nginx</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ===== EDUCATION ===== -->
-<section id="education">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-tag">Academic Background</span>
-            <h2 class="section-title">Education</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="education-grid">
-            <div class="edu-card reveal">
-                <span class="edu-icon">🎓</span>
-                <div>
-                    <div class="edu-degree">M.Sc. in Geographic Information Systems (GIS)</div>
-                    <div class="edu-school">Islamic Azad University, Science & Research Branch</div>
-                    <div class="edu-meta">📍 Tehran, Iran &nbsp;|&nbsp; 2014 – 2015</div>
-                </div>
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Projects</span>
+                <h2 class="section-title">Featured <span class="highlight">work</span></h2>
+                <p class="section-desc">Spatial systems, platforms, and tools I've architected from the ground up.</p>
             </div>
-            <div class="edu-card reveal">
-                <span class="edu-icon">💻</span>
-                <div>
-                    <div class="edu-degree">B.Sc. in Computer Engineering</div>
-                    <div class="edu-school">Islamic Azad University, Mahabad</div>
-                    <div class="edu-meta">📍 Mahabad, Iran &nbsp;|&nbsp; 2006 – 2010</div>
+            <div class="projects-grid">
+                <div class="project-card reveal reveal-delay-1">
+                    <div class="p-icon"><i class="fas fa-comment-dots"></i></div>
+                    <h4>geoChat-v2-core</h4>
+                    <p>Plugin-based architecture system for geospatial conversational AI. Modular, extensible, and built for scale.</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- Certifications -->
-        <div class="section-header reveal" style="margin-top:3.5rem">
-            <span class="section-tag">Credentials</span>
-            <h2 class="section-title">Certifications</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="certs-grid">
-            <div class="cert-card reveal">
-                <span class="cert-icon">🏆</span>
-                <div>
-                    <div class="cert-title">Advanced Model Context Protocol (MCP)</div>
-                    <div class="cert-issuer">MCP Server Development for Geospatial AI</div>
+                <div class="project-card reveal reveal-delay-2">
+                    <div class="p-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h4>Bookane.ir</h4>
+                    <p>Persian educational platform bridging learners with quality resources. Built with modern web stack.</p>
                 </div>
-            </div>
-            <div class="cert-card reveal">
-                <span class="cert-icon">📜</span>
-                <div>
-                    <div class="cert-title">Introduction to Model Context Protocol</div>
-                    <div class="cert-issuer">Foundational AI-Tool Integration</div>
+                <div class="project-card reveal reveal-delay-3">
+                    <div class="p-icon"><i class="fas fa-tree"></i></div>
+                    <h4>Urban Green Space Management</h4>
+                    <p>GIS-driven system for inventory, analysis, and planning of urban vegetation using remote sensing data.</p>
                 </div>
-            </div>
-            <div class="cert-card reveal">
-                <span class="cert-icon">🤖</span>
-                <div>
-                    <div class="cert-title">Machine Learning with Python</div>
-                    <div class="cert-issuer">Applied ML & Predictive Modeling</div>
+                <div class="project-card reveal reveal-delay-4">
+                    <div class="p-icon"><i class="fas fa-traffic-light"></i></div>
+                    <h4>Smart Traffic &amp; Transportation</h4>
+                    <p>Real-time traffic monitoring and route optimization using spatial algorithms and IoT feeds.</p>
                 </div>
-            </div>
-            <div class="cert-card reveal">
-                <span class="cert-icon">🌐</span>
-                <div>
-                    <div class="cert-title">Geo Web App with Open Source Tools</div>
-                    <div class="cert-issuer">Full-Stack FOSS4G Development</div>
+                <div class="project-card reveal reveal-delay-5">
+                    <div class="p-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h4>Teacher Ranking System</h4>
+                    <p>Data-driven evaluation platform for educational institutions with geospatial analytics.</p>
+                </div>
+                <div class="project-card reveal reveal-delay-1">
+                    <div class="p-icon"><i class="fas fa-wind"></i></div>
+                    <h4>Air Pollution Analysis (Tehran)</h4>
+                    <p>Spatio-temporal analysis of air quality across Tehran using satellite imagery and ground sensors.</p>
+                </div>
+                <div class="project-card reveal reveal-delay-2">
+                    <div class="p-icon"><i class="fas fa-fish"></i></div>
+                    <h4>Fish Cage Aquaculture Planning</h4>
+                    <p>Site suitability modeling for aquaculture in Urmia Lake using multi-criteria GIS analysis.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ===== COMMUNITY ===== -->
-<section id="community">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-tag">Open Source & Advocacy</span>
-            <h2 class="section-title">Community Engagement</h2>
-            <div class="section-line"></div>
+    <!-- ===== BLOG ===== -->
+    <section id="blog">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Blog</span>
+                <h2 class="section-title">Thoughts on <span class="highlight">geospatial &amp; code</span></h2>
+                <p class="section-desc">I write about geospatial engineering, open source, and the intersection of AI with location intelligence.</p>
+            </div>
+            <div class="blog-card-featured reveal reveal-delay-1">
+                <div class="left">
+                    <h3><i class="fas fa-pen-fancy" style="color:var(--accent);margin-right:0.5rem;"></i>Read my blog</h3>
+                    <p>In-depth articles on GIS, Python, geospatial AI, and open-source architecture. New posts monthly.</p>
+                </div>
+                <div class="right">
+                    <a href="https://blog.araz.me" target="_blank" rel="noopener" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i> blog.araz.me
+                    </a>
+                </div>
+            </div>
+            <div class="blog-posts">
+                <div class="blog-post-item reveal reveal-delay-2">
+                    <div class="b-date"><i class="far fa-calendar-alt" style="margin-right:0.3rem;"></i> Apr 2026</div>
+                    <h4>Building a Spatial Plugin Architecture with Python</h4>
+                    <p>How geoChat-v2-core leverages modular design for geospatial AI workflows.</p>
+                </div>
+                <div class="blog-post-item reveal reveal-delay-3">
+                    <div class="b-date"><i class="far fa-calendar-alt" style="margin-right:0.3rem;"></i> Feb 2026</div>
+                    <h4>H3 Indexing for Real-Time Geospatial Analysis</h4>
+                    <p>Using Uber's H3 hex grid system for efficient spatial joins and aggregations.</p>
+                </div>
+                <div class="blog-post-item reveal reveal-delay-4">
+                    <div class="b-date"><i class="far fa-calendar-alt" style="margin-right:0.3rem;"></i> Dec 2025</div>
+                    <h4>Open Source GIS: A Decade of Lessons</h4>
+                    <p>Reflections on contributing to OSGeo and building with free geospatial tools.</p>
+                </div>
+            </div>
         </div>
-        <div class="community-grid">
-            <div class="community-card reveal">
-                <div class="community-emoji">🌍</div>
-                <div class="community-title">Official OSGeo Advocate</div>
-                <div class="community-desc">Promoting open-source geospatial software and standards globally, driving adoption of FOSS tools in spatial science.</div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Contact</span>
+                <h2 class="section-title">Let's <span class="highlight">connect</span></h2>
+                <p class="section-desc">Have a project, idea, or just want to say hello? Reach out — I'm always open to geospatial conversations.</p>
             </div>
-            <div class="community-card reveal">
-                <div class="community-emoji">💡</div>
-                <div class="community-title">FOSS4G Contributor</div>
-                <div class="community-desc">Active contributor to the open-source geospatial ecosystem, building tools and resources for the global GIS community.</div>
-            </div>
-            <div class="community-card reveal">
-                <div class="community-emoji">🎓</div>
-                <div class="community-title">Technical Educator</div>
-                <div class="community-desc">Teaching Python for GIS professionals and mentoring developers to automate their geospatial workflows effectively.</div>
-            </div>
-            <div class="community-card reveal">
-                <div class="community-emoji">🤝</div>
-                <div class="community-title">GeoAI Pioneer</div>
-                <div class="community-desc">Pioneering the integration of AI agents with geospatial systems, building the spatial AI infrastructure for the Agent era.</div>
+            <div class="contact-wrap">
+                <div class="contact-info reveal reveal-delay-1">
+                    <h3>Get in touch</h3>
+                    <p>Prefer email? Drop me a line and I'll get back to you within 24 hours.</p>
+                    <a href="mailto:mail@araz.me" class="contact-link">
+                        <i class="fas fa-envelope"></i> mail@araz.me
+                    </a>
+                    <div style="margin-top:0.5rem;">
+                        <span style="color:var(--text-muted);font-size:0.85rem;">or find me on</span>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://github.com/arazshah" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/araz-shahkarami" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://blog.araz.me" target="_blank" rel="noopener" aria-label="Blog"><i class="fas fa-pen-fancy"></i></a>
+                        <a href="https://araz.me" target="_blank" rel="noopener" aria-label="Website"><i class="fas fa-globe"></i></a>
+                    </div>
+                </div>
+                <div class="contact-card-alt reveal reveal-delay-2">
+                    <div class="big-icon"><i class="fas fa-map-pin"></i></div>
+                    <h4>ARAZ SHAHKARAMI</h4>
+                    <div class="domain">araz.me</div>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.75rem;">
+                        <i class="fas fa-check-circle" style="color:var(--accent);"></i> Always open to geospatial collaborations
+                    </p>
+                    <div style="margin-top:1.2rem;">
+                        <a href="mailto:mail@araz.me" class="btn btn-primary" style="padding:0.6rem 1.8rem;">
+                            <i class="fas fa-paper-plane"></i> Send Email
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ===== CONTACT ===== -->
-<section id="contact">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-tag">Get In Touch</span>
-            <h2 class="section-title">Contact Me</h2>
-            <div class="section-line"></div>
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Araz Shahkarami. All rights reserved.</p>
+            <button class="back-to-top" id="backToTop" aria-label="Back to top">
+                <i class="fas fa-arrow-up"></i> Back to top
+            </button>
         </div>
-        <div class="contact-wrapper">
-            <p class="contact-desc reveal">
-                Open to collaboration, consulting, and new opportunities in GeoAI, backend development, and open-source geospatial projects.
-            </p>
-            <div class="contact-cards reveal">
-                <a href="mailto:araz.shah@gmail.com" class="contact-card">
-                    <span class="contact-card-icon">✉️</span>
-                    <span class="contact-card-label">Email</span>
-                    <span class="contact-card-value">araz.shah@gmail.com</span>
-                </a>
-                <a href="https://www.linkedin.com/in/araz-shahkarami" target="_blank" class="contact-card">
-                    <span class="contact-card-icon">💼</span>
-                    <span class="contact-card-label">LinkedIn</span>
-                    <span class="contact-card-value">araz-shahkarami</span>
-                </a>
-                <a href="https://github.com/araz-shahkarami" target="_blank" class="contact-card">
-                    <span class="contact-card-icon">🐙</span>
-                    <span class="contact-card-label">GitHub</span>
-                    <span class="contact-card-value">araz-shahkarami</span>
-                </a>
-                <a href="https://araz.me" target="_blank" class="contact-card">
-                    <span class="contact-card-icon">🌐</span>
-                    <span class="contact-card-label">Website</span>
-                    <span class="contact-card-value">araz.me</span>
-                </a>
-            </div>
-            <a href="mailto:araz.shah@gmail.com" class="btn btn-primary reveal" style="margin:0 auto">
-                ✉️ &nbsp; Send Me a Message
-            </a>
-        </div>
-    </div>
-</section>
+    </footer>
 
-<!-- ===== FOOTER ===== -->
-<footer>
-    <p class="footer-text">
-        Designed & Built by <span>Araz Shahkarami</span> &nbsp;·&nbsp;
-        <span>Geospatial AI Engineer</span> &nbsp;·&nbsp;
-        Urmia, Iran &nbsp;·&nbsp; 2025
-    </p>
-</footer>
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        (function() {
+            'use strict';
 
-<!-- ===== JAVASCRIPT ===== -->
-<script>
-    // Hamburger menu
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
+            // --- Typing effect ---
+            const roles = [
+                'Geospatial AI Engineer',
+                'Senior Software Engineer',
+                'GIS Developer',
+                'Open Source Advocate',
+                'Spatial Systems Architect'
+            ];
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typingEl = document.getElementById('typingText');
+            if (!typingEl) return;
 
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-    });
-
-    // Close menu on link click
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, i * 80);
-                observer.unobserve(entry.target);
+            function typeRole() {
+                const current = roles[roleIndex];
+                if (!isDeleting) {
+                    typingEl.textContent = current.substring(0, charIndex + 1);
+                    charIndex++;
+                    if (charIndex === current.length) {
+                        isDeleting = true;
+                        setTimeout(typeRole, 2200);
+                        return;
+                    }
+                    setTimeout(typeRole, 60 + Math.random() * 40);
+                } else {
+                    typingEl.textContent = current.substring(0, charIndex);
+                    charIndex--;
+                    if (charIndex < 0) {
+                        isDeleting = false;
+                        roleIndex = (roleIndex + 1) % roles.length;
+                        charIndex = 0;
+                        setTimeout(typeRole, 400);
+                        return;
+                    }
+                    setTimeout(typeRole, 30 + Math.random() * 20);
+                }
             }
-        });
-    }, { threshold: 0.1 });
+            setTimeout(typeRole, 600);
 
-    reveals.forEach(el => observer.observe(el));
-
-    // Active nav link on scroll
-    const sections = document.querySelectorAll('section[id]');
-    const navAnchors = document.querySelectorAll('.nav-links a');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            if (window.scrollY >= section.offsetTop - 100) {
-                current = section.getAttribute('id');
+            // --- Hamburger menu ---
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isOpen = navLinks.classList.toggle('open');
+                    hamburger.classList.toggle('active');
+                    hamburger.setAttribute('aria-expanded', isOpen);
+                });
+                // Close on link click
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        navLinks.classList.remove('open');
+                        hamburger.classList.remove('active');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    });
+                });
+                // Close on outside click
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.navbar')) {
+                        navLinks.classList.remove('open');
+                        hamburger.classList.remove('active');
+                        hamburger.setAttribute('aria-expanded', 'false');
+                    }
+                });
             }
-        });
-        navAnchors.forEach(a => {
-            a.style.color = a.getAttribute('href') === `#${current}`
-                ? 'var(--accent-light)'
-                : 'var(--text-muted)';
-        });
-    });
-</script>
 
+            // --- Nav active link on scroll ---
+            const sections = document.querySelectorAll('section[id]');
+            const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+            const observerOptions = {
+                root: null,
+                rootMargin: '-40% 0px -60% 0px',
+                threshold: 0
+            };
+
+            function updateActiveNav() {
+                let currentId = '';
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.2) {
+                        currentId = section.getAttribute('id');
+                    }
+                });
+                navAnchors.forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href') === '#' + currentId) {
+                        a.classList.add('active');
+                    }
+                });
+            }
+
+            if (sections.length && navAnchors.length) {
+                window.addEventListener('scroll', updateActiveNav, { passive: true });
+                updateActiveNav();
+            }
+
+            // --- Intersection Observer for reveal animations ---
+            const revealEls = document.querySelectorAll('.reveal');
+            if (revealEls.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+                revealEls.forEach(el => observer.observe(el));
+            }
+
+            // --- Back to top ---
+            const backBtn = document.getElementById('backToTop');
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            // --- Particles ---
+            const container = document.getElementById('particles');
+            if (container) {
+                const count = Math.min(60, Math.floor(window.innerWidth / 20));
+                for (let i = 0; i < count; i++) {
+                    const span = document.createElement('span');
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    const size = 1 + Math.random() * 3;
+                    const duration = 10 + Math.random() * 20;
+                    const delay = Math.random() * 10;
+                    span.style.left = x + '%';
+                    span.style.top = y + '%';
+                    span.style.width = size + 'px';
+                    span.style.height = size + 'px';
+                    span.style.animationDuration = duration + 's';
+                    span.style.animationDelay = delay + 's';
+                    span.style.opacity = 0.08 + Math.random() * 0.12;
+                    container.appendChild(span);
+                }
+            }
+
+            // --- Smooth scroll for all anchor links ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        const offset = parseInt(getComputedStyle(document.documentElement).scrollPaddingTop) || 68;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                });
+            });
+
+        })();
+    </script>
 </body>
 </html>

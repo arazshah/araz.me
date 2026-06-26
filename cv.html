@@ -1,603 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Araz Shahkarami - CV</title>
-<style>
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Araz Shahkarami · CV</title>
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-background: #f5f7fa;
-color: #2d3748;
-line-height: 1.5;
-padding: 20px;
-}
+    body {
+      background-color: #f7f9fb;
+      font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      color: #1e2b3c;
+      line-height: 1.5;
+      padding: 1.5rem;
+      min-height: 100vh;
+      position: relative;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M10 10 Q 30 5 50 20 T 90 30' stroke='%23b0c4d9' stroke-width='0.5' fill='none' opacity='0.2'/%3E%3Cpath d='M0 40 Q 20 30 40 50 T 80 60' stroke='%23a0b8d0' stroke-width='0.6' fill='none' opacity='0.15'/%3E%3Cpath d='M20 80 Q 40 70 60 85 T 100 80' stroke='%2390aec8' stroke-width='0.4' fill='none' opacity='0.2'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%232d8c5c' opacity='0.08'/%3E%3Ccircle cx='70' cy='70' r='3' fill='%232d8c5c' opacity='0.08'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
 
-.page {
-max-width: 210mm;
-margin: 0 auto;
-background: white;
-box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-border-radius: 12px;
-padding: 30px 35px;
-transition: all 0.2s;
-}
+    /* main container */
+    .cv-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: transparent;
+      animation: fadeIn 0.7s ease;
+    }
 
-/* Header */
-.header {
-display: flex;
-align-items: center;
-gap: 25px;
-margin-bottom: 25px;
-padding-bottom: 20px;
-border-bottom: 2px solid #e8edf2;
-}
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-.photo {
-flex-shrink: 0;
-width: 100px;
-height: 100px;
-border-radius: 50%;
-background: linear-gradient(135deg, #2c5f8a, #3d8b63);
-display: flex;
-align-items: center;
-justify-content: center;
-color: white;
-font-size: 36px;
-font-weight: 600;
-box-shadow: 0 4px 12px rgba(44,95,138,0.2);
-border: 3px solid white;
-outline: 2px solid #2c5f8a;
-}
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2a4a6b 100%);
+      color: white;
+      border-radius: 24px 24px 24px 24px;
+      padding: 2rem 2rem 1.8rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+      transition: all 0.2s;
+    }
 
-.header-info {
-flex: 1;
-}
+    .header-photo {
+      flex-shrink: 0;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px dashed rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 0.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
 
-.header-info h1 {
-font-size: 28px;
-font-weight: 700;
-color: #1a202c;
-letter-spacing: -0.5px;
-margin-bottom: 4px;
-}
+    .header-text {
+      flex: 1;
+      min-width: 200px;
+    }
 
-.header-info .title {
-font-size: 16px;
-color: #2c5f8a;
-font-weight: 500;
-margin-bottom: 8px;
-}
+    .header-text h1 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.25rem;
+    }
 
-.contact-row {
-display: flex;
-flex-wrap: wrap;
-gap: 12px 20px;
-font-size: 13px;
-color: #4a5568;
-}
+    .header-text .title {
+      font-size: 1.2rem;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 0.6rem;
+    }
 
-.contact-row span {
-display: inline-flex;
-align-items: center;
-gap: 5px;
-}
+    .header-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+    }
 
-.contact-row i {
-font-style: normal;
-font-weight: 500;
-color: #2c5f8a;
-}
+    .header-contact a {
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(255,255,255,0.3);
+    }
 
-/* Sections */
-.section {
-margin-bottom: 20px;
-}
+    .header-contact a:hover {
+      border-bottom-color: white;
+    }
 
-.section-title {
-font-size: 16px;
-font-weight: 700;
-color: #2c5f8a;
-text-transform: uppercase;
-letter-spacing: 1px;
-margin-bottom: 12px;
-padding-bottom: 6px;
-border-bottom: 2px solid #e8edf2;
-display: flex;
-align-items: center;
-gap: 8px;
-}
+    /* TWO-COLUMN LAYOUT */
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 2.2fr;
+      gap: 1.8rem;
+      align-items: start;
+    }
 
-.section-title::before {
-content: '';
-display: inline-block;
-width: 4px;
-height: 18px;
-background: #3d8b63;
-border-radius: 2px;
-}
+    /* SIDEBAR */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
 
-/* Summary */
-.summary-text {
-font-size: 14px;
-color: #2d3748;
-line-height: 1.6;
-}
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.6rem 1.5rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02);
+      transition: box-shadow 0.2s;
+    }
 
-/* Competencies tags */
-.tags {
-display: flex;
-flex-wrap: wrap;
-gap: 8px;
-}
+    .card:hover {
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.04);
+    }
 
-.tag {
-background: #eef3f8;
-color: #2c5f8a;
-padding: 4px 14px;
-border-radius: 20px;
-font-size: 12px;
-font-weight: 500;
-border: 1px solid #dce4ec;
-transition: 0.2s;
-}
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1e3a5f;
+      border-bottom: 2px solid #e9edf2;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
 
-.tag:hover {
-background: #2c5f8a;
-color: white;
-border-color: #2c5f8a;
-}
+    .skill-pill {
+      display: inline-block;
+      background: #eef3f7;
+      color: #1e3a5f;
+      padding: 0.3rem 0.9rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin: 0.25rem 0.2rem;
+      transition: 0.1s;
+    }
 
-.tag-green {
-background: #eaf5ef;
-color: #2d6b4a;
-border-color: #c8e0d3;
-}
+    .skill-pill.highlight {
+      background: #2d8c5c;
+      color: white;
+    }
 
-.tag-green:hover {
-background: #3d8b63;
-color: white;
-border-color: #3d8b63;
-}
+    .skill-cat {
+      margin-bottom: 1rem;
+    }
 
-/* Experience */
-.exp-item {
-margin-bottom: 16px;
-}
+    .skill-cat strong {
+      display: block;
+      font-size: 0.8rem;
+      color: #2a4a6b;
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.3px;
+    }
 
-.exp-header {
-display: flex;
-justify-content: space-between;
-align-items: baseline;
-flex-wrap: wrap;
-gap: 4px 10px;
-margin-bottom: 4px;
-}
+    .skill-cat .tags {
+      line-height: 1.7;
+    }
 
-.exp-header h3 {
-font-size: 15px;
-font-weight: 600;
-color: #1a202c;
-}
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-.exp-header .company {
-font-weight: 500;
-color: #2c5f8a;
-}
+    .sidebar li {
+      font-size: 0.9rem;
+      padding: 0.25rem 0;
+      border-bottom: 1px solid #f0f2f5;
+    }
 
-.exp-header .date {
-font-size: 12px;
-color: #718096;
-font-weight: 500;
-background: #f0f4f8;
-padding: 2px 10px;
-border-radius: 12px;
-}
+    .sidebar li:last-child {
+      border-bottom: none;
+    }
 
-.exp-desc {
-font-size: 13px;
-color: #4a5568;
-margin-bottom: 4px;
-font-style: italic;
-}
+    .education-item {
+      margin-bottom: 0.8rem;
+    }
 
-.exp-bullets {
-list-style: none;
-padding-left: 0;
-}
+    .education-item .degree {
+      font-weight: 600;
+      color: #1e3a5f;
+    }
 
-.exp-bullets li {
-font-size: 13px;
-color: #2d3748;
-padding-left: 18px;
-position: relative;
-margin-bottom: 3px;
-}
+    .education-item .meta {
+      font-size: 0.8rem;
+      color: #4a5f73;
+    }
 
-.exp-bullets li::before {
-content: '▸';
-position: absolute;
-left: 0;
-color: #3d8b63;
-font-weight: 700;
-}
+    .lang-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      padding: 0.2rem 0;
+    }
 
-/* Skills */
-.skills-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px 20px;
-}
+    .badge {
+      background: #2d8c5c;
+      color: white;
+      border-radius: 30px;
+      padding: 0.2rem 0.9rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-left: 0.3rem;
+      text-transform: uppercase;
+    }
 
-.skill-cat {
-margin-bottom: 6px;
-}
+    /* MAIN */
+    .main {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
 
-.skill-cat-title {
-font-size: 13px;
-font-weight: 600;
-color: #2c5f8a;
-margin-bottom: 4px;
-}
+    .main .card {
+      padding: 1.6rem 1.8rem;
+    }
 
-.skill-cat .tags {
-gap: 5px;
-}
+    .summary-text {
+      font-size: 0.95rem;
+      color: #1f3346;
+      line-height: 1.6;
+    }
 
-.skill-cat .tag {
-font-size: 11px;
-padding: 2px 10px;
-}
+    .exp-item {
+      margin-bottom: 1.5rem;
+    }
 
-/* Education */
-.edu-item {
-display: flex;
-justify-content: space-between;
-align-items: baseline;
-flex-wrap: wrap;
-gap: 4px 10px;
-margin-bottom: 8px;
-}
+    .exp-item:last-child {
+      margin-bottom: 0;
+    }
 
-.edu-item h3 {
-font-size: 14px;
-font-weight: 600;
-color: #1a202c;
-}
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: baseline;
+      margin-bottom: 0.3rem;
+    }
 
-.edu-item .school {
-font-weight: 500;
-color: #4a5568;
-}
+    .exp-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e3a5f;
+    }
 
-.edu-item .date {
-font-size: 12px;
-color: #718096;
-}
+    .exp-header .date {
+      font-size: 0.8rem;
+      color: #4a6b7f;
+      background: #eef3f7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+    }
 
-.edu-detail {
-font-size: 13px;
-color: #4a5568;
-margin-top: -2px;
-margin-bottom: 6px;
-}
+    .exp-sub {
+      font-weight: 500;
+      color: #2d5a7a;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
 
-/* Certifications, Community, Languages */
-.compact-list {
-list-style: none;
-padding-left: 0;
-}
+    .exp-item ul {
+      list-style: none;
+      padding-left: 0.2rem;
+      margin-top: 0.3rem;
+    }
 
-.compact-list li {
-font-size: 13px;
-padding-left: 18px;
-position: relative;
-margin-bottom: 4px;
-color: #2d3748;
-}
+    .exp-item li {
+      font-size: 0.9rem;
+      padding: 0.2rem 0 0.2rem 1.3rem;
+      position: relative;
+    }
 
-.compact-list li::before {
-content: '•';
-position: absolute;
-left: 0;
-color: #3d8b63;
-font-weight: 700;
-}
+    .exp-item li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: #2d8c5c;
+      font-weight: bold;
+    }
 
-.lang-item {
-display: inline-block;
-margin-right: 20px;
-font-size: 13px;
-}
+    .project-item {
+      border-left: 3px solid #2d8c5c;
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
 
-.lang-item strong {
-color: #2c5f8a;
-}
+    .project-item h4 {
+      font-weight: 600;
+      color: #1e3a5f;
+      font-size: 1rem;
+    }
 
-/* Projects */
-.project-item {
-margin-bottom: 10px;
-}
+    .project-item p {
+      font-size: 0.88rem;
+      color: #2a4055;
+      margin-top: 0.2rem;
+    }
 
-.project-item h4 {
-font-size: 14px;
-font-weight: 600;
-color: #1a202c;
-margin-bottom: 2px;
-}
+    .cert-grid, .community-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.8rem;
+    }
 
-.project-item p {
-font-size: 13px;
-color: #4a5568;
-}
+    .cert-item, .community-item {
+      background: #eef3f7;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #1e3a5f;
+    }
 
-.project-item .tech-tags {
-margin-top: 3px;
-}
+    /* RESPONSIVE */
+    @media (max-width: 820px) {
+      .two-column {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.8rem 1.5rem;
+      }
+      .header-contact {
+        justify-content: center;
+      }
+      .header-photo {
+        width: 120px;
+        height: 120px;
+      }
+    }
 
-/* Print */
-@media print {
-body {
-background: white;
-padding: 0;
-margin: 0;
-}
-.page {
-box-shadow: none;
-border-radius: 0;
-padding: 20px 25px;
-max-width: 100%;
-}
-.tag:hover {
-background: #eef3f8;
-color: #2c5f8a;
-}
-.tag-green:hover {
-background: #eaf5ef;
-color: #2d6b4a;
-}
-.photo {
-box-shadow: none;
-}
-}
+    @media (max-width: 480px) {
+      body {
+        padding: 0.8rem;
+      }
+      .header-text h1 {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 1.2rem;
+      }
+    }
 
-@media (max-width: 600px) {
-.page {
-padding: 20px 15px;
-}
-.header {
-flex-direction: column;
-text-align: center;
-gap: 12px;
-}
-.contact-row {
-justify-content: center;
-}
-.skills-grid {
-grid-template-columns: 1fr;
-}
-.exp-header {
-flex-direction: column;
-align-items: flex-start;
-}
-}
-</style>
+    /* PRINT */
+    @media print {
+      body {
+        background: white !important;
+        padding: 0.3in;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .cv-container {
+        max-width: 100%;
+      }
+      .header {
+        background: #1e3a5f !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        box-shadow: none;
+        border-radius: 12px;
+      }
+      .card {
+        box-shadow: none;
+        border: 1px solid #e4e9ef;
+        break-inside: avoid;
+      }
+      .two-column {
+        gap: 0.8rem;
+      }
+      .header-photo {
+        border-color: #aaa;
+        background: #f0f2f5;
+      }
+      .skill-pill.highlight {
+        background: #2d8c5c !important;
+        color: white !important;
+      }
+      .badge {
+        background: #2d8c5c !important;
+      }
+      .card-title {
+        border-bottom-color: #ccc;
+      }
+      .exp-header .date {
+        background: #e9edf2;
+      }
+      .sidebar .card {
+        break-inside: avoid;
+      }
+      body {
+        font-size: 9pt;
+      }
+      .header-text h1 {
+        font-size: 22pt;
+      }
+    }
+
+    /* subtle extras */
+    hr {
+      border: none;
+      border-top: 1px solid #e2e8f0;
+      margin: 0.8rem 0;
+    }
+    .text-small {
+      font-size: 0.8rem;
+      color: #3f5a70;
+    }
+  </style>
 </head>
 <body>
-<div class="page">
-<!-- Header -->
-<div class="header">
-<div class="photo">AS</div>
-<div class="header-info">
-<h1>Araz Shahkarami</h1>
-<div class="title">Geospatial AI Engineer &amp; Backend Developer</div>
-<div class="contact-row">
-<span><i>✉</i> araz.shahkarami@example.com</span>
-<span><i>📞</i> +1 (555) 123-4567</span>
-<span><i>📍</i> Vancouver, BC, Canada</span>
-<span><i>🔗</i> linkedin.com/in/araz-shahkarami</span>
-<span><i>🐙</i> github.com/arazshah</span>
-</div>
-</div>
-</div>
+<div class="cv-container">
 
-<!-- Professional Summary -->
-<div class="section">
-<div class="section-title">Professional Summary</div>
-<p class="summary-text">Geospatial AI Engineer and Backend Developer with 6+ years of experience building scalable geospatial data pipelines, deploying machine learning models for satellite imagery analysis, and developing RESTful APIs. Passionate about leveraging AI and geospatial data to solve environmental and urban challenges. Proficient in Python, cloud infrastructure, and modern geospatial libraries.</p>
-</div>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-photo">
+      <span>Your Photo Here</span>
+    </div>
+    <div class="header-text">
+      <h1>Araz Shahkarami</h1>
+      <div class="title">Geospatial AI Engineer &amp; Backend Developer</div>
+      <div class="header-contact">
+        <span>📍 Urmia, Iran</span>
+        <span>✉️ <a href="mailto:baraz.shah@gmail.com">baraz.shah@gmail.com</a></span>
+        <span>📞 +98-910-415-1005</span>
+        <span>🔗 <a href="#">/in/araz-shahkarami</a></span>
+        <span>🌐 <a href="#">araz.me</a></span>
+        <span>🐙 <a href="#">/arazshah</a></span>
+      </div>
+    </div>
+  </header>
 
-<!-- Core Competencies -->
-<div class="section">
-<div class="section-title">Core Competencies</div>
-<div class="tags">
-<span class="tag">Geospatial AI</span>
-<span class="tag">Deep Learning</span>
-<span class="tag">Computer Vision</span>
-<span class="tag">Backend Development</span>
-<span class="tag">API Design</span>
-<span class="tag">Cloud Computing</span>
-<span class="tag">Data Pipelines</span>
-<span class="tag">GIS Analysis</span>
-<span class="tag">Remote Sensing</span>
-<span class="tag">MLOps</span>
-<span class="tag tag-green">Python</span>
-<span class="tag tag-green">PostGIS</span>
-<span class="tag tag-green">Docker</span>
-<span class="tag tag-green">Kubernetes</span>
-</div>
-</div>
+  <!-- TWO COLUMN -->
+  <div class="two-column">
 
-<!-- Professional Experience -->
-<div class="section">
-<div class="section-title">Professional Experience</div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-<div class="exp-item">
-<div class="exp-header">
-<h3>Senior Geospatial AI Engineer <span class="company">— TerraSight AI</span></h3>
-<span class="date">Jan 2022 – Present</span>
-</div>
-<div class="exp-desc">Vancouver, BC</div>
-<ul class="exp-bullets">
-<li>Designed and deployed deep learning models for land cover classification using Sentinel-2 and Planet imagery, achieving 94% accuracy.</li>
-<li>Built scalable ETL pipelines processing 10+ TB of satellite data using Python, Apache Spark, and AWS Batch.</li>
-<li>Developed RESTful APIs with FastAPI and PostGIS to serve geospatial analytics to internal and external clients.</li>
-<li>Led migration of legacy GIS workflows to cloud-native microservices on AWS ECS with Docker and Terraform.</li>
-</ul>
-</div>
+      <!-- CORE COMPETENCIES -->
+      <div class="card">
+        <div class="card-title">⚡ Core Competencies</div>
+        <div>
+          <span class="skill-pill highlight">Geospatial AI & ML</span>
+          <span class="skill-pill highlight">Backend Architecture & APIs</span>
+          <span class="skill-pill highlight">GIS Workflow Automation</span>
+          <span class="skill-pill highlight">Spatial Database Design</span>
+          <span class="skill-pill highlight">ETL Pipeline Development</span>
+          <span class="skill-pill highlight">MCP</span>
+          <span class="skill-pill highlight">Open Source GIS Development</span>
+          <span class="skill-pill highlight">Cloud-Native Geospatial</span>
+          <span class="skill-pill highlight">Technical Training & Mentoring</span>
+        </div>
+      </div>
 
-<div class="exp-item">
-<div class="exp-header">
-<h3>Backend Developer <span class="company">— Maplytics Inc.</span></h3>
-<span class="date">Mar 2019 – Dec 2021</span>
-</div>
-<div class="exp-desc">Toronto, ON</div>
-<ul class="exp-bullets">
-<li>Developed and maintained geospatial APIs using Django REST Framework and PostGIS, serving 1M+ requests/month.</li>
-<li>Implemented real-time location-based features using Redis and WebSockets for fleet tracking platform.</li>
-<li>Optimized spatial queries and database indexing, reducing average response time by 40%.</li>
-<li>Collaborated with data scientists to integrate machine learning models into production backend services.</li>
-</ul>
-</div>
+      <!-- TECHNICAL SKILLS -->
+      <div class="card">
+        <div class="card-title">🛠️ Technical Skills</div>
+        <div class="skill-cat">
+          <strong>Languages</strong>
+          <div class="tags">Python, C#, SQL, JavaScript, Bash</div>
+        </div>
+        <div class="skill-cat">
+          <strong>Frameworks</strong>
+          <div class="tags">Django, FastAPI, Flask, .NET</div>
+        </div>
+        <div class="skill-cat">
+          <strong>Geospatial</strong>
+          <div class="tags">QGIS, GeoServer, PostGIS, GeoPandas, Rasterio, Shapely, Fiona, GDAL/OGR, OpenLayers, Leaflet</div>
+        </div>
+        <div class="skill-cat">
+          <strong>AI/ML</strong>
+          <div class="tags">Scikit-learn, TensorFlow, LLMs, MCP, GeoAI, NLP for Spatial Queries</div>
+        </div>
+        <div class="skill-cat">
+          <strong>Databases</strong>
+          <div class="tags">PostgreSQL/PostGIS, MS SQL Server, SQLite/SpatiaLite, Redis</div>
+        </div>
+        <div class="skill-cat">
+          <strong>DevOps</strong>
+          <div class="tags">Linux, Docker, Git, GitHub Actions, Nginx, CI/CD</div>
+        </div>
+        <div class="skill-cat">
+          <strong>Standards</strong>
+          <div class="tags">OGC (WMS, WFS, WCS, WMTS), GeoJSON, REST APIs, OpenAPI</div>
+        </div>
+        <div class="skill-cat">
+          <strong>Data Science</strong>
+          <div class="tags">Pandas, NumPy, Matplotlib, Seaborn, Jupyter Notebooks</div>
+        </div>
+      </div>
 
-<div class="exp-item">
-<div class="exp-header">
-<h3>Junior GIS Developer <span class="company">— GreenMap Solutions</span></h3>
-<span class="date">Jun 2017 – Feb 2019</span>
-</div>
-<div class="exp-desc">Calgary, AB</div>
-<ul class="exp-bullets">
-<li>Built interactive web maps using Leaflet, Mapbox, and GeoServer for environmental monitoring projects.</li>
-<li>Automated geodata processing workflows with Python (GDAL, Shapely, Fiona) and FME.</li>
-<li>Assisted in developing a REST API for real-time air quality data ingestion and visualization.</li>
-</ul>
-</div>
-</div>
+      <!-- EDUCATION -->
+      <div class="card">
+        <div class="card-title">🎓 Education</div>
+        <div class="education-item">
+          <div class="degree">MSc GIS</div>
+          <div class="meta">Islamic Azad University, Science &amp; Research Branch Tehran · 2014–2015</div>
+          <div class="text-small">spatial analysis, remote sensing, geoprocessing, thesis on spatial data modeling</div>
+        </div>
+        <div class="education-item">
+          <div class="degree">BSc Computer Engineering</div>
+          <div class="meta">Islamic Azad University Mahabad · 2006–2010</div>
+          <div class="text-small">software engineering, algorithms, data structures, database systems</div>
+        </div>
+      </div>
 
-<!-- Technical Skills -->
-<div class="section">
-<div class="section-title">Technical Skills</div>
-<div class="skills-grid">
-<div class="skill-cat">
-<div class="skill-cat-title">Languages &amp; Frameworks</div>
-<div class="tags">
-<span class="tag">Python</span>
-<span class="tag">JavaScript</span>
-<span class="tag">TypeScript</span>
-<span class="tag">Node.js</span>
-<span class="tag">FastAPI</span>
-<span class="tag">Django</span>
-</div>
-</div>
-<div class="skill-cat">
-<div class="skill-cat-title">Geospatial &amp; ML</div>
-<div class="tags">
-<span class="tag">PostGIS</span>
-<span class="tag">GDAL</span>
-<span class="tag">Rasterio</span>
-<span class="tag">TensorFlow</span>
-<span class="tag">PyTorch</span>
-<span class="tag">scikit-learn</span>
-</div>
-</div>
-<div class="skill-cat">
-<div class="skill-cat-title">Cloud &amp; DevOps</div>
-<div class="tags">
-<span class="tag">AWS</span>
-<span class="tag">Docker</span>
-<span class="tag">Kubernetes</span>
-<span class="tag">Terraform</span>
-<span class="tag">CI/CD</span>
-</div>
-</div>
-<div class="skill-cat">
-<div class="skill-cat-title">Data &amp; Databases</div>
-<div class="tags">
-<span class="tag">PostgreSQL</span>
-<span class="tag">MongoDB</span>
-<span class="tag">Redis</span>
-<span class="tag">Apache Spark</span>
-<span class="tag">Airflow</span>
-</div>
-</div>
-</div>
-</div>
+      <!-- LANGUAGES -->
+      <div class="card">
+        <div class="card-title">🌐 Languages</div>
+        <div class="lang-item"><span>Persian</span> <span>Native</span></div>
+        <div class="lang-item"><span>Turkish Azerbaijani</span> <span>Native/Bilingual</span></div>
+        <div class="lang-item"><span>English</span> <span>Professional Working</span></div>
+      </div>
 
-<!-- Education -->
-<div class="section">
-<div class="section-title">Education</div>
-<div class="edu-item">
-<h3>M.Sc. in Geospatial Artificial Intelligence <span class="school">— University of British Columbia</span></h3>
-<span class="date">2015 – 2017</span>
-</div>
-<div class="edu-detail">Thesis: Deep Learning for Urban Tree Canopy Mapping from Multi-Spectral Satellite Imagery</div>
-<div class="edu-item">
-<h3>B.Sc. in Computer Science <span class="school">— Simon Fraser University</span></h3>
-<span class="date">2011 – 2015</span>
-</div>
-<div class="edu-detail">Minor in Geographic Information Science; Dean's Honour Roll</div>
-</div>
+      <!-- CERTIFICATIONS -->
+      <div class="card">
+        <div class="card-title">📜 Certifications</div>
+        <div class="cert-grid">
+          <span class="cert-item">Advanced MCP</span>
+          <span class="cert-item">Intro MCP</span>
+          <span class="cert-item">ML with Python</span>
+          <span class="cert-item">Geo Web App with FOSS4G</span>
+          <span class="cert-item">Professional Conference Attendance</span>
+        </div>
+      </div>
 
-<!-- Certifications -->
-<div class="section">
-<div class="section-title">Certifications</div>
-<ul class="compact-list">
-<li>AWS Certified Solutions Architect – Associate (2023)</li>
-<li>TensorFlow Developer Certificate (2022)</li>
-<li>GIS Professional (GISP) – Certified (2021)</li>
-</ul>
-</div>
+      <!-- COMMUNITY -->
+      <div class="card">
+        <div class="card-title">🌍 Community</div>
+        <div class="community-grid">
+          <span class="community-item">OSGeo Advocate</span>
+          <span class="community-item">Open Source GIS Contributor</span>
+          <span class="community-item">GeoAI Community Builder</span>
+          <span class="community-item">Technical Educator</span>
+          <span class="community-item">Free Software Advocate</span>
+        </div>
+      </div>
+    </aside>
 
-<!-- Community Engagement -->
-<div class="section">
-<div class="section-title">Community Engagement</div>
-<ul class="compact-list">
-<li>Organizer, Vancouver Geospatial AI Meetup (2020–present)</li>
-<li>Mentor, Women in Geospatial+ Mentorship Program (2022–2023)</li>
-<li>Open-source contributor to Rasterio and Leafmap projects</li>
-</ul>
-</div>
+    <!-- MAIN -->
+    <main class="main">
 
-<!-- Languages -->
-<div class="section">
-<div class="section-title">Languages</div>
-<div>
-<span class="lang-item"><strong>English</strong> — Native</span>
-<span class="lang-item"><strong>Persian</strong> — Native</span>
-<span class="lang-item"><strong>French</strong> — Professional working proficiency</span>
-</div>
-</div>
+      <!-- PROFESSIONAL SUMMARY -->
+      <div class="card">
+        <div class="card-title">📌 Professional Summary</div>
+        <p class="summary-text">
+          Geospatial AI Engineer and Backend Developer with 8+ years of experience bridging GIS and software engineering. 
+          I design scalable geospatial APIs, build GeoAI pipelines, and advocate for open-source geospatial technologies. 
+          As an OSGeo advocate, I integrate LLMs with MCP to create intelligent spatial systems. 
+          Passionate about cloud-native geospatial, automation, and mentoring the next generation of geo-developers.
+        </p>
+      </div>
 
-<!-- Key Projects -->
-<div class="section">
-<div class="section-title">Key Projects</div>
-<div class="project-item">
-<h4>Urban Greenness Index API</h4>
-<p>Developed a FastAPI-based service that computes NDVI and greenness indices from Sentinel-2 imagery on demand, deployed on AWS Lambda with API Gateway.</p>
-<div class="tags tech-tags">
-<span class="tag">Python</span>
-<span class="tag">FastAPI</span>
-<span class="tag">AWS Lambda</span>
-<span class="tag">Rasterio</span>
-</div>
-</div>
-<div class="project-item">
-<h4>Real-time Flood Mapping Pipeline</h4>
-<p>Built an automated pipeline using SAR imagery (Sentinel-1) and a U-Net model to generate flood extent maps within hours of satellite overpass.</p>
-<div class="tags tech-tags">
-<span class="tag">TensorFlow</span>
-<span class="tag">GDAL</span>
-<span class="tag">Airflow</span>
-<span class="tag">Docker</span>
-</div>
-</div>
-</div>
+      <!-- PROFESSIONAL EXPERIENCE -->
+      <div class="card">
+        <div class="card-title">💼 Professional Experience</div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <h3>Spatial Science Innovators</h3>
+            <span class="date">Nov 2025 – Present</span>
+          </div>
+          <div class="exp-sub">Geospatial Backend Developer · Tehran</div>
+          <ul>
+            <li>Architect scalable geospatial backend services using microservices and FastAPI/Django.</li>
+            <li>Design and deploy GeoAI pipelines for real-time spatial inference and automation.</li>
+            <li>Develop MCP servers enabling LLM-driven geospatial queries and analysis.</li>
+            <li>Build enterprise-grade spatial solutions with PostGIS, GeoServer, and containerized workflows.</li>
+            <li>Lead integration of OGC standards (WMS, WFS, WMTS) into cloud-native platforms.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <h3>Araz.me Independent Consultancy</h3>
+            <span class="date">Jan 2018 – Present</span>
+          </div>
+          <div class="exp-sub">GIS Developer &amp; Geospatial Consultant · Remote</div>
+          <ul>
+            <li>Develop full-stack geospatial web applications (Leaflet, OpenLayers, Django/Flask).</li>
+            <li>Build ETL pipelines using GDAL, GeoPandas, and custom Python scripts.</li>
+            <li>Create QGIS plugins for automated geoprocessing and field data collection.</li>
+            <li>Perform advanced spatial analysis (hydrology, land use, network analysis).</li>
+            <li>Deliver technical training and mentoring in GeoAI, PostGIS, and Python automation.</li>
+            <li>Contribute to open-source geospatial projects and maintain reusable libraries.</li>
+            <li>Consult on spatial data infrastructure, database design, and GIS strategy.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-header">
+            <h3>Alborz Insurance Company</h3>
+            <span class="date">Aug 2016 – Present</span>
+          </div>
+          <div class="exp-sub">Backend Developer · Tehran</div>
+          <ul>
+            <li>Develop and maintain Python/C# backend services for insurance core systems.</li>
+            <li>Design RESTful APIs and integrate with third-party geospatial data providers.</li>
+            <li>Implement ETL workflows for large-scale data migration and reporting.</li>
+            <li>Perform data analysis and visualization using Pandas, Matplotlib, and Jupyter.</li>
+            <li>Manage Linux servers, CI/CD pipelines (GitHub Actions, Docker), and Nginx.</li>
+            <li>Collaborate with cross-functional teams to deliver geospatial risk models.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- KEY PROJECTS -->
+      <div class="card">
+        <div class="card-title">🚀 Key Projects</div>
+        <div class="project-item">
+          <h4>GeoChat Spatial MCP Framework</h4>
+          <p>MCP infrastructure enabling conversational AI–GIS interaction, spatial reasoning, and dynamic map generation.</p>
+        </div>
+        <div class="project-item">
+          <h4>Geospatial API Platform</h4>
+          <p>Scalable RESTful API suite for vector/tile/raster serving, built with FastAPI, PostGIS, and caching layers.</p>
+        </div>
+        <div class="project-item">
+          <h4>GIS Workflow Automation Suite</h4>
+          <p>Python toolchain automating repetitive geoprocessing tasks, reducing manual effort by 90%+.</p>
+        </div>
+        <div class="project-item">
+          <h4>MCP Server for Spatial Sciences</h4>
+          <p>Three-layer MCP architecture (Tools, Resources, Prompts) for seamless LLM–geospatial engine integration.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
 </div>
 </body>
 </html>

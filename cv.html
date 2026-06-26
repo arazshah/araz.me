@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Araz Shahkarami - CV</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+background: #f5f7fa;
+color: #2d3748;
+line-height: 1.5;
+padding: 20px;
+}
+
+.page {
+max-width: 210mm;
+margin: 0 auto;
+background: white;
+box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+border-radius: 12px;
+padding: 30px 35px;
+transition: all 0.2s;
+}
+
+/* Header */
+.header {
+display: flex;
+align-items: center;
+gap: 25px;
+margin-bottom: 25px;
+padding-bottom: 20px;
+border-bottom: 2px solid #e8edf2;
+}
+
+.photo {
+flex-shrink: 0;
+width: 100px;
+height: 100px;
+border-radius: 50%;
+background: linear-gradient(135deg, #2c5f8a, #3d8b63);
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-size: 36px;
+font-weight: 600;
+box-shadow: 0 4px 12px rgba(44,95,138,0.2);
+border: 3px solid white;
+outline: 2px solid #2c5f8a;
+}
+
+.header-info {
+flex: 1;
+}
+
+.header-info h1 {
+font-size: 28px;
+font-weight: 700;
+color: #1a202c;
+letter-spacing: -0.5px;
+margin-bottom: 4px;
+}
+
+.header-info .title {
+font-size: 16px;
+color: #2c5f8a;
+font-weight: 500;
+margin-bottom: 8px;
+}
+
+.contact-row {
+display: flex;
+flex-wrap: wrap;
+gap: 12px 20px;
+font-size: 13px;
+color: #4a5568;
+}
+
+.contact-row span {
+display: inline-flex;
+align-items: center;
+gap: 5px;
+}
+
+.contact-row i {
+font-style: normal;
+font-weight: 500;
+color: #2c5f8a;
+}
+
+/* Sections */
+.section {
+margin-bottom: 20px;
+}
+
+.section-title {
+font-size: 16px;
+font-weight: 700;
+color: #2c5f8a;
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 12px;
+padding-bottom: 6px;
+border-bottom: 2px solid #e8edf2;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.section-title::before {
+content: '';
+display: inline-block;
+width: 4px;
+height: 18px;
+background: #3d8b63;
+border-radius: 2px;
+}
+
+/* Summary */
+.summary-text {
+font-size: 14px;
+color: #2d3748;
+line-height: 1.6;
+}
+
+/* Competencies tags */
+.tags {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+.tag {
+background: #eef3f8;
+color: #2c5f8a;
+padding: 4px 14px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 500;
+border: 1px solid #dce4ec;
+transition: 0.2s;
+}
+
+.tag:hover {
+background: #2c5f8a;
+color: white;
+border-color: #2c5f8a;
+}
+
+.tag-green {
+background: #eaf5ef;
+color: #2d6b4a;
+border-color: #c8e0d3;
+}
+
+.tag-green:hover {
+background: #3d8b63;
+color: white;
+border-color: #3d8b63;
+}
+
+/* Experience */
+.exp-item {
+margin-bottom: 16px;
+}
+
+.exp-header {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+flex-wrap: wrap;
+gap: 4px 10px;
+margin-bottom: 4px;
+}
+
+.exp-header h3 {
+font-size: 15px;
+font-weight: 600;
+color: #1a202c;
+}
+
+.exp-header .company {
+font-weight: 500;
+color: #2c5f8a;
+}
+
+.exp-header .date {
+font-size: 12px;
+color: #718096;
+font-weight: 500;
+background: #f0f4f8;
+padding: 2px 10px;
+border-radius: 12px;
+}
+
+.exp-desc {
+font-size: 13px;
+color: #4a5568;
+margin-bottom: 4px;
+font-style: italic;
+}
+
+.exp-bullets {
+list-style: none;
+padding-left: 0;
+}
+
+.exp-bullets li {
+font-size: 13px;
+color: #2d3748;
+padding-left: 18px;
+position: relative;
+margin-bottom: 3px;
+}
+
+.exp-bullets li::before {
+content: '▸';
+position: absolute;
+left: 0;
+color: #3d8b63;
+font-weight: 700;
+}
+
+/* Skills */
+.skills-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px 20px;
+}
+
+.skill-cat {
+margin-bottom: 6px;
+}
+
+.skill-cat-title {
+font-size: 13px;
+font-weight: 600;
+color: #2c5f8a;
+margin-bottom: 4px;
+}
+
+.skill-cat .tags {
+gap: 5px;
+}
+
+.skill-cat .tag {
+font-size: 11px;
+padding: 2px 10px;
+}
+
+/* Education */
+.edu-item {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+flex-wrap: wrap;
+gap: 4px 10px;
+margin-bottom: 8px;
+}
+
+.edu-item h3 {
+font-size: 14px;
+font-weight: 600;
+color: #1a202c;
+}
+
+.edu-item .school {
+font-weight: 500;
+color: #4a5568;
+}
+
+.edu-item .date {
+font-size: 12px;
+color: #718096;
+}
+
+.edu-detail {
+font-size: 13px;
+color: #4a5568;
+margin-top: -2px;
+margin-bottom: 6px;
+}
+
+/* Certifications, Community, Languages */
+.compact-list {
+list-style: none;
+padding-left: 0;
+}
+
+.compact-list li {
+font-size: 13px;
+padding-left: 18px;
+position: relative;
+margin-bottom: 4px;
+color: #2d3748;
+}
+
+.compact-list li::before {
+content: '•';
+position: absolute;
+left: 0;
+color: #3d8b63;
+font-weight: 700;
+}
+
+.lang-item {
+display: inline-block;
+margin-right: 20px;
+font-size: 13px;
+}
+
+.lang-item strong {
+color: #2c5f8a;
+}
+
+/* Projects */
+.project-item {
+margin-bottom: 10px;
+}
+
+.project-item h4 {
+font-size: 14px;
+font-weight: 600;
+color: #1a202c;
+margin-bottom: 2px;
+}
+
+.project-item p {
+font-size: 13px;
+color: #4a5568;
+}
+
+.project-item .tech-tags {
+margin-top: 3px;
+}
+
+/* Print */
+@media print {
+body {
+background: white;
+padding: 0;
+margin: 0;
+}
+.page {
+box-shadow: none;
+border-radius: 0;
+padding: 20px 25px;
+max-width: 100%;
+}
+.tag:hover {
+background: #eef3f8;
+color: #2c5f8a;
+}
+.tag-green:hover {
+background: #eaf5ef;
+color: #2d6b4a;
+}
+.photo {
+box-shadow: none;
+}
+}
+
+@media (max-width: 600px) {
+.page {
+padding: 20px 15px;
+}
+.header {
+flex-direction: column;
+text-align: center;
+gap: 12px;
+}
+.contact-row {
+justify-content: center;
+}
+.skills-grid {
+grid-template-columns: 1fr;
+}
+.exp-header {
+flex-direction: column;
+align-items: flex-start;
+}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<!-- Header -->
+<div class="header">
+<div class="photo">AS</div>
+<div class="header-info">
+<h1>Araz Shahkarami</h1>
+<div class="title">Geospatial AI Engineer &amp; Backend Developer</div>
+<div class="contact-row">
+<span><i>✉</i> araz.shahkarami@example.com</span>
+<span><i>📞</i> +1 (555) 123-4567</span>
+<span><i>📍</i> Vancouver, BC, Canada</span>
+<span><i>🔗</i> linkedin.com/in/araz-shahkarami</span>
+<span><i>🐙</i> github.com/arazshah</span>
+</div>
+</div>
+</div>
+
+<!-- Professional Summary -->
+<div class="section">
+<div class="section-title">Professional Summary</div>
+<p class="summary-text">Geospatial AI Engineer and Backend Developer with 6+ years of experience building scalable geospatial data pipelines, deploying machine learning models for satellite imagery analysis, and developing RESTful APIs. Passionate about leveraging AI and geospatial data to solve environmental and urban challenges. Proficient in Python, cloud infrastructure, and modern geospatial libraries.</p>
+</div>
+
+<!-- Core Competencies -->
+<div class="section">
+<div class="section-title">Core Competencies</div>
+<div class="tags">
+<span class="tag">Geospatial AI</span>
+<span class="tag">Deep Learning</span>
+<span class="tag">Computer Vision</span>
+<span class="tag">Backend Development</span>
+<span class="tag">API Design</span>
+<span class="tag">Cloud Computing</span>
+<span class="tag">Data Pipelines</span>
+<span class="tag">GIS Analysis</span>
+<span class="tag">Remote Sensing</span>
+<span class="tag">MLOps</span>
+<span class="tag tag-green">Python</span>
+<span class="tag tag-green">PostGIS</span>
+<span class="tag tag-green">Docker</span>
+<span class="tag tag-green">Kubernetes</span>
+</div>
+</div>
+
+<!-- Professional Experience -->
+<div class="section">
+<div class="section-title">Professional Experience</div>
+
+<div class="exp-item">
+<div class="exp-header">
+<h3>Senior Geospatial AI Engineer <span class="company">— TerraSight AI</span></h3>
+<span class="date">Jan 2022 – Present</span>
+</div>
+<div class="exp-desc">Vancouver, BC</div>
+<ul class="exp-bullets">
+<li>Designed and deployed deep learning models for land cover classification using Sentinel-2 and Planet imagery, achieving 94% accuracy.</li>
+<li>Built scalable ETL pipelines processing 10+ TB of satellite data using Python, Apache Spark, and AWS Batch.</li>
+<li>Developed RESTful APIs with FastAPI and PostGIS to serve geospatial analytics to internal and external clients.</li>
+<li>Led migration of legacy GIS workflows to cloud-native microservices on AWS ECS with Docker and Terraform.</li>
+</ul>
+</div>
+
+<div class="exp-item">
+<div class="exp-header">
+<h3>Backend Developer <span class="company">— Maplytics Inc.</span></h3>
+<span class="date">Mar 2019 – Dec 2021</span>
+</div>
+<div class="exp-desc">Toronto, ON</div>
+<ul class="exp-bullets">
+<li>Developed and maintained geospatial APIs using Django REST Framework and PostGIS, serving 1M+ requests/month.</li>
+<li>Implemented real-time location-based features using Redis and WebSockets for fleet tracking platform.</li>
+<li>Optimized spatial queries and database indexing, reducing average response time by 40%.</li>
+<li>Collaborated with data scientists to integrate machine learning models into production backend services.</li>
+</ul>
+</div>
+
+<div class="exp-item">
+<div class="exp-header">
+<h3>Junior GIS Developer <span class="company">— GreenMap Solutions</span></h3>
+<span class="date">Jun 2017 – Feb 2019</span>
+</div>
+<div class="exp-desc">Calgary, AB</div>
+<ul class="exp-bullets">
+<li>Built interactive web maps using Leaflet, Mapbox, and GeoServer for environmental monitoring projects.</li>
+<li>Automated geodata processing workflows with Python (GDAL, Shapely, Fiona) and FME.</li>
+<li>Assisted in developing a REST API for real-time air quality data ingestion and visualization.</li>
+</ul>
+</div>
+</div>
+
+<!-- Technical Skills -->
+<div class="section">
+<div class="section-title">Technical Skills</div>
+<div class="skills-grid">
+<div class="skill-cat">
+<div class="skill-cat-title">Languages &amp; Frameworks</div>
+<div class="tags">
+<span class="tag">Python</span>
+<span class="tag">JavaScript</span>
+<span class="tag">TypeScript</span>
+<span class="tag">Node.js</span>
+<span class="tag">FastAPI</span>
+<span class="tag">Django</span>
+</div>
+</div>
+<div class="skill-cat">
+<div class="skill-cat-title">Geospatial &amp; ML</div>
+<div class="tags">
+<span class="tag">PostGIS</span>
+<span class="tag">GDAL</span>
+<span class="tag">Rasterio</span>
+<span class="tag">TensorFlow</span>
+<span class="tag">PyTorch</span>
+<span class="tag">scikit-learn</span>
+</div>
+</div>
+<div class="skill-cat">
+<div class="skill-cat-title">Cloud &amp; DevOps</div>
+<div class="tags">
+<span class="tag">AWS</span>
+<span class="tag">Docker</span>
+<span class="tag">Kubernetes</span>
+<span class="tag">Terraform</span>
+<span class="tag">CI/CD</span>
+</div>
+</div>
+<div class="skill-cat">
+<div class="skill-cat-title">Data &amp; Databases</div>
+<div class="tags">
+<span class="tag">PostgreSQL</span>
+<span class="tag">MongoDB</span>
+<span class="tag">Redis</span>
+<span class="tag">Apache Spark</span>
+<span class="tag">Airflow</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Education -->
+<div class="section">
+<div class="section-title">Education</div>
+<div class="edu-item">
+<h3>M.Sc. in Geospatial Artificial Intelligence <span class="school">— University of British Columbia</span></h3>
+<span class="date">2015 – 2017</span>
+</div>
+<div class="edu-detail">Thesis: Deep Learning for Urban Tree Canopy Mapping from Multi-Spectral Satellite Imagery</div>
+<div class="edu-item">
+<h3>B.Sc. in Computer Science <span class="school">— Simon Fraser University</span></h3>
+<span class="date">2011 – 2015</span>
+</div>
+<div class="edu-detail">Minor in Geographic Information Science; Dean's Honour Roll</div>
+</div>
+
+<!-- Certifications -->
+<div class="section">
+<div class="section-title">Certifications</div>
+<ul class="compact-list">
+<li>AWS Certified Solutions Architect – Associate (2023)</li>
+<li>TensorFlow Developer Certificate (2022)</li>
+<li>GIS Professional (GISP) – Certified (2021)</li>
+</ul>
+</div>
+
+<!-- Community Engagement -->
+<div class="section">
+<div class="section-title">Community Engagement</div>
+<ul class="compact-list">
+<li>Organizer, Vancouver Geospatial AI Meetup (2020–present)</li>
+<li>Mentor, Women in Geospatial+ Mentorship Program (2022–2023)</li>
+<li>Open-source contributor to Rasterio and Leafmap projects</li>
+</ul>
+</div>
+
+<!-- Languages -->
+<div class="section">
+<div class="section-title">Languages</div>
+<div>
+<span class="lang-item"><strong>English</strong> — Native</span>
+<span class="lang-item"><strong>Persian</strong> — Native</span>
+<span class="lang-item"><strong>French</strong> — Professional working proficiency</span>
+</div>
+</div>
+
+<!-- Key Projects -->
+<div class="section">
+<div class="section-title">Key Projects</div>
+<div class="project-item">
+<h4>Urban Greenness Index API</h4>
+<p>Developed a FastAPI-based service that computes NDVI and greenness indices from Sentinel-2 imagery on demand, deployed on AWS Lambda with API Gateway.</p>
+<div class="tags tech-tags">
+<span class="tag">Python</span>
+<span class="tag">FastAPI</span>
+<span class="tag">AWS Lambda</span>
+<span class="tag">Rasterio</span>
+</div>
+</div>
+<div class="project-item">
+<h4>Real-time Flood Mapping Pipeline</h4>
+<p>Built an automated pipeline using SAR imagery (Sentinel-1) and a U-Net model to generate flood extent maps within hours of satellite overpass.</p>
+<div class="tags tech-tags">
+<span class="tag">TensorFlow</span>
+<span class="tag">GDAL</span>
+<span class="tag">Airflow</span>
+<span class="tag">Docker</span>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

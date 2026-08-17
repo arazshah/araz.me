@@ -1,1563 +1,2670 @@
-```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Araz Shahkarami · Geospatial AI Engineer</title>
-    <meta name="description" content="Araz Shahkarami – Geospatial AI Engineer, 13+ years in IT & GIS, Master's in GIS & Remote Sensing, OSGeo advocate.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e17'/%3E%3Ctext x='16' y='22' font-family='Inter,sans-serif' font-weight='700' font-size='16' fill='%2310b981' text-anchor='middle'%3EAM%3C/text%3E%3C/svg%3E">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <title>Araz Shahkarami — Backend, Geospatial & AI Engineer</title>
+
+    <meta
+        name="description"
+        content="Araz Shahkarami is a senior backend engineer specializing in geospatial systems, spatial databases, GeoAI, Python and AI-powered mapping applications."
+    >
+
+    <meta
+        name="keywords"
+        content="Araz Shahkarami, Backend Engineer, Geospatial Engineer, GeoAI, Python, FastAPI, Django, PostGIS, GIS, LLM, OSGeo"
+    >
+
+    <meta name="author" content="Araz Shahkarami">
+    <meta name="theme-color" content="#f7f7f3">
+    <meta name="color-scheme" content="light">
+
+    <link rel="canonical" href="https://araz.me/">
+
+    <!-- Open Graph -->
+    <meta
+        property="og:title"
+        content="Araz Shahkarami — Backend, Geospatial & AI Engineer"
+    >
+    <meta
+        property="og:description"
+        content="I build backend systems where software, spatial intelligence and AI meet."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://araz.me/">
+    <meta property="og:site_name" content="Araz Shahkarami">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta
+        name="twitter:title"
+        content="Araz Shahkarami — Backend, Geospatial & AI Engineer"
+    >
+    <meta
+        name="twitter:description"
+        content="Backend systems, geospatial intelligence and AI."
+    >
+
+    <!-- Optional favicon -->
+    <link
+        rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23121715%22/><text x=%2250%22 y=%2267%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2254%22 font-weight=%22700%22 fill=%22%23ffffff%22>A</text></svg>"
+    >
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Araz Shahkarami",
+        "url": "https://araz.me/",
+        "jobTitle": "Senior Backend and Geospatial AI Engineer",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Urmia",
+            "addressCountry": "IR"
+        },
+        "alumniOf": [
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "Islamic Azad University, Science and Research Branch"
+            },
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "Islamic Azad University, Mahabad Branch"
+            }
+        ],
+        "sameAs": [
+            "https://www.linkedin.com/in/araz-shahkarami/",
+            "https://github.com/arazshah/",
+            "https://cv.araz.me/",
+            "https://geo.araz.me/",
+            "https://mapathon.ir/",
+            "https://bookane.ir/",
+            "https://rsynx.ir/"
+        ],
+        "knowsAbout": [
+            "Python",
+            "Backend Engineering",
+            "FastAPI",
+            "Django",
+            "PostgreSQL",
+            "PostGIS",
+            "Geospatial Information Systems",
+            "GeoAI",
+            "Artificial Intelligence",
+            "Large Language Models",
+            "Model Context Protocol",
+            "Open Source Software"
+        ]
+    }
+    </script>
+
     <style>
-        /* ===== RESET & BASE ===== */
+        /* -------------------------------------------------------
+           ARAZ.ME
+           Spatial Intelligence Portfolio
+           ------------------------------------------------------- */
+
+        :root {
+            --paper: #f7f7f3;
+            --surface: #ffffff;
+            --ink: #121715;
+            --muted: #66706b;
+            --quiet: #929b96;
+            --line: rgba(18, 23, 21, 0.12);
+            --line-strong: rgba(18, 23, 21, 0.22);
+            --green: #1f7558;
+            --green-dark: #155840;
+            --green-soft: #e7f2ed;
+            --orange: #e36b3c;
+            --yellow: #f2c84b;
+            --shadow:
+                0 24px 80px rgba(31, 43, 38, 0.08),
+                0 2px 10px rgba(31, 43, 38, 0.04);
+            --radius-sm: 12px;
+            --radius-md: 22px;
+            --radius-lg: 36px;
+            --max-width: 1380px;
+            --header-height: 84px;
+        }
+
         *,
         *::before,
         *::after {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --bg-dark: #0a0e17;
-            --bg-card: #111827;
-            --bg-surface: #1a2234;
-            --bg-elevated: #1f2a3e;
-            --accent: #10b981;
-            --accent-dark: #059669;
-            --accent-glow: rgba(16, 185, 129, 0.15);
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --border-subtle: rgba(148, 163, 184, 0.08);
-            --radius: 12px;
-            --radius-lg: 20px;
-            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --nav-height: 68px;
-            --section-gap: 6rem;
         }
 
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: var(--nav-height);
+            scroll-padding-top: calc(var(--header-height) + 24px);
         }
 
         body {
-            font-family: var(--font);
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
+            margin: 0;
+            min-width: 320px;
             overflow-x: hidden;
+            background:
+                radial-gradient(
+                    circle at 80% 12%,
+                    rgba(31, 117, 88, 0.075),
+                    transparent 25rem
+                ),
+                var(--paper);
+            color: var(--ink);
+            font-family:
+                Inter,
+                ui-sans-serif,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.menu-open {
+            overflow: hidden;
         }
 
         a {
-            color: var(--accent);
+            color: inherit;
             text-decoration: none;
-            transition: color 0.25s ease;
-        }
-        a:hover {
-            color: var(--accent-dark);
         }
 
-        img {
-            max-width: 100%;
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        img,
+        svg {
             display: block;
+            max-width: 100%;
+        }
+
+        ::selection {
+            background: var(--green);
+            color: #fff;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
+            width: min(calc(100% - 48px), var(--max-width));
+            margin-inline: auto;
         }
 
-        section {
-            padding: var(--section-gap) 0;
+        .skip-link {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 9999;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: var(--ink);
+            color: #fff;
+            transform: translateY(-150%);
+            transition: transform 180ms ease;
         }
 
-        .section-label {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        /* Header */
+
+        .site-header {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 1000;
+            height: var(--header-height);
+            border-bottom: 1px solid transparent;
+            background: rgba(247, 247, 243, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            transition:
+                border-color 180ms ease,
+                background 180ms ease;
+        }
+
+        .site-header.scrolled {
+            border-color: var(--line);
+            background: rgba(247, 247, 243, 0.92);
+        }
+
+        .nav-shell {
+            width: min(calc(100% - 48px), var(--max-width));
+            height: 100%;
+            margin-inline: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .brand-mark {
             position: relative;
-            padding-left: 2rem;
+            width: 30px;
+            height: 30px;
+            border: 1.5px solid var(--ink);
+            border-radius: 50%;
         }
-        .section-label::before {
-            content: '';
+
+        .brand-mark::before,
+        .brand-mark::after {
+            content: "";
             position: absolute;
+            background: var(--ink);
+        }
+
+        .brand-mark::before {
+            width: 1px;
+            height: 38px;
+            top: -5px;
+            left: 14px;
+            transform: rotate(38deg);
+        }
+
+        .brand-mark::after {
+            width: 7px;
+            height: 7px;
+            right: -2px;
+            bottom: 3px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 0 4px var(--paper);
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .desktop-nav a {
+            position: relative;
+            padding-block: 8px;
+            color: var(--muted);
+            font-size: 0.86rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+            transition: color 180ms ease;
+        }
+
+        .desktop-nav a::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 2px;
             left: 0;
+            height: 1px;
+            background: var(--ink);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 220ms ease;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a:focus-visible {
+            color: var(--ink);
+        }
+
+        .desktop-nav a:hover::after,
+        .desktop-nav a:focus-visible::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 13px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            position: relative;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+
+        .status-dot::before {
+            content: "";
+            position: absolute;
+            inset: -4px;
+            border: 1px solid rgba(31, 117, 88, 0.4);
+            border-radius: inherit;
+            animation: pulse 2.2s ease-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.6);
+            }
+            70%,
+            100% {
+                opacity: 0;
+                transform: scale(1.55);
+            }
+        }
+
+        .menu-button {
+            display: none;
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: var(--surface);
+            cursor: pointer;
+        }
+
+        .menu-button span {
+            display: block;
+            width: 16px;
+            height: 1px;
+            margin: 5px auto;
+            background: var(--ink);
+            transition: transform 180ms ease;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        /* Hero */
+
+        .hero {
+            position: relative;
+            min-height: 100svh;
+            padding: calc(var(--header-height) + 70px) 0 48px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.16fr) minmax(430px, 0.84fr);
+            align-items: center;
+            gap: clamp(60px, 8vw, 140px);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 30px;
+            color: var(--green-dark);
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 34px;
+            height: 1px;
+            background: currentColor;
+        }
+
+        .hero-title {
+            max-width: 850px;
+            margin: 0;
+            font-size: clamp(3.9rem, 7.8vw, 8.4rem);
+            font-weight: 760;
+            letter-spacing: -0.085em;
+            line-height: 0.89;
+        }
+
+        .hero-title .outline-word {
+            color: transparent;
+            -webkit-text-stroke: 1.4px var(--ink);
+        }
+
+        .hero-title .accent-word {
+            position: relative;
+            color: var(--green);
+        }
+
+        .hero-title .accent-word::after {
+            content: "";
+            position: absolute;
+            right: 0.03em;
+            bottom: 0.02em;
+            width: 0.18em;
+            height: 0.18em;
+            border-radius: 50%;
+            background: var(--orange);
+        }
+
+        .hero-summary {
+            max-width: 680px;
+            margin: 38px 0 0;
+            color: var(--muted);
+            font-size: clamp(1.06rem, 1.45vw, 1.27rem);
+            letter-spacing: -0.025em;
+            line-height: 1.65;
+        }
+
+        .hero-summary strong {
+            color: var(--ink);
+            font-weight: 700;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 38px;
+        }
+
+        .button {
+            min-height: 50px;
+            padding: 13px 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid var(--line-strong);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--ink);
+            font-size: 0.86rem;
+            font-weight: 750;
+            transition:
+                transform 180ms ease,
+                background 180ms ease,
+                border-color 180ms ease,
+                color 180ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button-primary {
+            border-color: var(--ink);
+            background: var(--ink);
+            color: #fff;
+        }
+
+        .button-primary:hover {
+            border-color: var(--green);
+            background: var(--green);
+        }
+
+        .button svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        /* Spatial Hero Graphic */
+
+        .spatial-card {
+            position: relative;
+            min-height: 580px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background:
+                linear-gradient(rgba(18, 23, 21, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18, 23, 21, 0.045) 1px, transparent 1px),
+                var(--surface);
+            background-size: 38px 38px;
+            box-shadow: var(--shadow);
+            isolation: isolate;
+        }
+
+        .spatial-card::before {
+            content: "";
+            position: absolute;
+            width: 340px;
+            height: 340px;
             top: 50%;
-            transform: translateY(-50%);
-            width: 1.25rem;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
+            left: 50%;
+            border: 1px solid rgba(31, 117, 88, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spatial-card::after {
+            content: "";
+            position: absolute;
+            width: 215px;
+            height: 215px;
+            top: 50%;
+            left: 50%;
+            border: 1px dashed rgba(18, 23, 21, 0.18);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbit 24s linear infinite;
+        }
+
+        @keyframes orbit {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .map-art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .map-art .route {
+            fill: none;
+            stroke: var(--ink);
+            stroke-width: 1.25;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 4 9;
+            opacity: 0.32;
+        }
+
+        .map-art .route-accent {
+            fill: none;
+            stroke: var(--green);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.85;
+        }
+
+        .map-art .terrain {
+            fill: none;
+            stroke: var(--ink);
+            stroke-width: 0.8;
+            opacity: 0.12;
+        }
+
+        .map-art .point {
+            fill: var(--paper);
+            stroke: var(--ink);
+            stroke-width: 1.5;
+        }
+
+        .map-art .point-active {
+            fill: var(--orange);
+            stroke: var(--surface);
+            stroke-width: 5;
+        }
+
+        .coordinate-label {
+            position: absolute;
+            top: 28px;
+            left: 28px;
+            z-index: 2;
+            color: var(--muted);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            line-height: 1.7;
+            text-transform: uppercase;
+        }
+
+        .geo-index {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line-strong);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.76);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .map-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            width: 154px;
+            height: 154px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--line-strong);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow: 0 12px 40px rgba(25, 45, 36, 0.1);
+            transform: translate(-50%, -50%);
+            backdrop-filter: blur(12px);
+        }
+
+        .map-core strong {
+            font-size: 2.1rem;
+            letter-spacing: -0.08em;
+            line-height: 1;
+        }
+
+        .map-core span {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.67rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .floating-tag {
+            position: absolute;
+            z-index: 5;
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow: 0 6px 24px rgba(30, 50, 42, 0.07);
+            color: var(--ink);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.68rem;
+            font-weight: 650;
+            backdrop-filter: blur(10px);
+            transition: transform 250ms ease;
+        }
+
+        .tag-python {
+            top: 24%;
+            right: 10%;
+        }
+
+        .tag-postgis {
+            bottom: 21%;
+            right: 8%;
+        }
+
+        .tag-geoai {
+            bottom: 14%;
+            left: 10%;
+        }
+
+        .tag-mcp {
+            top: 27%;
+            left: 8%;
+        }
+
+        .spatial-footer {
+            position: absolute;
+            right: 28px;
+            bottom: 25px;
+            left: 28px;
+            z-index: 6;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            color: var(--muted);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        /* Signals */
+
+        .signal-strip {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.42);
+        }
+
+        .signals {
+            min-height: 92px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .signal {
+            padding: 23px 28px;
+            border-right: 1px solid var(--line);
+        }
+
+        .signal:first-child {
+            padding-left: 0;
+        }
+
+        .signal:last-child {
+            border-right: 0;
+        }
+
+        .signal strong {
+            display: block;
+            font-size: 1.25rem;
+            letter-spacing: -0.04em;
+        }
+
+        .signal span {
+            display: block;
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        /* General sections */
+
+        .section {
+            padding: clamp(92px, 11vw, 160px) 0;
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: 0.42fr 1.58fr;
+            gap: 48px;
+            margin-bottom: clamp(52px, 7vw, 90px);
+        }
+
+        .section-kicker {
+            margin: 8px 0 0;
+            color: var(--green-dark);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-        .section-title .highlight {
-            color: var(--accent);
+            max-width: 940px;
+            margin: 0;
+            font-size: clamp(2.5rem, 5.2vw, 5.7rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 0.98;
         }
 
-        .section-desc {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 640px;
+        .section-title em {
+            color: var(--green);
+            font-family: Georgia, "Times New Roman", serif;
+            font-weight: 400;
+        }
+
+        /* About */
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: clamp(48px, 8vw, 130px);
+        }
+
+        .about-lead {
+            margin: 0;
+            font-size: clamp(1.55rem, 2.6vw, 2.65rem);
+            font-weight: 570;
+            letter-spacing: -0.05em;
+            line-height: 1.25;
+        }
+
+        .about-copy {
+            max-width: 680px;
+        }
+
+        .about-copy p {
+            margin: 0 0 24px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .about-copy strong {
+            color: var(--ink);
+        }
+
+        .capability-list {
+            margin-top: 42px;
+            border-top: 1px solid var(--line);
+        }
+
+        .capability {
+            display: grid;
+            grid-template-columns: 44px 1fr auto;
+            align-items: center;
+            gap: 16px;
+            padding: 19px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .capability-index {
+            color: var(--quiet);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.67rem;
+        }
+
+        .capability strong {
+            font-size: 0.96rem;
+            letter-spacing: -0.02em;
+        }
+
+        .capability span:last-child {
+            color: var(--muted);
+            font-size: 0.78rem;
+            text-align: right;
+        }
+
+        /* Projects */
+
+        .projects-section {
+            position: relative;
+            overflow: hidden;
+            background: var(--ink);
+            color: #fff;
+        }
+
+        .projects-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.12;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+            background-size: 52px 52px;
+            mask-image: linear-gradient(to bottom, black, transparent 88%);
+        }
+
+        .projects-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .projects-section .section-kicker {
+            color: #85c8ad;
+        }
+
+        .projects-section .section-title em {
+            color: #85c8ad;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 18px;
+        }
+
+        .project-card {
+            position: relative;
+            min-height: 420px;
+            overflow: hidden;
+            padding: clamp(26px, 3vw, 38px);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.055);
+            transition:
+                transform 250ms ease,
+                background 250ms ease,
+                border-color 250ms ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.085);
+        }
+
+        .project-card.featured {
+            grid-column: span 7;
+            min-height: 540px;
+            background:
+                radial-gradient(
+                    circle at 76% 24%,
+                    rgba(80, 183, 139, 0.2),
+                    transparent 17rem
+                ),
+                rgba(255, 255, 255, 0.055);
+        }
+
+        .project-card.secondary {
+            grid-column: span 5;
+        }
+
+        .project-card.third,
+        .project-card.fourth {
+            grid-column: span 6;
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            color: rgba(255, 255, 255, 0.52);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .project-number {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        .project-content {
+            margin-top: auto;
+        }
+
+        .project-title {
+            margin: 0;
+            font-size: clamp(2.3rem, 4.2vw, 5.2rem);
+            font-weight: 660;
+            letter-spacing: -0.075em;
+            line-height: 0.95;
+        }
+
+        .secondary .project-title,
+        .third .project-title,
+        .fourth .project-title {
+            font-size: clamp(2.2rem, 3.5vw, 3.7rem);
+        }
+
+        .project-description {
+            max-width: 620px;
+            margin: 24px 0 0;
+            color: rgba(255, 255, 255, 0.63);
+            font-size: 0.98rem;
             line-height: 1.7;
         }
 
-        /* ===== SCROLL REVEAL ===== */
+        .project-tags {
+            margin-top: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .project-tags span {
+            padding: 7px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+
+        .project-link {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition:
+                background 180ms ease,
+                color 180ms ease,
+                transform 180ms ease;
+        }
+
+        .project-link:hover {
+            background: #fff;
+            color: var(--ink);
+            transform: rotate(6deg);
+        }
+
+        .project-link svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .project-orbit {
+            position: absolute;
+            top: 50%;
+            right: -80px;
+            width: 360px;
+            height: 360px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .project-orbit::before,
+        .project-orbit::after {
+            content: "";
+            position: absolute;
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .project-orbit::before {
+            inset: 54px;
+        }
+
+        .project-orbit::after {
+            inset: 112px;
+            background: rgba(111, 204, 164, 0.08);
+        }
+
+        /* Experience */
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 0.46fr 1.54fr;
+            gap: 52px;
+        }
+
+        .experience-aside {
+            position: sticky;
+            top: calc(var(--header-height) + 34px);
+            align-self: start;
+        }
+
+        .experience-aside p {
+            max-width: 330px;
+            margin: 18px 0 0;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .timeline {
+            border-top: 1px solid var(--line-strong);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 140px minmax(0, 1fr);
+            gap: 40px;
+            padding: 34px 0 38px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .timeline-date {
+            color: var(--green-dark);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        .timeline-role {
+            margin: 0;
+            font-size: clamp(1.3rem, 2vw, 2rem);
+            letter-spacing: -0.045em;
+            line-height: 1.15;
+        }
+
+        .timeline-company {
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 650;
+        }
+
+        .timeline-description {
+            max-width: 760px;
+            margin: 18px 0 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* Open source */
+
+        .open-source-panel {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(34px, 6vw, 78px);
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 60px;
+            align-items: center;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .open-source-panel::after {
+            content: "OS";
+            position: absolute;
+            right: -0.06em;
+            bottom: -0.38em;
+            color: rgba(31, 117, 88, 0.045);
+            font-size: clamp(12rem, 28vw, 30rem);
+            font-weight: 850;
+            letter-spacing: -0.12em;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .open-source-panel > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .panel-title {
+            max-width: 760px;
+            margin: 0;
+            font-size: clamp(2.35rem, 5vw, 5.4rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 0.98;
+        }
+
+        .panel-copy {
+            margin: 28px 0 0;
+            max-width: 680px;
+            color: var(--muted);
+        }
+
+        .os-badge {
+            width: min(100%, 250px);
+            aspect-ratio: 1;
+            margin-inline: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--line-strong);
+            border-radius: 50%;
+            background:
+                radial-gradient(circle, var(--green-soft), transparent 67%);
+            text-align: center;
+        }
+
+        .os-badge strong {
+            font-size: clamp(2.2rem, 4vw, 4rem);
+            letter-spacing: -0.08em;
+            line-height: 0.9;
+        }
+
+        .os-badge span {
+            margin-top: 13px;
+            color: var(--green-dark);
+            font-size: 0.68rem;
+            font-weight: 850;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        /* Contact */
+
+        .contact-section {
+            padding-bottom: 48px;
+        }
+
+        .contact-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            padding: clamp(34px, 7vw, 94px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: var(--radius-lg);
+            background: var(--green);
+            color: #fff;
+        }
+
+        .contact-card::before {
+            content: "";
+            position: absolute;
+            width: 630px;
+            height: 630px;
+            top: -240px;
+            right: -180px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 90px rgba(255, 255, 255, 0.03),
+                0 0 0 180px rgba(255, 255, 255, 0.025);
+        }
+
+        .contact-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-label {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.68);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .contact-title {
+            max-width: 1050px;
+            margin: 42px 0 0;
+            font-size: clamp(3.2rem, 7.5vw, 8.2rem);
+            font-weight: 700;
+            letter-spacing: -0.085em;
+            line-height: 0.9;
+        }
+
+        .contact-title span {
+            color: rgba(255, 255, 255, 0.52);
+        }
+
+        .contact-footer {
+            margin-top: 70px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 32px;
+        }
+
+        .contact-email {
+            position: relative;
+            display: inline-block;
+            font-size: clamp(1.05rem, 2vw, 1.4rem);
+            font-weight: 720;
+        }
+
+        .contact-email::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: -6px;
+            left: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.62);
+            transition: transform 180ms ease;
+            transform-origin: left;
+        }
+
+        .contact-email:hover::after {
+            transform: scaleX(0.45);
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .contact-links a {
+            padding: 11px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 750;
+            transition:
+                background 180ms ease,
+                color 180ms ease;
+        }
+
+        .contact-links a:hover {
+            background: #fff;
+            color: var(--green-dark);
+        }
+
+        /* Footer */
+
+        .site-footer {
+            padding: 22px 0 36px;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            color: var(--muted);
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+            font-size: 0.67rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .footer-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-location::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+
+        /* Reveal animation */
+
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(24px);
+            transition:
+                opacity 700ms cubic-bezier(0.2, 0.75, 0.25, 1),
+                transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1);
         }
+
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        .reveal-delay-1 {
-            transition-delay: 0.1s;
-        }
-        .reveal-delay-2 {
-            transition-delay: 0.2s;
-        }
-        .reveal-delay-3 {
-            transition-delay: 0.3s;
-        }
-        .reveal-delay-4 {
-            transition-delay: 0.4s;
-        }
-        .reveal-delay-5 {
-            transition-delay: 0.5s;
+
+        /* Focus */
+
+        :focus-visible {
+            outline: 3px solid rgba(31, 117, 88, 0.35);
+            outline-offset: 4px;
         }
 
-        /* ===== BACKGROUND DECORATIVE ===== */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background-image:
-                linear-gradient(rgba(16, 185, 129, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(16, 185, 129, 0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
+        /* Responsive */
 
-        .bg-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .bg-particles span {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.15;
-            animation: float-particle 12s infinite ease-in-out;
-        }
-
-        @keyframes float-particle {
-            0%,
-            100% {
-                transform: translateY(0) scale(1);
-                opacity: 0.15;
-            }
-            50% {
-                transform: translateY(-80px) scale(1.4);
-                opacity: 0.4;
-            }
-        }
-
-        .bg-topo {
-            position: fixed;
-            top: 10%;
-            right: -5%;
-            width: 500px;
-            height: 500px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.04;
-            filter: blur(1px);
-        }
-        .bg-topo svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* ===== NAVIGATION ===== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            height: var(--nav-height);
-            background: rgba(10, 14, 23, 0.75);
-            backdrop-filter: blur(18px) saturate(1.8);
-            -webkit-backdrop-filter: blur(18px) saturate(1.8);
-            border-bottom: 1px solid var(--border-subtle);
-            transition: background 0.3s ease;
-        }
-        .navbar .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 100%;
-        }
-        .nav-logo {
-            font-size: 1.35rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .nav-logo .logo-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: var(--accent);
-            color: #0a0e17;
-            border-radius: 6px;
-            font-weight: 900;
-            font-size: 0.9rem;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            list-style: none;
-        }
-        .nav-links a {
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: all 0.25s ease;
-            position: relative;
-        }
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .nav-hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .nav-hamburger:hover {
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .nav-hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--text-primary);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            transform-origin: center;
-        }
-        .nav-hamburger.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-        .nav-hamburger.active span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-        .nav-hamburger.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-            padding-top: var(--nav-height);
-            overflow: hidden;
-        }
-        .hero .container {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-        }
-        .hero-content {
-            max-width: 820px;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--accent-glow);
-            border: 1px solid rgba(16, 185, 129, 0.15);
-            padding: 0.4rem 1rem 0.4rem 1.2rem;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.01em;
-        }
-        .hero-badge i {
-            font-size: 0.65rem;
-        }
-        .hero-badge .dot-pulse {
-            display: inline-block;
-            width: 7px;
-            height: 7px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.4;
-                transform: scale(0.8);
-            }
-        }
-
-        .hero h1 {
-            font-size: clamp(2.8rem, 10vw, 5.5rem);
-            font-weight: 900;
-            line-height: 1.03;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.5rem;
-        }
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--accent), #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero-sub {
-            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            min-height: 2.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            flex-wrap: wrap;
-        }
-        .hero-sub .typing-text {
-            color: var(--accent);
-            font-weight: 600;
-            position: relative;
-        }
-        .hero-sub .typing-text::after {
-            content: '|';
-            animation: blink-caret 0.8s step-end infinite;
-            font-weight: 300;
-            color: var(--accent);
-        }
-        @keyframes blink-caret {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
-        }
-
-        .hero-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem 2rem;
-            margin-top: 1.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .hero-meta a {
-            color: var(--text-secondary);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: color 0.2s;
-        }
-        .hero-meta a:hover {
-            color: var(--accent);
-        }
-        .hero-meta i {
-            font-size: 0.85rem;
-            color: var(--accent);
-        }
-
-        .hero-cta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2.5rem;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 2rem;
-            border-radius: 100px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: var(--font);
-            text-decoration: none;
-        }
-        .btn-primary {
-            background: var(--accent);
-            color: #0a0e17;
-            box-shadow: 0 4px 24px rgba(16, 185, 129, 0.3);
-        }
-        .btn-primary:hover {
-            background: #0ea272;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4);
-            color: #0a0e17;
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Hero decorative globe */
-        .hero-globe {
-            position: absolute;
-            right: -8%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 600px;
-            height: 600px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.08;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, var(--accent), transparent 70%);
-            filter: blur(40px);
-        }
-        .hero-coords {
-            position: absolute;
-            left: 5%;
-            bottom: 12%;
-            font-family: 'Inter', monospace;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            opacity: 0.25;
-            letter-spacing: 0.1em;
-            line-height: 1.8;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .hero-coords span {
-            display: block;
-        }
-
-        /* ===== ABOUT ===== */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-        .about-text p {
-            color: var(--text-secondary);
-            margin-bottom: 1.2rem;
-            font-size: 1.05rem;
-        }
-        .about-text p strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-        .about-highlights {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .about-highlight-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius);
-            padding: 1rem 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transition: all 0.3s ease;
-        }
-        .about-highlight-item:hover {
-            border-color: rgba(16, 185, 129, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        .about-highlight-item i {
-            font-size: 1.2rem;
-            color: var(--accent);
-            width: 28px;
-            text-align: center;
-        }
-        .about-highlight-item span {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        .about-stat {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .about-stat:hover {
-            border-color: rgba(16, 185, 129, 0.15);
-            transform: translateY(-3px);
-        }
-        .about-stat .num {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1.2;
-        }
-        .about-stat .label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        /* ===== EXPERTISE ===== */
-        .expertise-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-            margin-top: 2rem;
-        }
-        .expertise-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius);
-            padding: 1.5rem 1.5rem 1.8rem;
-            transition: all 0.35s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .expertise-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), transparent);
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-        .expertise-card:hover::before {
-            opacity: 1;
-        }
-        .expertise-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(16, 185, 129, 0.15);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-        .expertise-card .cat-icon {
-            font-size: 1.4rem;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
-        }
-        .expertise-card h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.01em;
-        }
-        .expertise-card .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-        }
-        .expertise-card .tag {
-            background: rgba(16, 185, 129, 0.08);
-            color: var(--accent);
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 0.25rem 0.65rem;
-            border-radius: 100px;
-            border: 1px solid rgba(16, 185, 129, 0.08);
-            letter-spacing: 0.01em;
-        }
-
-        /* ===== PROJECTS ===== */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 1.8rem 1.5rem 1.5rem;
-            transition: all 0.35s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .project-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-        .project-card:hover::after {
-            opacity: 1;
-        }
-        .project-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(16, 185, 129, 0.12);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-        }
-        .project-card .p-icon {
-            font-size: 1.3rem;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
-        }
-        .project-card h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-            letter-spacing: -0.01em;
-        }
-        .project-card p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* ===== BLOG ===== */
-        .blog-card-featured {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-            flex-wrap: wrap;
-            transition: all 0.35s ease;
-            margin-top: 2rem;
-        }
-        .blog-card-featured:hover {
-            border-color: rgba(16, 185, 129, 0.12);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
-        }
-        .blog-card-featured .left h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-        }
-        .blog-card-featured .left p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            max-width: 400px;
-        }
-        .blog-card-featured .right {
-            flex-shrink: 0;
-        }
-
-        .blog-posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.25rem;
-            margin-top: 2rem;
-        }
-        .blog-post-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        .blog-post-item:hover {
-            border-color: rgba(16, 185, 129, 0.1);
-            transform: translateY(-3px);
-        }
-        .blog-post-item .b-date {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 0.4rem;
-        }
-        .blog-post-item h4 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            line-height: 1.4;
-        }
-        .blog-post-item p {
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-        }
-
-        /* ===== CONTACT ===== */
-        .contact-wrap {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-        .contact-info h3 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-        .contact-info p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-        .contact-info .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            color: var(--text-primary);
-            font-weight: 500;
-            font-size: 1.05rem;
-            padding: 0.6rem 1.2rem;
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            border: 1px solid var(--border-subtle);
-            transition: all 0.3s ease;
-            margin-bottom: 0.75rem;
-            width: fit-content;
-        }
-        .contact-info .contact-link i {
-            color: var(--accent);
-        }
-        .contact-info .contact-link:hover {
-            border-color: rgba(16, 185, 129, 0.2);
-            transform: translateX(4px);
-        }
-
-        .contact-socials {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .contact-socials a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius);
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        .contact-socials a:hover {
-            color: var(--accent);
-            border-color: rgba(16, 185, 129, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
-        }
-
-        .contact-card-alt {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-        }
-        .contact-card-alt .big-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-        .contact-card-alt h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-        .contact-card-alt .domain {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            border-top: 1px solid var(--border-subtle);
-            padding: 2rem 0;
-            margin-top: 2rem;
-        }
-        footer .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.82rem;
-        }
-        .back-to-top {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: var(--text-secondary);
-            font-size: 0.82rem;
-            font-weight: 500;
-            transition: color 0.2s;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: var(--font);
-        }
-        .back-to-top:hover {
-            color: var(--accent);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .contact-wrap {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .hero-globe {
-                width: 400px;
-                height: 400px;
-                right: -20%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            :root {
-                --section-gap: 4rem;
-            }
-            .nav-links {
-                position: fixed;
-                top: var(--nav-height);
-                left: 0;
-                width: 100%;
-                background: rgba(10, 14, 23, 0.98);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 1.5rem 1.5rem 2.5rem;
-                gap: 0.15rem;
-                transform: translateY(-110%);
-                opacity: 0;
-                transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                border-bottom: 1px solid var(--border-subtle);
-                pointer-events: none;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            }
-            .nav-links.open {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: all;
-            }
-            .nav-links a {
-                padding: 0.8rem 1rem;
-                font-size: 1rem;
-                width: 100%;
-                border-radius: 8px;
-            }
-            .nav-hamburger {
-                display: flex;
-            }
-            .hero h1 {
-                font-size: clamp(2.2rem, 12vw, 3.6rem);
-            }
-            .about-highlights {
-                grid-template-columns: 1fr;
-            }
-            .about-stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            .hero-coords {
+        @media (max-width: 1100px) {
+            .desktop-nav {
                 display: none;
             }
-            .blog-card-featured {
+
+            .menu-button {
+                display: block;
+            }
+
+            .mobile-menu {
+                position: fixed;
+                inset: var(--header-height) 0 0;
+                z-index: 999;
+                padding: 48px 24px;
+                display: flex;
                 flex-direction: column;
-                text-align: center;
-                padding: 1.8rem 1.5rem;
+                background: rgba(247, 247, 243, 0.98);
+                transform: translateX(100%);
+                transition: transform 260ms ease;
             }
-            .blog-card-featured .left p {
-                max-width: 100%;
-            }
-            section {
-                padding: var(--section-gap) 0;
-            }
-            .contact-info .contact-link {
-                width: 100%;
-                justify-content: center;
-            }
-        }
 
-        @media (max-width: 480px) {
-            .about-stats {
-                grid-template-columns: 1fr;
+            .mobile-menu.open {
+                transform: translateX(0);
             }
-            .hero-cta {
+
+            .mobile-menu nav {
+                display: flex;
                 flex-direction: column;
-                width: 100%;
             }
-            .hero-cta .btn {
-                width: 100%;
-                justify-content: center;
+
+            .mobile-menu a {
+                padding: 14px 0;
+                border-bottom: 1px solid var(--line);
+                font-size: clamp(1.6rem, 7vw, 3rem);
+                font-weight: 650;
+                letter-spacing: -0.05em;
             }
-            .projects-grid {
+
+            .mobile-menu .mobile-meta {
+                margin-top: auto;
+                color: var(--muted);
+                font-size: 0.75rem;
+            }
+
+            .hero-grid {
                 grid-template-columns: 1fr;
             }
-            .blog-posts {
+
+            .hero-copy {
+                padding-top: 32px;
+            }
+
+            .spatial-card {
+                min-height: 500px;
+            }
+
+            .section-header,
+            .about-layout,
+            .experience-grid,
+            .open-source-panel {
                 grid-template-columns: 1fr;
             }
-            .expertise-grid {
-                grid-template-columns: 1fr;
+
+            .section-header {
+                gap: 22px;
             }
-            .contact-socials {
-                justify-content: center;
+
+            .experience-aside {
+                position: static;
             }
-            footer .container {
+
+            .project-card.featured,
+            .project-card.secondary,
+            .project-card.third,
+            .project-card.fourth {
+                grid-column: span 12;
+            }
+
+            .open-source-panel {
+                gap: 44px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            :root {
+                --header-height: 72px;
+                --radius-lg: 25px;
+                --radius-md: 18px;
+            }
+
+            .container,
+            .nav-shell {
+                width: min(calc(100% - 30px), var(--max-width));
+            }
+
+            .status-chip {
+                display: none;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: calc(var(--header-height) + 62px);
+            }
+
+            .hero-title {
+                font-size: clamp(3.45rem, 18vw, 5.7rem);
+            }
+
+            .hero-title .outline-word {
+                -webkit-text-stroke-width: 1px;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+            }
+
+            .button {
+                flex: 1 1 auto;
+            }
+
+            .spatial-card {
+                min-height: 440px;
+            }
+
+            .floating-tag {
+                font-size: 0.6rem;
+            }
+
+            .spatial-footer {
                 flex-direction: column;
-                text-align: center;
+                gap: 3px;
+            }
+
+            .signals {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .signal {
+                border-bottom: 1px solid var(--line);
+            }
+
+            .signal:nth-child(2) {
+                border-right: 0;
+            }
+
+            .signal:nth-child(3),
+            .signal:nth-child(4) {
+                border-bottom: 0;
+            }
+
+            .signal:nth-child(3) {
+                padding-left: 0;
+            }
+
+            .section {
+                padding: 88px 0;
+            }
+
+            .capability {
+                grid-template-columns: 34px 1fr;
+            }
+
+            .capability span:last-child {
+                grid-column: 2;
+                text-align: left;
+            }
+
+            .project-card,
+            .project-card.featured {
+                min-height: 460px;
+            }
+
+            .project-link {
+                top: 24px;
+                right: 24px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .open-source-panel {
+                padding: 36px 24px;
+            }
+
+            .os-badge {
+                width: 190px;
+            }
+
+            .contact-card {
+                min-height: 540px;
+            }
+
+            .contact-footer,
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
             }
         }
 
-        /* selection */
-        ::selection {
-            background: var(--accent);
-            color: #0a0e17;
+        @media (max-width: 440px) {
+            .brand-text {
+                display: none;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .signals {
+                grid-template-columns: 1fr;
+            }
+
+            .signal,
+            .signal:nth-child(3) {
+                padding-left: 0;
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .signal:last-child {
+                border-bottom: 0;
+            }
+
+            .map-core {
+                width: 132px;
+                height: 132px;
+            }
+
+            .tag-mcp,
+            .tag-postgis {
+                display: none;
+            }
         }
 
-        /* scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2a3a5a;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3a4a6a;
-        }
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
 
-        /* map coordinate watermark */
-        .map-watermark {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            font-family: 'Inter', monospace;
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            opacity: 0.12;
-            letter-spacing: 0.08em;
-            pointer-events: none;
-            z-index: 0;
-            line-height: 1.6;
-            text-align: right;
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
         }
     </style>
 </head>
+
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <!-- ===== BACKGROUND DECOR ===== -->
-    <div class="bg-grid" aria-hidden="true"></div>
-    <div class="bg-particles" id="particles" aria-hidden="true"></div>
-    <div class="bg-topo" aria-hidden="true">
-        <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 250 Q50 200 100 250 T200 250 T300 250 T400 250 T500 250" stroke="white" stroke-width="1.5" stroke-dasharray="4 6"/>
-            <path d="M0 200 Q50 150 100 200 T200 200 T300 200 T400 200 T500 200" stroke="white" stroke-width="1" stroke-dasharray="3 8"/>
-            <path d="M0 300 Q50 350 100 300 T200 300 T300 300 T400 300 T500 300" stroke="white" stroke-width="1" stroke-dasharray="3 8"/>
-            <path d="M0 160 Q50 120 100 160 T200 160 T300 160 T400 160 T500 160" stroke="white" stroke-width="0.6" stroke-dasharray="2 10" opacity="0.5"/>
-            <path d="M0 340 Q50 380 100 340 T200 340 T300 340 T400 340 T500 340" stroke="white" stroke-width="0.6" stroke-dasharray="2 10" opacity="0.5"/>
-            <circle cx="250" cy="250" r="80" stroke="white" stroke-width="0.8" stroke-dasharray="4 8" opacity="0.4"/>
-            <circle cx="250" cy="250" r="140" stroke="white" stroke-width="0.5" stroke-dasharray="3 12" opacity="0.25"/>
-        </svg>
-    </div>
-    <div class="map-watermark">35.6892° N &nbsp; 51.3890° E<br>urn:ogc:def:crs:EPSG::4326</div>
-
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <a href="#hero" class="nav-logo" aria-label="Araz Shahkarami Home">
-                <span class="logo-icon">AM</span>
-                <span>ARAZ</span>
+    <!-- Header -->
+    <header class="site-header" id="siteHeader">
+        <div class="nav-shell">
+            <a class="brand" href="#top" aria-label="Araz Shahkarami — Home">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span class="brand-text">ARAZ SHAHKARAMI</span>
             </a>
-            <ul class="nav-links" id="navLinks" role="menubar">
-                <li role="none"><a href="#hero" role="menuitem" class="active">Home</a></li>
-                <li role="none"><a href="#about" role="menuitem">About</a></li>
-                <li role="none"><a href="#expertise" role="menuitem">Expertise</a></li>
-                <li role="none"><a href="#projects" role="menuitem">Projects</a></li>
-                <li role="none"><a href="#blog" role="menuitem">Blog</a></li>
-                <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
-            </ul>
-            <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="hero">
-        <div class="hero-globe" aria-hidden="true"></div>
-        <div class="hero-coords" aria-hidden="true">
-            <span>LAT: 35.6892° N</span>
-            <span>LON: 51.3890° E</span>
-            <span>ZOOM: 12</span>
-        </div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="dot-pulse"></span>
-                    Available for collaboration
-                </div>
-                <h1>
-                    Araz<br>
-                    <span class="highlight">Shahkarami</span>
-                </h1>
-                <div class="hero-sub">
-                    <span class="typing-text" id="typingText">Geospatial AI Engineer</span>
-                </div>
-                <div class="hero-meta">
-                    <a href="mailto:mail@araz.me"><i class="fas fa-envelope"></i> mail@araz.me</a>
-                    <a href="https://araz.me" target="_blank" rel="noopener"><i class="fas fa-globe"></i> araz.me</a>
-                    <a href="https://github.com/arazshah" target="_blank" rel="noopener"><i class="fab fa-github"></i> arazshah</a>
-                    <a href="https://linkedin.com/in/araz-shahkarami" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> in/araz-shahkarami</a>
-                </div>
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary"><i class="fas fa-arrow-down"></i> View Projects</a>
-                    <a href="#contact" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> Get in Touch</a>
-                </div>
+            <nav class="desktop-nav" aria-label="Main navigation">
+                <a href="#about">About</a>
+                <a href="#work">Selected work</a>
+                <a href="#experience">Experience</a>
+
+                <a
+                    href="https://geo.araz.me/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Geo Lab ↗
+                </a>
+
+                <a
+                    href="https://cv.araz.me/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    CV ↗
+                </a>
+            </nav>
+
+            <div class="nav-actions">
+                <span class="status-chip">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    Open to opportunities
+                </span>
+
+                <button
+                    class="menu-button"
+                    id="menuButton"
+                    type="button"
+                    aria-label="Open navigation"
+                    aria-controls="mobileMenu"
+                    aria-expanded="false"
+                >
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- ===== ABOUT ===== -->
-    <section id="about">
-        <div class="container">
-            <div class="reveal">
-                <span class="section-label">About</span>
-                <h2 class="section-title">Mapping the world through <span class="highlight">code &amp; data</span></h2>
-            </div>
-            <div class="about-grid">
-                <div class="about-text reveal reveal-delay-1">
-                    <p>
-                        <strong>13+ years</strong> bridging IT infrastructure with geospatial intelligence. 
-                        Holding a <strong>Master's in GIS &amp; Remote Sensing</strong>, I architect 
-                        systems where location intelligence meets modern software engineering.
+    <!-- Mobile menu -->
+    <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <nav aria-label="Mobile navigation">
+            <a href="#about">About</a>
+            <a href="#work">Selected work</a>
+            <a href="#experience">Experience</a>
+            <a href="https://geo.araz.me/">Geo Lab ↗</a>
+            <a href="https://cv.araz.me/">Curriculum Vitae ↗</a>
+            <a href="https://github.com/arazshah/">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/araz-shahkarami/">
+                LinkedIn ↗
+            </a>
+        </nav>
+
+        <div class="mobile-meta">
+            Urmia, Iran · Open to relocation
+        </div>
+    </aside>
+
+    <main id="main-content">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="container hero-grid">
+                <div class="hero-copy reveal">
+                    <p class="eyebrow">
+                        Backend · Geospatial · Artificial Intelligence
                     </p>
-                    <p>
-                        Based between <strong>Tehran</strong> and <strong>Urmia, Iran</strong>. 
-                        Fluent in <strong>Turkish, Persian, English</strong>. 
-                        Founder of <a href="https://bookane.ir" target="_blank" rel="noopener">bookane.ir</a>, 
-                        writer at <a href="https://blog.araz.me" target="_blank" rel="noopener">blog.araz.me</a>, 
-                        and creator of <strong>geoChat-v2-core</strong>.
+
+                    <h1 class="hero-title">
+                        Engineering<br>
+                        <span class="outline-word">systems</span> with<br>
+                        spatial <span class="accent-word">intelligence</span>
+                    </h1>
+
+                    <p class="hero-summary">
+                        I’m <strong>Araz Shahkarami</strong>, a senior backend
+                        engineer working at the intersection of
+                        <strong>Python, geospatial systems and AI</strong>.
+                        I turn complex data, maps and intelligent workflows
+                        into reliable software products.
                     </p>
-                    <p>
-                        <strong>OSGeo</strong> advocate. Open source is not just a tool — it's a philosophy 
-                        I embed in every layer of my work.
-                    </p>
-                    <div class="about-highlights">
-                        <div class="about-highlight-item">
-                            <i class="fas fa-map-marked-alt"></i>
-                            <span>GIS &amp; Remote Sensing</span>
-                        </div>
-                        <div class="about-highlight-item">
-                            <i class="fas fa-code"></i>
-                            <span>Full-Stack Engineer</span>
-                        </div>
-                        <div class="about-highlight-item">
-                            <i class="fas fa-brain"></i>
-                            <span>AI/ML Integration</span>
-                        </div>
-                        <div class="about-highlight-item">
-                            <i class="fas fa-cloud"></i>
-                            <span>Cloud &amp; DevOps</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-stats reveal reveal-delay-2">
-                    <div class="about-stat">
-                        <div class="num">13+</div>
-                        <div class="label">Years Experience</div>
-                    </div>
-                    <div class="about-stat">
-                        <div class="num">25+</div>
-                        <div class="label">Projects Delivered</div>
-                    </div>
-                    <div class="about-stat">
-                        <div class="num">3</div>
-                        <div class="label">Languages Spoken</div>
-                    </div>
-                    <div class="about-stat">
-                        <div class="num">∞</div>
-                        <div class="label">Open Source Commits</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ===== EXPERTISE ===== -->
-    <section id="expertise">
-        <div class="container">
-            <div class="reveal">
-                <span class="section-label">Expertise</span>
-                <h2 class="section-title">Tech stack &amp; <span class="highlight">specializations</span></h2>
-                <p class="section-desc">From geospatial data pipelines to AI-driven analytics — the tools I wield to build spatial systems at scale.</p>
-            </div>
-            <div class="expertise-grid">
-                <div class="expertise-card reveal reveal-delay-1">
-                    <div class="cat-icon"><i class="fas fa-globe-americas"></i></div>
-                    <h4>Geospatial</h4>
-                    <div class="tags">
-                        <span class="tag">GDAL/OGR</span>
-                        <span class="tag">PostGIS</span>
-                        <span class="tag">QGIS</span>
-                        <span class="tag">GeoServer</span>
-                        <span class="tag">GeoDjango</span>
-                        <span class="tag">GeoPandas</span>
-                        <span class="tag">Rasterio</span>
-                        <span class="tag">MapLibre</span>
-                        <span class="tag">Deck.gl</span>
-                    </div>
-                </div>
-                <div class="expertise-card reveal reveal-delay-2">
-                    <div class="cat-icon"><i class="fas fa-server"></i></div>
-                    <h4>Backend</h4>
-                    <div class="tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">FastAPI</span>
-                        <span class="tag">NestJS</span>
-                        <span class="tag">Node.js</span>
-                        <span class="tag">REST API</span>
-                    </div>
-                </div>
-                <div class="expertise-card reveal reveal-delay-3">
-                    <div class="cat-icon"><i class="fas fa-robot"></i></div>
-                    <h4>AI / ML</h4>
-                    <div class="tags">
-                        <span class="tag">LLMs</span>
-                        <span class="tag">MCP Protocol</span>
-                        <span class="tag">H3 Indexing</span>
-                    </div>
-                </div>
-                <div class="expertise-card reveal reveal-delay-4">
-                    <div class="cat-icon"><i class="fas fa-code"></i></div>
-                    <h4>Frontend</h4>
-                    <div class="tags">
-                        <span class="tag">TypeScript</span>
-                        <span class="tag">React</span>
-                        <span class="tag">Next.js</span>
-                    </div>
-                </div>
-                <div class="expertise-card reveal reveal-delay-5">
-                    <div class="cat-icon"><i class="fas fa-cubes"></i></div>
-                    <h4>DevOps</h4>
-                    <div class="tags">
-                        <span class="tag">Docker</span>
-                        <span class="tag">Nginx</span>
-                        <span class="tag">PostgreSQL</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <div class="hero-actions">
+                        <a
+                            class="button button-primary"
+                            href="#work"
+                        >
+                            Explore selected work
 
-    <!-- ===== PROJECTS ===== -->
-    <section id="projects">
-        <div class="container">
-            <div class="reveal">
-                <span class="section-label">Projects</span>
-                <h2 class="section-title">Featured <span class="highlight">work</span></h2>
-                <p class="section-desc">Spatial systems, platforms, and tools I've architected from the ground up.</p>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card reveal reveal-delay-1">
-                    <div class="p-icon"><i class="fas fa-comment-dots"></i></div>
-                    <h4>geoChat-v2-core</h4>
-                    <p>Plugin-based architecture system for geospatial conversational AI. Modular, extensible, and built for scale.</p>
-                </div>
-                <div class="project-card reveal reveal-delay-2">
-                    <div class="p-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h4>Bookane.ir</h4>
-                    <p>Persian educational platform bridging learners with quality resources. Built with modern web stack.</p>
-                </div>
-                <div class="project-card reveal reveal-delay-3">
-                    <div class="p-icon"><i class="fas fa-tree"></i></div>
-                    <h4>Urban Green Space Management</h4>
-                    <p>GIS-driven system for inventory, analysis, and planning of urban vegetation using remote sensing data.</p>
-                </div>
-                <div class="project-card reveal reveal-delay-4">
-                    <div class="p-icon"><i class="fas fa-traffic-light"></i></div>
-                    <h4>Smart Traffic &amp; Transportation</h4>
-                    <p>Real-time traffic monitoring and route optimization using spatial algorithms and IoT feeds.</p>
-                </div>
-                <div class="project-card reveal reveal-delay-5">
-                    <div class="p-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <h4>Teacher Ranking System</h4>
-                    <p>Data-driven evaluation platform for educational institutions with geospatial analytics.</p>
-                </div>
-                <div class="project-card reveal reveal-delay-1">
-                    <div class="p-icon"><i class="fas fa-wind"></i></div>
-                    <h4>Air Pollution Analysis (Tehran)</h4>
-                    <p>Spatio-temporal analysis of air quality across Tehran using satellite imagery and ground sensors.</p>
-                </div>
-                <div class="project-card reveal reveal-delay-2">
-                    <div class="p-icon"><i class="fas fa-fish"></i></div>
-                    <h4>Fish Cage Aquaculture Planning</h4>
-                    <p>Site suitability modeling for aquaculture in Urmia Lake using multi-criteria GIS analysis.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M5 12h14M14 7l5 5-5 5"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </a>
 
-    <!-- ===== BLOG ===== -->
-    <section id="blog">
-        <div class="container">
-            <div class="reveal">
-                <span class="section-label">Blog</span>
-                <h2 class="section-title">Thoughts on <span class="highlight">geospatial &amp; code</span></h2>
-                <p class="section-desc">I write about geospatial engineering, open source, and the intersection of AI with location intelligence.</p>
-            </div>
-            <div class="blog-card-featured reveal reveal-delay-1">
-                <div class="left">
-                    <h3><i class="fas fa-pen-fancy" style="color:var(--accent);margin-right:0.5rem;"></i>Read my blog</h3>
-                    <p>In-depth articles on GIS, Python, geospatial AI, and open-source architecture. New posts monthly.</p>
-                </div>
-                <div class="right">
-                    <a href="https://blog.araz.me" target="_blank" rel="noopener" class="btn btn-primary">
-                        <i class="fas fa-external-link-alt"></i> blog.araz.me
-                    </a>
-                </div>
-            </div>
-            <div class="blog-posts">
-                <div class="blog-post-item reveal reveal-delay-2">
-                    <div class="b-date"><i class="far fa-calendar-alt" style="margin-right:0.3rem;"></i> Apr 2026</div>
-                    <h4>Building a Spatial Plugin Architecture with Python</h4>
-                    <p>How geoChat-v2-core leverages modular design for geospatial AI workflows.</p>
-                </div>
-                <div class="blog-post-item reveal reveal-delay-3">
-                    <div class="b-date"><i class="far fa-calendar-alt" style="margin-right:0.3rem;"></i> Feb 2026</div>
-                    <h4>H3 Indexing for Real-Time Geospatial Analysis</h4>
-                    <p>Using Uber's H3 hex grid system for efficient spatial joins and aggregations.</p>
-                </div>
-                <div class="blog-post-item reveal reveal-delay-4">
-                    <div class="b-date"><i class="far fa-calendar-alt" style="margin-right:0.3rem;"></i> Dec 2025</div>
-                    <h4>Open Source GIS: A Decade of Lessons</h4>
-                    <p>Reflections on contributing to OSGeo and building with free geospatial tools.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                        <a
+                            class="button"
+                            href="https://cv.araz.me/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Read my CV
+                            <span aria-hidden="true">↗</span>
+                        </a>
 
-    <!-- ===== CONTACT ===== -->
-    <section id="contact">
-        <div class="container">
-            <div class="reveal">
-                <span class="section-label">Contact</span>
-                <h2 class="section-title">Let's <span class="highlight">connect</span></h2>
-                <p class="section-desc">Have a project, idea, or just want to say hello? Reach out — I'm always open to geospatial conversations.</p>
-            </div>
-            <div class="contact-wrap">
-                <div class="contact-info reveal reveal-delay-1">
-                    <h3>Get in touch</h3>
-                    <p>Prefer email? Drop me a line and I'll get back to you within 24 hours.</p>
-                    <a href="mailto:mail@araz.me" class="contact-link">
-                        <i class="fas fa-envelope"></i> mail@araz.me
-                    </a>
-                    <div style="margin-top:0.5rem;">
-                        <span style="color:var(--text-muted);font-size:0.85rem;">or find me on</span>
-                    </div>
-                    <div class="contact-socials">
-                        <a href="https://github.com/arazshah" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/araz-shahkarami" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://blog.araz.me" target="_blank" rel="noopener" aria-label="Blog"><i class="fas fa-pen-fancy"></i></a>
-                        <a href="https://araz.me" target="_blank" rel="noopener" aria-label="Website"><i class="fas fa-globe"></i></a>
-                    </div>
-                </div>
-                <div class="contact-card-alt reveal reveal-delay-2">
-                    <div class="big-icon"><i class="fas fa-map-pin"></i></div>
-                    <h4>ARAZ SHAHKARAMI</h4>
-                    <div class="domain">araz.me</div>
-                    <p style="color:var(--text-secondary);font-size:0.9rem;margin-top:0.75rem;">
-                        <i class="fas fa-check-circle" style="color:var(--accent);"></i> Always open to geospatial collaborations
-                    </p>
-                    <div style="margin-top:1.2rem;">
-                        <a href="mailto:mail@araz.me" class="btn btn-primary" style="padding:0.6rem 1.8rem;">
-                            <i class="fas fa-paper-plane"></i> Send Email
+                        <a
+                            class="button"
+                            href="https://geo.araz.me/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Enter Geo Lab
+                            <span aria-hidden="true">↗</span>
                         </a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="container">
-            <p>© 2026 Araz Shahkarami. All rights reserved.</p>
-            <button class="back-to-top" id="backToTop" aria-label="Back to top">
-                <i class="fas fa-arrow-up"></i> Back to top
-            </button>
+                <div
+                    class="spatial-card reveal"
+                    id="spatialCard"
+                    aria-label="Interactive spatial systems illustration"
+                >
+                    <div class="coordinate-label">
+                        37.5527° N<br>
+                        45.0761° E<br>
+                        URMIA / IR
+                    </div>
+
+                    <div class="geo-index">GEO</div>
+
+                    <svg
+                        class="map-art"
+                        viewBox="0 0 600 700"
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            class="terrain"
+                            d="M-30 148C54 84 123 198 205 135S348 89 425 154s132 31 206-22"
+                        />
+                        <path
+                            class="terrain"
+                            d="M-40 188C58 126 116 234 218 172s173-23 230 29 113 57 190 5"
+                        />
+                        <path
+                            class="terrain"
+                            d="M-10 545c92-83 166 11 252-44s147-72 223-4 121 26 183-37"
+                        />
+                        <path
+                            class="terrain"
+                            d="M-30 590c95-83 160 20 262-44s165-47 237 6 119 27 180-9"
+                        />
+
+                        <path
+                            class="route"
+                            d="M54 570C125 508 89 391 193 350s130-177 238-128 74 160 134 204"
+                        />
+
+                        <path
+                            class="route"
+                            d="M40 203c82 52 124 18 195 105s159 86 207 26 88-34 141-98"
+                        />
+
+                        <path
+                            class="route-accent"
+                            d="M106 496C156 430 187 462 235 387s91-46 131-91 78-32 129-101"
+                        />
+
+                        <circle class="point" cx="106" cy="496" r="7"/>
+                        <circle class="point" cx="235" cy="387" r="6"/>
+                        <circle class="point" cx="366" cy="296" r="6"/>
+                        <circle class="point-active" cx="495" cy="195" r="8"/>
+                    </svg>
+
+                    <div class="map-core">
+                        <strong>12+</strong>
+                        <span>Years building</span>
+                    </div>
+
+                    <span class="floating-tag tag-python">PYTHON</span>
+                    <span class="floating-tag tag-postgis">POSTGIS</span>
+                    <span class="floating-tag tag-geoai">GEOAI</span>
+                    <span class="floating-tag tag-mcp">MCP</span>
+
+                    <div class="spatial-footer">
+                        <span>Spatial systems / backend architecture</span>
+                        <span id="localTime">UTC +03:30</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signals -->
+        <section class="signal-strip" aria-label="Professional highlights">
+            <div class="container signals">
+                <div class="signal">
+                    <strong>12+ years</strong>
+                    <span>Software engineering</span>
+                </div>
+
+                <div class="signal">
+                    <strong>Python-first</strong>
+                    <span>Backend architecture</span>
+                </div>
+
+                <div class="signal">
+                    <strong>GeoAI</strong>
+                    <span>Maps meet intelligence</span>
+                </div>
+
+                <div class="signal">
+                    <strong>OSGeo</strong>
+                    <span>Advocate & contributor</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="section" id="about">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="section-kicker">01 / About</p>
+
+                    <h2 class="section-title">
+                        Beyond code: designing the
+                        <em>logic</em> behind complex systems.
+                    </h2>
+                </header>
+
+                <div class="about-layout">
+                    <p class="about-lead reveal">
+                        My work connects backend engineering, spatial data
+                        and intelligent interfaces—three disciplines that
+                        rarely remain separate in real-world systems.
+                    </p>
+
+                    <div class="about-copy reveal">
+                        <p>
+                            I specialize in designing modular backend services,
+                            spatial databases, data-intensive APIs and
+                            AI-assisted geospatial platforms. My experience
+                            spans insurance technology, risk assessment,
+                            claims management, Sensor Web systems, natural
+                            language mapping and enterprise spatial
+                            infrastructure.
+                        </p>
+
+                        <p>
+                            I currently work as a
+                            <strong>Geospatial Backend Developer</strong> at
+                            Spatial Science Innovators and as a
+                            <strong>Senior Software Engineer</strong> at
+                            Alborz Insurance Company. I have also led and
+                            mentored technical teams, created independent
+                            products and produced Persian technical education.
+                        </p>
+
+                        <div class="capability-list">
+                            <div class="capability">
+                                <span class="capability-index">01</span>
+                                <strong>Backend Architecture</strong>
+                                <span>Python · FastAPI · Django · APIs</span>
+                            </div>
+
+                            <div class="capability">
+                                <span class="capability-index">02</span>
+                                <strong>Spatial Engineering</strong>
+                                <span>PostGIS · GDAL · GeoDjango · OGC</span>
+                            </div>
+
+                            <div class="capability">
+                                <span class="capability-index">03</span>
+                                <strong>AI & LLM Systems</strong>
+                                <span>Orchestration · Tools · MCP · ML</span>
+                            </div>
+
+                            <div class="capability">
+                                <span class="capability-index">04</span>
+                                <strong>Technical Leadership</strong>
+                                <span>Architecture · Mentoring · R&amp;D</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selected work -->
+        <section class="section projects-section" id="work">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="section-kicker">02 / Selected work</p>
+
+                    <h2 class="section-title">
+                        Products built around
+                        <em>real problems</em>, not demonstrations.
+                    </h2>
+                </header>
+
+                <div class="projects-grid">
+                    <!-- Mapathon -->
+                    <article class="project-card featured reveal">
+                        <div class="project-meta">
+                            <span class="project-number">01</span>
+                            <span>Geospatial AI · Flagship Project</span>
+                        </div>
+
+                        <a
+                            class="project-link"
+                            href="https://mapathon.ir/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Visit Mapathon"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M7 17 17 7M8 7h9v9"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </a>
+
+                        <div class="project-orbit" aria-hidden="true"></div>
+
+                        <div class="project-content">
+                            <h3 class="project-title">Mapathon</h3>
+
+                            <p class="project-description">
+                                A Persian geospatial AI assistant that turns
+                                natural-language requests into location search,
+                                routing, spatial analysis and interactive
+                                map-based responses. Designed around modular
+                                capabilities, plugin-based spatial intelligence
+                                and smart LLM orchestration.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>GeoAI</span>
+                                <span>Natural Language</span>
+                                <span>Python SDK</span>
+                                <span>LLM Orchestration</span>
+                                <span>Spatial Analysis</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Geo Lab -->
+                    <article class="project-card secondary reveal">
+                        <div class="project-meta">
+                            <span class="project-number">02</span>
+                            <span>Research · Experiments</span>
+                        </div>
+
+                        <a
+                            class="project-link"
+                            href="https://geo.araz.me/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Visit Araz Geo Lab"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M7 17 17 7M8 7h9v9"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </a>
+
+                        <div class="project-content">
+                            <h3 class="project-title">Geo Lab</h3>
+
+                            <p class="project-description">
+                                A dedicated space for geospatial experiments,
+                                prototypes, spatial data tools and explorations
+                                at the intersection of mapping, backend systems
+                                and artificial intelligence.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>GIS</span>
+                                <span>Spatial R&amp;D</span>
+                                <span>Open Data</span>
+                                <span>Geo Tools</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Bookane -->
+                    <article class="project-card third reveal">
+                        <div class="project-meta">
+                            <span class="project-number">03</span>
+                            <span>Education · Persian Technology</span>
+                        </div>
+
+                        <a
+                            class="project-link"
+                            href="https://bookane.ir/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Visit Bookane"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M7 17 17 7M8 7h9v9"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </a>
+
+                        <div class="project-content">
+                            <h3 class="project-title">Bookane</h3>
+
+                            <p class="project-description">
+                                A Persian technology education platform
+                                covering programming, backend engineering,
+                                web development, DevOps, GIS, databases and
+                                artificial intelligence.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>Education</span>
+                                <span>Persian Content</span>
+                                <span>Community</span>
+                                <span>Software Engineering</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Rsynx -->
+                    <article class="project-card fourth reveal">
+                        <div class="project-meta">
+                            <span class="project-number">04</span>
+                            <span>Developer Tool · CLI</span>
+                        </div>
+
+                        <a
+                            class="project-link"
+                            href="https://rsynx.ir/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Visit Rsynx"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M7 17 17 7M8 7h9v9"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </a>
+
+                        <div class="project-content">
+                            <h3 class="project-title">Rsynx</h3>
+
+                            <p class="project-description">
+                                A lightweight, terminal-first file-sharing
+                                service designed to transfer files and create
+                                shareable links without leaving the command
+                                line.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>CLI</span>
+                                <span>File Sharing</span>
+                                <span>Backend</span>
+                                <span>Developer Experience</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="section" id="experience">
+            <div class="container experience-grid">
+                <aside class="experience-aside reveal">
+                    <p class="section-kicker">03 / Experience</p>
+
+                    <p>
+                        A career shaped by software engineering, spatial
+                        research, enterprise systems and product development.
+                    </p>
+
+                    <div style="margin-top: 28px">
+                        <a
+                            class="button"
+                            href="https://cv.araz.me/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Full experience in CV ↗
+                        </a>
+                    </div>
+                </aside>
+
+                <div class="timeline">
+                    <article class="timeline-item reveal">
+                        <div class="timeline-date">2025 — NOW</div>
+
+                        <div>
+                            <h3 class="timeline-role">
+                                Geospatial Backend Developer
+                            </h3>
+
+                            <span class="timeline-company">
+                                Spatial Science Innovators · Tehran, Iran
+                            </span>
+
+                            <p class="timeline-description">
+                                Building scalable geospatial APIs,
+                                microservice-based spatial platforms, GeoAI
+                                pipelines and MCP servers using Python,
+                                FastAPI and PostGIS.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-item reveal">
+                        <div class="timeline-date">2016 — NOW</div>
+
+                        <div>
+                            <h3 class="timeline-role">
+                                Senior Software Engineer
+                            </h3>
+
+                            <span class="timeline-company">
+                                Alborz Insurance Company · Iran
+                            </span>
+
+                            <p class="timeline-description">
+                                Designing enterprise Python backend systems,
+                                spatial risk assessment capabilities, claims
+                                visualization, data integration and
+                                anomaly-detection workflows while leading and
+                                mentoring a technical team.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-item reveal">
+                        <div class="timeline-date">2014 — 2016</div>
+
+                        <div>
+                            <h3 class="timeline-role">
+                                Python Engineer &amp; Geospatial R&amp;D Developer
+                            </h3>
+
+                            <span class="timeline-company">
+                                PTA GIS Software Producer Company · Tehran
+                            </span>
+
+                            <p class="timeline-description">
+                                Researched and developed Sensor Web systems,
+                                OGC/SWE-based components and data pipelines
+                                for GPS devices, weather stations and connected
+                                geospatial sensors.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-item reveal">
+                        <div class="timeline-date">2010 — 2012</div>
+
+                        <div>
+                            <h3 class="timeline-role">
+                                Junior Software Developer
+                            </h3>
+
+                            <span class="timeline-company">
+                                Sadra Software Company · Urmia
+                            </span>
+
+                            <p class="timeline-description">
+                                Worked on software development, database
+                                solutions and ETL processes using C and
+                                Microsoft SQL Server.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Open source -->
+        <section class="section">
+            <div class="container">
+                <div class="open-source-panel reveal">
+                    <div>
+                        <p class="section-kicker">04 / Open knowledge</p>
+
+                        <h2 class="panel-title">
+                            Software becomes stronger when knowledge stays open.
+                        </h2>
+
+                        <p class="panel-copy">
+                            As an OSGeo Advocate, I contribute to open
+                            geospatial software, Persian localization and
+                            community knowledge sharing. This includes adding
+                            Persian language support to GeoLibre and creating
+                            technical content around backend engineering,
+                            GIS, AI and emerging standards such as the Model
+                            Context Protocol.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a
+                                class="button button-primary"
+                                href="https://github.com/arazshah/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Explore GitHub
+                                <span aria-hidden="true">↗</span>
+                            </a>
+
+                            <a
+                                class="button"
+                                href="https://www.linkedin.com/in/araz-shahkarami/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Follow on LinkedIn
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="os-badge" aria-label="OSGeo Advocate">
+                        <strong>OSGeo</strong>
+                        <span>Advocate</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section contact-section" id="contact">
+            <div class="container">
+                <div class="contact-card reveal">
+                    <div>
+                        <p class="contact-label">
+                            Available for meaningful engineering challenges
+                        </p>
+
+                        <h2 class="contact-title">
+                            Have a complex system to build?
+                            <span>Let’s map it out.</span>
+                        </h2>
+                    </div>
+
+                    <div class="contact-footer">
+                        <!-- Replace if your preferred email is different -->
+                        <a
+                            class="contact-email"
+                            href="mailto:mail@araz.me"
+                        >
+                            mail@araz.me
+                        </a>
+
+                        <div class="contact-links">
+                            <a
+                                href="https://www.linkedin.com/in/araz-shahkarami/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                LinkedIn ↗
+                            </a>
+
+                            <a
+                                href="https://github.com/arazshah/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                GitHub ↗
+                            </a>
+
+                            <a
+                                href="https://cv.araz.me/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                CV ↗
+                            </a>
+
+                            <a
+                                href="https://geo.araz.me/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Geo Lab ↗
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>
+                © <span id="year">2026</span> Araz Shahkarami
+            </span>
+
+            <span>
+                Backend × Geospatial × AI
+            </span>
+
+            <span class="footer-location">
+                Urmia, Iran · Open to relocation
+            </span>
         </div>
     </footer>
 
-    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        (function() {
-            'use strict';
+        (() => {
+            "use strict";
 
-            // --- Typing effect ---
-            const roles = [
-                'Geospatial AI Engineer',
-                'Senior Software Engineer',
-                'GIS Developer',
-                'Open Source Advocate',
-                'Spatial Systems Architect'
-            ];
-            let roleIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            const typingEl = document.getElementById('typingText');
-            if (!typingEl) return;
+            const header = document.getElementById("siteHeader");
+            const menuButton = document.getElementById("menuButton");
+            const mobileMenu = document.getElementById("mobileMenu");
+            const spatialCard = document.getElementById("spatialCard");
+            const localTime = document.getElementById("localTime");
+            const year = document.getElementById("year");
 
-            function typeRole() {
-                const current = roles[roleIndex];
-                if (!isDeleting) {
-                    typingEl.textContent = current.substring(0, charIndex + 1);
-                    charIndex++;
-                    if (charIndex === current.length) {
-                        isDeleting = true;
-                        setTimeout(typeRole, 2200);
-                        return;
-                    }
-                    setTimeout(typeRole, 60 + Math.random() * 40);
-                } else {
-                    typingEl.textContent = current.substring(0, charIndex);
-                    charIndex--;
-                    if (charIndex < 0) {
-                        isDeleting = false;
-                        roleIndex = (roleIndex + 1) % roles.length;
-                        charIndex = 0;
-                        setTimeout(typeRole, 400);
-                        return;
-                    }
-                    setTimeout(typeRole, 30 + Math.random() * 20);
-                }
-            }
-            setTimeout(typeRole, 600);
-
-            // --- Hamburger menu ---
-            const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('navLinks');
-            if (hamburger && navLinks) {
-                hamburger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const isOpen = navLinks.classList.toggle('open');
-                    hamburger.classList.toggle('active');
-                    hamburger.setAttribute('aria-expanded', isOpen);
-                });
-                // Close on link click
-                navLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', function() {
-                        navLinks.classList.remove('open');
-                        hamburger.classList.remove('active');
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    });
-                });
-                // Close on outside click
-                document.addEventListener('click', function(e) {
-                    if (!e.target.closest('.navbar')) {
-                        navLinks.classList.remove('open');
-                        hamburger.classList.remove('active');
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
+            // Dynamic year
+            if (year) {
+                year.textContent = new Date().getFullYear();
             }
 
-            // --- Nav active link on scroll ---
-            const sections = document.querySelectorAll('section[id]');
-            const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
-            const observerOptions = {
-                root: null,
-                rootMargin: '-40% 0px -60% 0px',
-                threshold: 0
+            // Header scroll state
+            const updateHeader = () => {
+                header?.classList.toggle("scrolled", window.scrollY > 20);
             };
 
-            function updateActiveNav() {
-                let currentId = '';
-                sections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.2) {
-                        currentId = section.getAttribute('id');
-                    }
-                });
-                navAnchors.forEach(a => {
-                    a.classList.remove('active');
-                    if (a.getAttribute('href') === '#' + currentId) {
-                        a.classList.add('active');
-                    }
-                });
-            }
+            updateHeader();
+            window.addEventListener("scroll", updateHeader, { passive: true });
 
-            if (sections.length && navAnchors.length) {
-                window.addEventListener('scroll', updateActiveNav, { passive: true });
-                updateActiveNav();
-            }
+            // Mobile navigation
+            const setMenuState = (open) => {
+                if (!menuButton || !mobileMenu) return;
 
-            // --- Intersection Observer for reveal animations ---
-            const revealEls = document.querySelectorAll('.reveal');
-            if (revealEls.length) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                }, {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -40px 0px'
-                });
-                revealEls.forEach(el => observer.observe(el));
-            }
+                document.body.classList.toggle("menu-open", open);
+                mobileMenu.classList.toggle("open", open);
+                mobileMenu.setAttribute("aria-hidden", String(!open));
+                menuButton.setAttribute("aria-expanded", String(open));
+                menuButton.setAttribute(
+                    "aria-label",
+                    open ? "Close navigation" : "Open navigation"
+                );
 
-            // --- Back to top ---
-            const backBtn = document.getElementById('backToTop');
-            if (backBtn) {
-                backBtn.addEventListener('click', function() {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
+                const bars = menuButton.querySelectorAll("span");
 
-            // --- Particles ---
-            const container = document.getElementById('particles');
-            if (container) {
-                const count = Math.min(60, Math.floor(window.innerWidth / 20));
-                for (let i = 0; i < count; i++) {
-                    const span = document.createElement('span');
-                    const x = Math.random() * 100;
-                    const y = Math.random() * 100;
-                    const size = 1 + Math.random() * 3;
-                    const duration = 10 + Math.random() * 20;
-                    const delay = Math.random() * 10;
-                    span.style.left = x + '%';
-                    span.style.top = y + '%';
-                    span.style.width = size + 'px';
-                    span.style.height = size + 'px';
-                    span.style.animationDuration = duration + 's';
-                    span.style.animationDelay = delay + 's';
-                    span.style.opacity = 0.08 + Math.random() * 0.12;
-                    container.appendChild(span);
+                if (bars.length === 2) {
+                    bars[0].style.transform = open
+                       ? "translateY(3px) rotate(45deg)"
+                        : "none";
+
+                    bars[1].style.transform = open
+                        ? "translateY(-3px) rotate(-45deg)"
+                        : "none";
                 }
-            }
+            };
 
-            // --- Smooth scroll for all anchor links ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if (href === '#') return;
-                    const target = document.querySelector(href);
-                    if (target) {
-                        e.preventDefault();
-                        const offset = parseInt(getComputedStyle(document.documentElement).scrollPaddingTop) || 68;
-                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top, behavior: 'smooth' });
-                    }
-                });
+            menuButton?.addEventListener("click", () => {
+                const isOpen =
+                    menuButton.getAttribute("aria-expanded") === "true";
+
+                setMenuState(!isOpen);
             });
 
+            mobileMenu?.querySelectorAll("a").forEach((link) => {
+                link.addEventListener("click", () => setMenuState(false));
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    setMenuState(false);
+                }
+            });
+
+            // Reveal elements when they enter the viewport
+            const revealElements = document.querySelectorAll(".reveal");
+
+            if (
+                "IntersectionObserver" in window &&
+                !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ) {
+                const revealObserver = new IntersectionObserver(
+                    (entries, observer) => {
+                        entries.forEach((entry) => {
+                            if (!entry.isIntersecting) return;
+
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                        });
+                    },
+                    {
+                        threshold: 0.12,
+                        rootMargin: "0px 0px -50px 0px"
+                    }
+                );
+
+                revealElements.forEach((element, index) => {
+                    element.style.transitionDelay =
+                        `${Math.min(index % 4, 3) * 70}ms`;
+
+                    revealObserver.observe(element);
+                });
+            } else {
+                revealElements.forEach((element) => {
+                    element.classList.add("visible");
+                });
+            }
+
+            // Subtle spatial-card pointer interaction
+            if (
+                spatialCard &&
+                window.matchMedia("(pointer: fine)").matches &&
+                !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ) {
+                const tags = spatialCard.querySelectorAll(".floating-tag");
+
+                spatialCard.addEventListener("pointermove", (event) => {
+                    const rect = spatialCard.getBoundingClientRect();
+
+                    const normalizedX =
+                        (event.clientX - rect.left) / rect.width - 0.5;
+
+                    const normalizedY =
+                        (event.clientY - rect.top) / rect.height - 0.5;
+
+                    tags.forEach((tag, index) => {
+                        const depth = (index + 1) * 2.6;
+
+                        tag.style.transform =
+                            `translate(
+                                ${normalizedX * depth}px,
+                                ${normalizedY * depth}px
+                            )`;
+                    });
+                });
+
+                spatialCard.addEventListener("pointerleave", () => {
+                    tags.forEach((tag) => {
+                        tag.style.transform = "translate(0, 0)";
+                    });
+                });
+            }
+
+            // Display the current time in Urmia/Tehran timezone
+            const updateLocalTime = () => {
+                if (!localTime) return;
+
+                try {
+                    const formatter = new Intl.DateTimeFormat("en-GB", {
+                        timeZone: "Asia/Tehran",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false
+                    });
+
+                    localTime.textContent =
+                        `${formatter.format(new Date())} · ASIA/TEHRAN`;
+                } catch {
+                    localTime.textContent = "UTC +03:30";
+                }
+            };
+
+            updateLocalTime();
+            window.setInterval(updateLocalTime, 30_000);
+
+            // Close mobile navigation if viewport becomes desktop-sized
+            window.addEventListener(
+                "resize",
+                () => {
+                    if (window.innerWidth > 1100) {
+                        setMenuState(false);
+                    }
+                },
+                { passive: true }
+            );
+
+            // Keep keyboard focus inside the mobile menu while it is open
+            document.addEventListener("keydown", (event) => {
+                if (
+                    event.key !== "Tab" ||
+                    !mobileMenu?.classList.contains("open")
+                ) {
+                    return;
+                }
+
+                const focusableElements = [
+                    menuButton,
+                    ...mobileMenu.querySelectorAll(
+                        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                    )
+                ].filter(Boolean);
+
+                if (!focusableElements.length) return;
+
+                const firstElement = focusableElements[0];
+                const lastElement =
+                    focusableElements[focusableElements.length - 1];
+
+                if (
+                    event.shiftKey &&
+                    document.activeElement === firstElement
+                ) {
+                    event.preventDefault();
+                    lastElement.focus();
+                } else if (
+                    !event.shiftKey &&
+                    document.activeElement === lastElement
+                ) {
+                    event.preventDefault();
+                    firstElement.focus();
+                }
+            });
         })();
     </script>
 </body>

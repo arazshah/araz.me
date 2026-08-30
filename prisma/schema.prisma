@@ -1,0 +1,447 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Locale {
+  fa
+  en
+  az
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+  SPAM
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         UserRole   @default(EDITOR)
+  active       Boolean    @default(true)
+  totpSecret   String?
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  posts        Post[]
+  revisions    Revision[]
+  auditLogs    AuditLog[]
+}
+
+model Page {
+  id          String        @id @default(cuid())
+  locale      Locale
+  title       String
+  slug        String
+  summary     String?
+  body        String        @db.Text
+  status      ContentStatus @default(DRAFT)
+  featured    Boolean       @default(false)
+  sortOrder   Int           @default(0)
+  publishedAt DateTime?
+  seo         SeoMetadata?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+
+  @@unique([locale, slug])
+  @@index([status, publishedAt])
+}
+
+model Post {
+  id          String         @id @default(cuid())
+  locale      Locale
+  title       String
+  slug        String
+  summary     String
+  body        String         @db.Text
+  status      ContentStatus  @default(DRAFT)
+  featured    Boolean        @default(false)
+  coverId     String?
+  authorId    String?
+  publishedAt DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  deletedAt   DateTime?
+  author      User?          @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  cover       MediaAsset?    @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  categories  PostCategory[]
+  tags        PostTag[]
+  seo         SeoMetadata?
+
+  @@unique([locale, slug])
+  @@index([status, publishedAt])
+}
+
+model Category {
+  id     String         @id @default(cuid())
+  locale Locale
+  name   String
+  slug   String
+  posts  PostCategory[]
+
+  @@unique([locale, slug])
+}
+
+model Tag {
+  id     String    @id @default(cuid())
+  locale Locale
+  name   String
+  slug   String
+  posts  PostTag[]
+
+  @@unique([locale, slug])
+}
+
+model PostCategory {
+  postId     String
+  categoryId String
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+}
+
+model PostTag {
+  postId String
+  tagId  String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+}
+
+model Project {
+  id            String                @id @default(cuid())
+  locale        Locale
+  title         String
+  slug          String
+  summary       String
+  problem       String?               @db.Text
+  solution      String?               @db.Text
+  architecture  String?               @db.Text
+  contribution  String?               @db.Text
+  challenges    String?               @db.Text
+  results       String?               @db.Text
+  role          String?
+  projectStatus String?
+  year          Int?
+  githubUrl     String?
+  liveUrl       String?
+  featured      Boolean               @default(false)
+  status        ContentStatus         @default(DRAFT)
+  sortOrder     Int                   @default(0)
+  publishedAt   DateTime?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  deletedAt     DateTime?
+  categories    ProjectCategoryLink[]
+  technologies  ProjectTechnology[]
+  seo           SeoMetadata?
+
+  @@unique([locale, slug])
+  @@index([status, year])
+}
+
+model ProjectCategory {
+  id       String                @id @default(cuid())
+  locale   Locale
+  name     String
+  slug     String
+  projects ProjectCategoryLink[]
+
+  @@unique([locale, slug])
+}
+
+model ProjectCategoryLink {
+  projectId  String
+  categoryId String
+  project    Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category   ProjectCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, categoryId])
+}
+
+model Technology {
+  id       String              @id @default(cuid())
+  name     String              @unique
+  url      String?
+  projects ProjectTechnology[]
+}
+
+model ProjectTechnology {
+  projectId    String
+  technologyId String
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, technologyId])
+}
+
+model Podcast {
+  id          String           @id @default(cuid())
+  locale      Locale
+  title       String
+  slug        String
+  description String           @db.Text
+  rssUrl      String?
+  enabled     Boolean          @default(true)
+  episodes    PodcastEpisode[]
+
+  @@unique([locale, slug])
+}
+
+model PodcastEpisode {
+  id          String         @id @default(cuid())
+  podcastId   String
+  locale      Locale
+  title       String
+  slug        String
+  summary     String
+  showNotes   String         @db.Text
+  transcript  String?        @db.Text
+  season      Int?
+  episode     Int?
+  duration    Int?
+  audioUrl    String?
+  status      ContentStatus  @default(DRAFT)
+  publishedAt DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  podcast     Podcast        @relation(fields: [podcastId], references: [id], onDelete: Cascade)
+  guests      EpisodeGuest[]
+  seo         SeoMetadata?
+
+  @@unique([locale, slug])
+}
+
+model Guest {
+  id       String         @id @default(cuid())
+  name     String
+  bio      String?
+  url      String?
+  episodes EpisodeGuest[]
+}
+
+model EpisodeGuest {
+  episodeId String
+  guestId   String
+  episode   PodcastEpisode @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  guest     Guest          @relation(fields: [guestId], references: [id], onDelete: Cascade)
+
+  @@id([episodeId, guestId])
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  locale       Locale
+  organization String
+  role         String
+  description  String?   @db.Text
+  location     String?
+  startDate    DateTime?
+  endDate      DateTime?
+  current      Boolean   @default(false)
+  visible      Boolean   @default(true)
+  sortOrder    Int       @default(0)
+}
+
+model Education {
+  id          String  @id @default(cuid())
+  locale      Locale
+  institution String
+  field       String?
+  description String?
+  visible     Boolean @default(true)
+  sortOrder   Int     @default(0)
+}
+
+model Skill {
+  id        String  @id @default(cuid())
+  locale    Locale
+  name      String
+  group     String
+  level     Int?
+  visible   Boolean @default(true)
+  sortOrder Int     @default(0)
+
+  @@unique([locale, name])
+}
+
+model Service {
+  id        String  @id @default(cuid())
+  locale    Locale
+  title     String
+  slug      String
+  summary   String
+  enabled   Boolean @default(false)
+  sortOrder Int     @default(0)
+
+  @@unique([locale, slug])
+}
+
+model MediaItem {
+  id          String    @id @default(cuid())
+  locale      Locale
+  title       String
+  type        String
+  url         String?
+  description String?
+  publishedAt DateTime?
+  visible     Boolean   @default(true)
+  sortOrder   Int       @default(0)
+}
+
+model OpenSourceEntry {
+  id            String  @id @default(cuid())
+  locale        Locale
+  name          String
+  summary       String
+  repositoryUrl String?
+  homepageUrl   String?
+  featured      Boolean @default(false)
+  visible       Boolean @default(true)
+  sortOrder     Int     @default(0)
+}
+
+model SocialLink {
+  id        String  @id @default(cuid())
+  label     String
+  url       String
+  visible   Boolean @default(true)
+  sortOrder Int     @default(0)
+}
+
+model NavigationMenu {
+  id     String           @id @default(cuid())
+  locale Locale
+  key    String
+  items  NavigationItem[]
+
+  @@unique([locale, key])
+}
+
+model NavigationItem {
+  id        String         @id @default(cuid())
+  menuId    String
+  label     String
+  href      String
+  sortOrder Int            @default(0)
+  visible   Boolean        @default(true)
+  menu      NavigationMenu @relation(fields: [menuId], references: [id], onDelete: Cascade)
+}
+
+model MediaAsset {
+  id         String   @id @default(cuid())
+  filename   String
+  storageKey String   @unique
+  mimeType   String
+  size       Int
+  width      Int?
+  height     Int?
+  altText    String
+  caption    String?
+  credits    String?
+  createdAt  DateTime @default(now())
+  posts      Post[]
+}
+
+model ContactSubmission {
+  id                String        @id @default(cuid())
+  name              String
+  email             String
+  company           String?
+  collaborationType String
+  subject           String
+  message           String        @db.Text
+  budget            String?
+  status            ContactStatus @default(NEW)
+  notes             String?       @db.Text
+  ipHash            String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model SeoMetadata {
+  id             String          @id @default(cuid())
+  title          String?
+  description    String?
+  canonicalUrl   String?
+  noIndex        Boolean         @default(false)
+  openGraphImage String?
+  schemaData     Json?
+  pageId         String?         @unique
+  postId         String?         @unique
+  projectId      String?         @unique
+  episodeId      String?         @unique
+  page           Page?           @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  post           Post?           @relation(fields: [postId], references: [id], onDelete: Cascade)
+  project        Project?        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  episode        PodcastEpisode? @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+}
+
+model Redirect {
+  id          String   @id @default(cuid())
+  source      String   @unique
+  destination String
+  permanent   Boolean  @default(true)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Revision {
+  id         String   @id @default(cuid())
+  entityType String
+  entityId   String
+  snapshot   Json
+  editorId   String?
+  createdAt  DateTime @default(now())
+  editor     User?    @relation(fields: [editorId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId, createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String?
+  entityId   String?
+  metadata   Json?
+  ipHash     String?
+  createdAt  DateTime @default(now())
+  actor      User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+}

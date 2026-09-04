@@ -85,20 +85,20 @@ CI runs client generation, migrations against PostgreSQL, type checking, linting
 
 ## Production with Docker Compose
 
-1. Copy `.env.example` to `.env` and set `POSTGRES_PASSWORD`, a 32+ character `AUTH_SECRET`, `NEXT_PUBLIC_SITE_URL`, and `SITE_DOMAIN`.
+1. Copy `.env.example` to `.env` and set `POSTGRES_PASSWORD`, a 32+ character `AUTH_SECRET`, and `NEXT_PUBLIC_SITE_URL`.
 2. Build and start:
 
 ```bash
 docker compose build --pull
-docker compose up -d db
-docker compose run --rm app npx prisma migrate deploy
 docker compose up -d
 ```
 
-3. Create the first administrator with a one-off app container and protected environment variables.
-4. Verify `https://your-domain/api/health`, then `/fa`, `/en`, and `/admin/login`.
+The one-shot `migrate` service applies checked-in database migrations before the application starts.
 
-Caddy provisions HTTPS when DNS points to the VPS and ports 80/443 are open. Nginx can replace Caddy: proxy to `app:3000`, forward `Host` and `X-Forwarded-For`, set a request-body limit, and enable HSTS only after HTTPS works.
+3. Create the first administrator with a one-off application container and protected environment variables.
+4. Route your platform proxy to the `app` service on port 3000, then verify `/api/health`, `/fa`, `/en`, and `/admin/login`.
+
+On Coolify, assign the public domain to the `app` service on port 3000. Coolify provides the public reverse proxy and HTTPS, so this stack does not bind host ports 80 or 443.
 
 ## VPS operations, rollback, and logs
 

@@ -1,0 +1,594 @@
+% !TeX program = pdflatex
+% Compile with pdfLaTeX.
+
+\documentclass[10pt,a4paper]{article}
+
+% -------------------------------------------------
+% Page geometry
+% -------------------------------------------------
+\usepackage[
+  top=1.35cm,
+  bottom=1.35cm,
+  left=1.45cm,
+  right=1.45cm
+]{geometry}
+
+% -------------------------------------------------
+% pdfLaTeX font and encoding configuration
+% -------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Use LaTeX's standard sans-serif font.
+% No fontspec, system font, or external font is required.
+\renewcommand{\familydefault}{\sfdefault}
+
+% -------------------------------------------------
+% Packages
+% -------------------------------------------------
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{hyperref}
+
+% -------------------------------------------------
+% Colors
+% -------------------------------------------------
+\definecolor{Primary}{HTML}{163A5F}
+\definecolor{Accent}{HTML}{1976A3}
+\definecolor{BodyText}{HTML}{222222}
+\definecolor{MutedText}{HTML}{555555}
+\definecolor{RuleColor}{HTML}{B8C6D1}
+
+% -------------------------------------------------
+% Hyperlinks and PDF metadata
+% -------------------------------------------------
+\hypersetup{
+  colorlinks=true,
+  urlcolor=Accent,
+  linkcolor=Accent,
+  citecolor=Accent,
+  pdfauthor={Araz Shahkarami},
+  pdftitle={Araz Shahkarami - Senior Backend Engineer},
+  pdfsubject={
+    Backend Engineering, Geospatial Systems,
+    Artificial Intelligence and Open Source
+  },
+  pdfkeywords={
+    Python,
+    Backend Engineering,
+    GIS,
+    Geospatial Systems,
+    Artificial Intelligence,
+    LLM,
+    PostGIS,
+    Django,
+    FastAPI,
+    Open Source,
+    Technical Leadership
+  },
+  bookmarksopen=true
+}
+
+\urlstyle{same}
+
+% -------------------------------------------------
+% Global formatting
+% -------------------------------------------------
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\raggedbottom
+
+\color{BodyText}
+
+\setlist[itemize]{
+  leftmargin=1.35em,
+  itemsep=1.5pt,
+  topsep=2.5pt,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+% -------------------------------------------------
+% Section formatting
+% -------------------------------------------------
+\titleformat{\section}
+  {\large\bfseries\color{Primary}}
+  {}
+  {0pt}
+  {}
+  [\vspace{1.5pt}\color{RuleColor}\titlerule]
+
+\titlespacing*{\section}
+  {0pt}
+  {9pt}
+  {5pt}
+
+% -------------------------------------------------
+% Custom columns
+% -------------------------------------------------
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% -------------------------------------------------
+% Custom commands
+% -------------------------------------------------
+\newcommand{\contactsep}{%
+  \hspace{0.45em}{\color{RuleColor}|}\hspace{0.45em}%
+}
+
+\newcommand{\jobentry}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Y R{3.2cm}@{}}
+    {\bfseries #1} &
+    {\bfseries\color{MutedText} #3} \\
+    {\itshape\color{MutedText} #2} &
+    {\itshape\color{MutedText} #4}
+  \end{tabularx}
+  \vspace{-3pt}
+}
+
+\newcommand{\projectentry}[2]{%
+  \noindent
+  {\bfseries #1}
+  \hfill
+  {\small #2}
+  \par
+  \vspace{1pt}
+}
+
+\newcommand{\educationentry}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Y R{2.4cm}@{}}
+    {\bfseries #1} &
+    {\bfseries\color{MutedText} #3} \\
+    {\itshape\color{MutedText} #2} &
+    {\itshape\color{MutedText} #4}
+  \end{tabularx}
+}
+
+\newcommand{\skillrow}[2]{%
+  \textbf{#1:} #2\par
+}
+
+% -------------------------------------------------
+% Document
+% -------------------------------------------------
+\begin{document}
+% =================================================
+% Header
+% =================================================
+\begin{center}
+  {\fontsize{25}{28}\selectfont\bfseries\color{Primary}
+    ARAZ SHAHKARAMI
+  }
+
+  \vspace{3pt}
+
+  {\large\bfseries\color{Accent}
+    Senior Backend Engineer --- Geospatial Systems \& AI
+  }
+
+  \vspace{6pt}
+
+  {\small
+    Urmia, Iran
+    \contactsep
+    Open to Relocation
+    \contactsep
+    \href{tel:+989104151005}{+98 910 415 1005}
+  }
+
+  \vspace{2pt}
+
+  {\small
+    \href{mailto:mail@araz.me}{mail@araz.me}
+    \contactsep
+    \href{mailto:araz.shah@gmail.com}{araz.shah@gmail.com}
+    \contactsep
+    \href{https://araz.me}{araz.me}
+  }
+
+  \vspace{2pt}
+
+  {\small
+    \href{https://linkedin.com/in/araz-shahkarami}
+      {linkedin.com/in/araz-shahkarami}
+    \contactsep
+    \href{https://github.com/arazshah}
+      {github.com/arazshah}
+  }
+\end{center}
+
+\vspace{2pt}
+
+% =================================================
+% Professional Summary
+% =================================================
+\section{Professional Summary}
+
+Senior Backend Engineer specializing in geospatial systems and artificial
+intelligence, with more than 12 years of professional experience in software
+development, spatial platforms, API design, data-intensive applications, and
+geospatial research and development. Experienced in building Python backend
+services, spatial databases, risk-assessment platforms, claims-management
+solutions, Sensor Web systems, and natural-language-to-map applications.
+
+Combines backend engineering, GIS, and AI/LLM orchestration to design modular,
+maintainable, and extensible software. Proven experience leading a 
+technical team, mentoring developers, building independent products, creating
+Persian technical education, and contributing to open-source geospatial
+software. Recognized as an OSGeo Advocate and actively involved in the
+open-source and geospatial communities.
+
+% =================================================
+% Core Expertise
+% =================================================
+\section{Core Expertise}
+
+\skillrow{Backend Engineering}{
+Python, Django, Django REST Framework, FastAPI, Flask, REST APIs,
+GraphQL, Celery, asynchronous processing, WebSockets, authentication,
+and service-oriented backend development
+}
+
+\skillrow{Geospatial Engineering}{
+PostGIS, GeoDjango, GDAL/OGR, QGIS, ArcGIS, ArcPy, Shapely,
+GeoJSON, Leaflet, spatial analysis, remote sensing, map-based applications,
+OGC standards, Sensor Web, and Sensor Web Enablement
+}
+
+\skillrow{AI and LLM Systems}{
+LLM orchestration, natural-language geospatial interfaces,
+tool-using AI systems, plugin-based AI architectures, cascading request
+routing, Model Context Protocol concepts, machine learning, scikit-learn,
+Pandas, and NumPy
+}
+
+\skillrow{Data and Infrastructure}{
+PostgreSQL, PostGIS, MongoDB, Redis, Microsoft SQL Server, MySQL,
+Elasticsearch, RabbitMQ, MQTT, Linux, Git, GitHub, Docker, testing,
+deployment, and data integration
+}
+
+\skillrow{Leadership}{
+Technical leadership, team coordination, developer mentoring,
+architecture planning, research and development, product development,
+technical education, and open-source collaboration
+}
+
+% =================================================
+% Professional Experience
+% =================================================
+\section{Professional Experience}
+
+\jobentry
+  {Geospatial Backend Developer}
+  {Spatial Science Innovators}
+  {2025--Present}
+  {Tehran, Iran}
+
+\begin{itemize}
+  \item Design and develop scalable geospatial backend services and
+        RESTful APIs for spatial data processing, analysis, and delivery.
+
+  \item Architect microservice-based geospatial platforms using
+        Python, FastAPI, and PostGIS, with a focus on maintainability,
+        reliability, and high-performance spatial queries.
+
+  \item Build GeoAI pipelines that integrate machine learning models
+        with geospatial datasets to support predictive spatial analytics
+        and intelligent decision-making.
+
+  \item Develop Model Context Protocol (MCP) servers that enable AI
+        agents to securely access and interact with geospatial tools,
+        datasets, and analytical resources.
+
+  \item Collaborate with cross-functional engineering and domain teams
+        to deliver enterprise-grade spatial data infrastructure and
+        production-ready geospatial solutions.
+\end{itemize}
+
+\vspace{3pt}
+
+\jobentry
+  {Senior Software Engineer / Senior Python Backend Developer}
+  {Alborz Insurance Company}
+  {2016--Present}
+  {Iran}
+
+\begin{itemize}
+  \item Progressed from specialist to senior specialist and senior software
+  engineer, taking increasing responsibility for backend development,
+  geospatial solutions, data platforms, and technical delivery.
+
+  \item Designed and developed Python-based backend systems and APIs for
+  enterprise insurance workflows, integrating operational, historical,
+  customer, and geospatial data.
+
+  \item Built geospatial risk-assessment capabilities that combined spatial,
+  demographic, environmental, meteorological, and organizational data to
+  support insurance analysis and decision-making.
+
+  \item Developed map-based tools for claims management, case visualization,
+  historical-record integration, geographic search, and operational
+  monitoring.
+
+  \item Applied spatial analysis and anomaly-detection approaches to identify
+  suspicious geographic patterns and support fraud-investigation workflows.
+
+  \item Designed and maintained data-processing workflows and spatial
+  databases using Python, PostgreSQL, PostGIS, GeoDjango, Redis, and related
+  GIS technologies.
+
+  \item Led a technical team, coordinated implementation work,
+  mentored developers, and supported the delivery of backend and geospatial
+  software projects.
+
+  \item Contributed to software architecture, API design, database modeling,
+  system integration, troubleshooting, and production support.
+\end{itemize}
+
+\vspace{3pt}
+
+\jobentry
+  {Python Engineer \& Geospatial R\&D Developer}
+  {PTA GIS Software Producer Company}
+  {2014--2016}
+  {Tehran, Iran}
+
+\begin{itemize}
+  \item Conducted research and development on Sensor Web systems based on
+  Open Geospatial Consortium standards and Sensor Web Enablement concepts.
+
+  \item Developed software components for collecting, processing, storing,
+  and visualizing observations from GPS devices, weather stations, sensors,
+  and connected systems.
+
+  \item Designed databases for geospatial and time-dependent sensor data and
+  implemented Python-based processing and integration workflows.
+
+  \item Worked with GIS and communication technologies including Python,
+  GDAL/OGR, QGIS, ArcPy, MQTT, Redis, WebSockets, and spatial databases.
+
+  \item Integrated sensor observations with GIS applications to support
+  monitoring, visualization, geospatial analysis, and research activities.
+
+  \item Automated geospatial data preparation, transformation, and analysis
+  for software and research projects.
+\end{itemize}
+
+\vspace{3pt}
+
+\jobentry
+  {Junior Software Developer}
+  {Sadra Software Company}
+  {2010--2012}
+  {Urmia, Iran}
+
+\begin{itemize}
+  \item Contributed to software development and database solutions using
+  C, Microsoft SQL Server, and related data-processing technologies.
+
+  \item Developed and maintained ETL and data-integration processes for
+  operational software projects.
+
+  \item Assisted with database design, query development, troubleshooting,
+  and maintenance of client software and data workflows.
+\end{itemize}
+
+% =================================================
+% Selected Projects
+% =================================================
+\section{Selected Projects}
+
+\projectentry
+  {Mapathon --- Persian Geospatial AI Assistant}
+  {\href{https://mapathon.ir}{mapathon.ir}}
+
+\begin{itemize}
+  \item Created a Persian geospatial AI assistant that transforms
+  natural-language requests into location search, routing, spatial analysis,
+  and interactive map-based responses.
+
+  \item Designed the platform around a plugin-based geospatial intelligence
+  architecture with cascading request routing, smart LLM orchestration,
+  and extensible custom capabilities.
+
+  \item Developed a Python SDK and modular capability system for integrating
+  new geospatial tools, data providers, analytical operations, and AI-driven
+  workflows.
+
+  \item Combined backend engineering, mapping, spatial processing, and LLM
+  interaction to make complex geospatial operations accessible through
+  natural language.
+\end{itemize}
+
+\vspace{2pt}
+
+\projectentry
+  {Bookane --- Persian Technology Education Platform}
+  {\href{https://bookane.ir}{bookane.ir}}
+
+\begin{itemize}
+  \item Developed and maintained a Persian educational platform offering
+  structured learning content in programming, web development, DevOps,
+  GIS, databases, and artificial intelligence.
+
+  \item Produced and organized Persian technical content designed to make
+  software engineering and geospatial technologies more accessible to
+  Persian-speaking learners.
+
+  \item Combined platform development, technical instruction, content
+  planning, and community-oriented knowledge sharing.
+\end{itemize}
+
+\vspace{2pt}
+
+\projectentry
+  {Rsynx --- Terminal-Based File Sharing}
+  {\href{https://rsynx.ir}{rsynx.ir}}
+
+\begin{itemize}
+  \item Built a lightweight service focused on making file sharing from the
+  command line simple and fast.
+
+  \item Designed the project around a straightforward developer experience
+  for transferring files and obtaining shareable links directly from the
+  terminal.
+
+  \item Developed the project as an independent product combining backend
+  services, command-line workflows, and practical developer tooling.
+\end{itemize}
+
+\vspace{2pt}
+
+\projectentry
+  {Additional Geospatial and AI Projects}
+  {\href{https://github.com/arazshah}{github.com/arazshah}}
+
+\begin{itemize}
+  \item Developed and maintained personal and open-source projects including
+  \texttt{mapathon-ai}, \texttt{s3geo},
+  \texttt{smart\_spatial\_system}, \texttt{geoChat-v2-core},
+  and \texttt{rsynx}.
+
+  \item Explored reusable architectures for spatial data management,
+  geospatial AI, natural-language interfaces, backend services, and
+  developer-oriented geospatial tools.
+\end{itemize}
+\vspace{6pt}
+% =================================================
+% Open Source
+% =================================================
+\section{Open-Source Contributions \& Community Leadership}
+
+\begin{itemize}
+  \item Recognized as an
+  \href{https://wiki.osgeo.org/wiki/OSGeo_Advocate#Araz_ShahKarami}
+  {OSGeo Advocate}
+  for involvement in the open-source geospatial community, knowledge sharing,
+  and advocacy for open geospatial technologies.
+
+  \item Contributed Persian-language support to
+  \href{https://github.com/opengeos/GeoLibre}{GeoLibre}
+  through an upstream contribution:
+  \href{https://github.com/opengeos/GeoLibre/pull/1758}
+  {opengeos/GeoLibre PR \#1758}.
+
+  \item Helped improve the accessibility of geospatial open-source software
+  for Persian-speaking users through localization and community
+  participation.
+
+  \item Participated in open-source, Linux, and technical communities,
+  including activities associated with Sharif University communities,
+  Urmia Linux user groups, and other local technology communities.
+
+  \item Shared knowledge about backend development, GIS, artificial
+  intelligence, open-source software, and emerging technologies such as
+  Anthropic's Model Context Protocol.
+
+  \item Mentored developers and produced Persian educational content through
+  online platforms, technical articles, and video-based instruction.
+\end{itemize}
+
+% =================================================
+% Education
+% =================================================
+\section{Education}
+
+\educationentry
+  {Master of Science in GIS and Remote Sensing}
+  {Islamic Azad University, Science and Research Branch}
+  {2016}
+  {Tehran, Iran}
+
+\vspace{2pt}
+
+{\small
+Focus: GIS software development, geospatial systems, spatial databases,
+remote sensing, Sensor Web, and applied geospatial research.
+}
+
+\vspace{5pt}
+
+\educationentry
+  {Bachelor's Degree in Computer Science}
+  {Islamic Azad University, Mahabad Branch}
+  {2010}
+  {Mahabad, Iran}
+
+\vspace{2pt}
+
+{\small
+Focus: software programming, databases, algorithms, and software development.
+}
+
+% =================================================
+% Teaching
+% =================================================
+\section{Technical Leadership, Mentoring \& Education}
+
+\begin{itemize}
+  \item Led and mentored a technical team working on backend,
+  data, and geospatial software development.
+
+  \item Supported developers through technical guidance, problem solving,
+  architecture discussions, implementation planning, and knowledge sharing.
+
+  \item Created Persian educational materials covering programming,
+  backend engineering, web development, GIS, databases, DevOps, and AI.
+
+  \item Published and presented technical knowledge through Bookane,
+  personal websites, blog content, online communities, and video-based
+  education.
+
+  \item Maintains a personal technical presence through
+  \href{https://araz.me}{araz.me},
+  \href{https://blog.araz.me}{blog.araz.me},
+  and
+  \href{https://github.com/arazshah}{GitHub}.
+\end{itemize}
+
+% =================================================
+% Languages
+% =================================================
+\section{Languages}
+
+\begin{tabularx}{\textwidth}{@{}p{4.4cm}Y@{}}
+  \textbf{Azerbaijani Turkish} & Native proficiency \\
+  \textbf{Persian}             & Native / bilingual proficiency \\
+  \textbf{English}             & Upper-intermediate professional proficiency \\
+\end{tabularx}
+
+% =================================================
+% Additional Information
+% =================================================
+\section{Additional Information}
+
+\begin{tabularx}{\textwidth}{@{}p{4.4cm}Y@{}}
+  \textbf{Current location} & Urmia, Iran \\
+  \textbf{Mobility}         & Open to relocation and international opportunities \\
+  \textbf{Preferred roles}  &
+  Senior Backend Engineer, Geospatial Backend Engineer,
+  Geospatial AI Engineer, Python Engineer, or Technical Lead \\
+  \textbf{Professional interests} &
+  Backend architecture, geospatial intelligence, spatial databases,
+  AI/LLM applications, open-source software, developer tools,
+  and technical leadership
+\end{tabularx}
+
+\vspace{8pt}
+
+\begin{center}
+  {\footnotesize\color{MutedText}
+    Updated August 2026
+    \quad|\quad
+    \href{https://araz.me}{araz.me}
+  }
+\end{center}
+
+\end{document}

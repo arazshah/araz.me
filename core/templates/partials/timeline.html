@@ -1,0 +1,4 @@
+{% load ui %}<ol class="timeline">{% for e in experience %}
+<li><div class="when mono">{{ e.start }} — {{ e.end|default:"" }}{% if not e.end %}{% t "present" %}{% endif %}</div>
+<div><h3>{{ e.role }}</h3><p class="muted">{{ e.company }}{% if e.location %} · {{ e.location }}{% endif %}</p>
+<ul class="bullets">{% for b in e.bullets %}<li>{{ b }}</li>{% endfor %}</ul></div></li>{% endfor %}</ol>

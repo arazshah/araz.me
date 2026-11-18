@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ c.title }} — {{ S.name }}{% endblock %}
+{% block desc %}{{ c.summary|truncatechars:160 }}{% endblock %}
+{% block content %}
+<section class="wrap page-head">
+  <a class="back" href="{% url 'cases' %}">{% t "back" %}</a>
+  <p class="eyebrow mono">{{ c.city }} · {{ c.latitude|floatformat:3 }}°, {{ c.longitude|floatformat:3 }}° <span class="status s-{{ c.status }}">{% status_label c.status %}</span></p>
+  <h1>{{ c.title }}</h1><p class="lead">{{ c.summary }}</p>
+  {% if c.result %}<p class="result mono">{% t "result" %}: {{ c.result }}</p>{% endif %}
+  {% if c.repo_url %}<p><a class="btn btn-ghost" href="{{ c.repo_url }}" rel="noopener">{% t "source" %} ↗</a></p>{% endif %}
+</section>
+{% if c.image %}<section class="wrap"><img class="cover" src="{{ c.image.url }}" alt="{{ c.title }}"></section>{% endif %}
+{% if c.body %}<section class="wrap section tight"><article class="prose narrow">{{ c.body }}</article></section>{% endif %}
+{% if others %}<section class="wrap section"><div class="grid grid-3">{% for c in others %}{% include "partials/case_card.html" %}{% endfor %}</div></section>{% endif %}
+{% endblock %}

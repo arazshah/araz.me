@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ p.title }} — {{ S.name }}{% endblock %}
+{% block desc %}{{ p.summary }}{% endblock %}
+{% block head %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"{{ p.title|escapejs }}","datePublished":"{{ p.date|date:'Y-m-d' }}","author":{"@type":"Person","name":"Araz Shahkarami"}}</script>{% endblock %}
+{% block content %}
+<article class="wrap page-head narrow-head">
+  <a class="back" href="{% url 'blog' %}">{% t "back" %}</a>
+  <p class="eyebrow mono">{{ p.date|date:"Y-m-d" }} · {{ p.reading_minutes }} {% t "min_read" %}</p>
+  <h1>{{ p.title }}</h1><p class="lead">{{ p.summary }}</p>
+  <ul class="tags">{% for t in p.tag_list %}<li>{{ t }}</li>{% endfor %}</ul>
+</article>
+<section class="wrap section tight"><div class="prose narrow">{{ p.body }}</div></section>
+{% endblock %}

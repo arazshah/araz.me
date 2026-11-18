@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{% t "nav_blog" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">{% t "nav_blog" %}</p><h1>{% t "nav_blog" %}</h1><p class="lead">{% t "blog_intro" %}</p></section>
+<section class="wrap section tight">
+  {% if page.object_list %}<div class="grid grid-3">{% for p in page %}{% include "partials/post_card.html" %}{% endfor %}</div>
+  {% if page.has_other_pages %}<p class="pager">{% if page.has_previous %}<a href="?page={{ page.previous_page_number }}">←</a>{% endif %} {{ page.number }} / {{ page.paginator.num_pages }} {% if page.has_next %}<a href="?page={{ page.next_page_number }}">→</a>{% endif %}</p>{% endif %}
+  {% else %}<p class="muted">{% t "no_posts" %}</p>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{% t "nav_products" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">{% t "nav_products" %}</p><h1>{% t "nav_products" %}</h1><p class="lead">{% t "products_intro" %}</p></section>
+<section class="wrap section tight"><div class="grid grid-2">{% for p in products %}{% include "partials/product_card.html" %}{% endfor %}</div></section>
+{% endblock %}

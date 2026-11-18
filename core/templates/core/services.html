@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{% t "nav_services" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">{% t "nav_services" %}</p><h1>{% t "nav_services" %}</h1><p class="lead">{% t "services_intro" %}</p></section>
+<section class="wrap section tight"><div class="grid grid-2">{% for s in services %}<article class="card"><div class="ico" aria-hidden="true">{{ s.icon }}</div><h3>{{ s.title }}</h3><p class="muted">{{ s.description }}</p></article>{% endfor %}</div>
+<div class="cta-band"><h2>{% t "contact_title" %}</h2><p><a class="btn" href="{% url 'contact' %}">{% t "cta_contact" %}</a></p></div></section>
+{% endblock %}

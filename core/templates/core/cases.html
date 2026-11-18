@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{% t "nav_cases" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">{% t "nav_cases" %}</p><h1>{% t "nav_cases" %}</h1><p class="lead">{% t "cases_intro" %}</p></section>
+<section class="wrap section tight"><div class="grid grid-3">{% for c in cases %}{% include "partials/case_card.html" %}{% endfor %}</div></section>
+{% endblock %}

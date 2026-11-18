@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ p.name }} — {{ S.name }}{% endblock %}
+{% block desc %}{{ p.tagline }}{% endblock %}
+{% block head %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"{{ p.name|escapejs }}","description":"{{ p.tagline|escapejs }}","applicationCategory":"DeveloperApplication","author":{"@type":"Person","name":"Araz Shahkarami"}}</script>{% endblock %}
+{% block content %}
+<section class="wrap page-head">
+  <a class="back" href="{% url 'products' %}">{% t "back" %}</a>
+  <p class="eyebrow">{{ p.kind }} <span class="status s-{{ p.status }}">{% status_label p.status %}</span></p>
+  <h1>{{ p.name }}</h1><p class="lead">{{ p.tagline }}</p>
+  <div class="cta">
+    {% if p.url %}<a class="btn" href="{{ p.url }}" rel="noopener">{% t "visit_site" %} ↗</a>{% endif %}
+    {% if p.source_url %}<a class="btn btn-ghost" href="{{ p.source_url }}" rel="noopener">{% t "source" %} ↗</a>{% endif %}
+    {% if p.package_url %}<a class="btn btn-ghost" href="{{ p.package_url }}" rel="noopener">{% t "package" %} ↗</a>{% endif %}
+  </div>
+</section>
+<section class="wrap section tight split">
+  <article class="prose">{{ p.description }}</article>
+  <aside class="facts">
+    {% if p.role %}<div><span class="k">{% t "role" %}</span><span>{{ p.role }}</span></div>{% endif %}
+    {% if p.year %}<div><span class="k">·</span><span class="mono">{{ p.year }}</span></div>{% endif %}
+    <div><span class="k">{% t "status" %}</span><span>{% status_label p.status %}</span></div>
+    {% if p.stack_list %}<div><span class="k">{% t "stack" %}</span><ul class="tags">{% for s in p.stack_list %}<li>{{ s }}</li>{% endfor %}</ul></div>{% endif %}
+  </aside>
+</section>
+{% if others %}<section class="wrap section"><div class="grid grid-3">{% for p in others %}{% include "partials/product_card.html" %}{% endfor %}</div></section>{% endif %}
+{% endblock %}

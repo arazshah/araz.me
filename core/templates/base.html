@@ -1,0 +1,69 @@
+{% load static ui %}<!doctype html>
+<html lang="{{ LANG }}" dir="{{ DIR }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ S.name }} — {{ S.headline }}{% endblock %}</title>
+<meta name="description" content="{% block desc %}{{ S.meta_description|default:S.tagline }}{% endblock %}">
+<link rel="canonical" href="{{ SITE_URL }}{{ request.path }}">
+<link rel="alternate" hreflang="en" href="{{ SITE_URL }}/en/{{ request.path|slice:'4:' }}">
+<link rel="alternate" hreflang="fa" href="{{ SITE_URL }}/fa/{{ request.path|slice:'4:' }}">
+<meta property="og:title" content="{% block ogtitle %}{{ S.name }} — {{ S.headline }}{% endblock %}">
+<meta property="og:description" content="{{ S.meta_description|default:S.tagline }}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{ SITE_URL }}{% if S.photo %}{{ S.photo.url }}{% else %}{% static 'img/araz.jpg' %}{% endif %}">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0b1215">
+<link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" href="/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/site.css' %}">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Araz Shahkarami","jobTitle":"Geospatial AI Engineer","url":"https://araz.me","email":"{{ S.email }}","address":{"@type":"PostalAddress","addressLocality":"Urmia","addressCountry":"IR"},"sameAs":["{{ S.linkedin }}","{{ S.github }}"],"knowsAbout":["GeoAI","PostGIS","Model Context Protocol","FastAPI","Django","GIS"]}</script>
+{% block head %}{% endblock %}
+</head>
+<body>
+<a class="skip" href="#main">{% t "skip" %}</a>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="{% url 'home' %}"><span class="brand-mark" aria-hidden="true"></span>{{ S.name }}</a>
+    <nav id="menu" class="menu" aria-label="Main">
+      <a href="{% url 'products' %}">{% t "nav_products" %}</a>
+      <a href="{% url 'cases' %}">{% t "nav_cases" %}</a>
+      <a href="{% url 'opensource' %}">{% t "nav_opensource" %}</a>
+      <a href="{% url 'services' %}">{% t "nav_services" %}</a>
+      {% if has_posts %}<a href="{% url 'blog' %}">{% t "nav_blog" %}</a>{% endif %}
+      <a href="{% url 'about' %}">{% t "nav_about" %}</a>
+      <a href="{% url 'resume' %}">{% t "nav_resume" %}</a>
+    </nav>
+    <div class="nav-tools">
+      <a class="chip" href="{% switch_url %}" hreflang="{% if LANG == 'en' %}fa{% else %}en{% endif %}">{% t "other_lang" %}</a>
+      <button class="icon-btn" id="theme" aria-label="{% t 'theme' %}">◑</button>
+      <a class="btn btn-sm" href="{% url 'contact' %}">{% t "nav_contact" %}</a>
+      <button class="icon-btn burger" id="burger" aria-label="{% t 'menu' %}" aria-expanded="false" aria-controls="menu">☰</button>
+    </div>
+  </div>
+</header>
+<main id="main">{% block content %}{% endblock %}</main>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span>{{ S.name }}</div>
+      <p class="muted">{{ S.headline }} · {{ S.location }}<br>{% t "footer_note" %}</p>
+    </div>
+    <div class="foot-links">
+      <a href="mailto:{{ S.email }}">{{ S.email }}</a>
+      <a href="{{ S.linkedin }}" rel="me noopener">LinkedIn</a>
+      <a href="{{ S.github }}" rel="me noopener">GitHub</a>
+      {% if S.osgeo_url %}<a href="{{ S.osgeo_url }}" rel="me noopener">OSGeo</a>{% endif %}
+      <a href="{% url 'now' %}">{% t "nav_now" %}</a>
+      {% if has_posts %}<a href="/feed.xml">RSS</a>{% endif %}
+    </div>
+  </div>
+  <div class="wrap copy">© {% now "Y" %} {{ S.name }}</div>
+</footer>
+<script src="{% static 'js/site.js' %}" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

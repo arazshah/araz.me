@@ -1,0 +1,6 @@
+{% load ui %}<article class="card card-link">
+  <div class="card-top"><span class="eyebrow mono">{{ c.city }}</span><span class="status s-{{ c.status }}">{% status_label c.status %}</span></div>
+  <h3><a class="stretch" href="{{ c.get_absolute_url }}">{{ c.title }}</a></h3>
+  <p class="muted">{{ c.summary|truncatewords:24 }}</p>
+  {% if c.result %}<p class="result mono">{{ c.result }}</p>{% endif %}
+</article>

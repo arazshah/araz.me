@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{% t "nav_now" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">/now</p><h1>{% t "now_title" %}</h1><p class="lead">{% t "now_sub" %}</p></section>
+<section class="wrap section tight"><article class="prose narrow">{{ S.now }}</article></section>
+{% endblock %}

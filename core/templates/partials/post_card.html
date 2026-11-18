@@ -1,0 +1,5 @@
+{% load ui %}<article class="card card-link">
+  <div class="card-top"><span class="eyebrow mono">{{ p.date|date:"Y-m-d" }}</span><span class="muted mono">{{ p.reading_minutes }} {% t "min_read" %}</span></div>
+  <h3><a class="stretch" href="{{ p.get_absolute_url }}">{{ p.title }}</a></h3>
+  <p class="muted">{{ p.summary }}</p>
+</article>

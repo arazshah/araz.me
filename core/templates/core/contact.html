@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{% t "nav_contact" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">{% t "nav_contact" %}</p><h1>{% t "contact_title" %}</h1><p class="lead">{% t "contact_sub" %}</p></section>
+<section class="wrap section tight split">
+  <div>
+  {% if sent %}<p class="alert">{% t "sent" %}</p>{% else %}
+  <form method="post" class="form">{% csrf_token %}
+    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <label>{% t "f_name" %}<input name="name" required maxlength="120" autocomplete="name"></label>
+    <label>{% t "f_email" %}<input type="email" name="email" required autocomplete="email"></label>
+    <label>{% t "f_subject" %}<input name="subject" maxlength="200"></label>
+    <label>{% t "f_message" %}<textarea name="body" rows="7" required maxlength="5000"></textarea></label>
+    <button class="btn" type="submit">{% t "f_send" %}</button>
+  </form>{% endif %}
+  </div>
+  <aside class="facts">
+    <div><span class="k">Email</span><a href="mailto:{{ S.email }}">{{ S.email }}</a></div>
+    <div><span class="k">LinkedIn</span><a href="{{ S.linkedin }}" rel="noopener">/in/araz-shahkarami</a></div>
+    <div><span class="k">GitHub</span><a href="{{ S.github }}" rel="noopener">/arazshah</a></div>
+    <div><span class="k">·</span><span>{{ S.location }}</span></div>
+  </aside>
+</section>
+{% endblock %}

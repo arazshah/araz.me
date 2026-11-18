@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% load static ui %}
+{% block title %}{% t "nav_about" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">{% t "nav_about" %}</p><h1>{{ S.name }}</h1><p class="lead">{{ S.headline }} · {{ S.location }}</p></section>
+<section class="wrap section tight split">
+  <article class="prose">{{ S.about }}</article>
+  <aside class="facts">
+    <img class="portrait-sm" src="{% if S.photo %}{{ S.photo.url }}{% else %}{% static 'img/araz.jpg' %}{% endif %}" alt="{{ S.name }}" width="240" height="240">
+    <div><span class="k">{% t "languages" %}</span><span>{% t "lang_line" %}</span></div>
+    <div><span class="k">·</span><a href="{% url 'now' %}">{% t "nav_now" %} →</a></div>
+  </aside>
+</section>
+<section class="wrap section tight"><h2>{% t "skills" %}</h2>
+  <div class="skills">{% for g in skills %}<div><h3>{{ g.name }}</h3><ul class="tags">{% for s in g.skill_list %}<li>{{ s }}</li>{% endfor %}</ul></div>{% endfor %}</div></section>
+<section class="wrap section tight"><h2>{% t "experience" %}</h2>{% include "partials/timeline.html" %}<p><a class="btn btn-ghost" href="{% url 'resume' %}">{% t "nav_resume" %} →</a></p></section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{% t "nav_opensource" %} — {{ S.name }}{% endblock %}
+{% block content %}
+<section class="wrap page-head"><p class="eyebrow">OSGeo · FOSS4G</p><h1>{% t "nav_opensource" %}</h1><p class="lead">{% t "oss_intro" %}</p></section>
+<section class="wrap section tight">
+  <h2 class="h-sm">{% t "highlights" %}</h2>
+  <div class="grid grid-2">{% for r in highlights %}
+    <article class="card card-link"><div class="card-top"><span class="eyebrow mono">{{ r.language }}</span>{% if r.stars %}<span class="muted mono">★ {{ r.stars }}</span>{% endif %}</div>
+    <h3><a class="stretch" href="{{ r.url }}" rel="noopener">{{ r.name }} ↗</a></h3><p class="muted">{{ r.description }}</p></article>{% endfor %}</div>
+</section>
+<section class="wrap section tight">
+  <div class="sec-head"><h2 class="h-sm">GitHub</h2><a class="more" href="{{ S.github }}" rel="noopener">{% t "more_repos" %} ↗</a></div>
+  <ul class="repo-list">{% for r in repos %}<li><a href="{{ r.url }}" rel="noopener"><strong>{{ r.name }}</strong><span class="muted">{{ r.description }}</span><span class="mono muted">{{ r.language }}{% if r.stars %} · ★ {{ r.stars }}{% endif %}</span></a></li>{% endfor %}</ul>
+</section>
+{% endblock %}

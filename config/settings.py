@@ -13,8 +13,14 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", "dev-only-insecure-key-change-me" if DEBUG
 if not SECRET_KEY:
     raise RuntimeError("Set DJANGO_SECRET_KEY in production.")
 
-ALLOWED_HOSTS = [h for h in env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,araz.me,www.araz.me").split(",") if h]
-CSRF_TRUSTED_ORIGINS = [o for o in env("DJANGO_CSRF_TRUSTED_ORIGINS", "https://araz.me,https://www.araz.me").split(",") if o]
+# The site sits behind Coolify's proxy, so accept any Host by default (set DJANGO_ALLOWED_HOSTS to restrict).
+# Local hosts are always allowed so container health checks never fail.
+ALLOWED_HOSTS = [h.strip() for h in env("DJANGO_ALLOWED_HOSTS", "*").split(",") if h.strip()]
+for _h in ("localhost", "127.0.0.1", "[::1]"):
+    if "*" not in ALLOWED_HOSTS and _h not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_h)
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in env(
+    "DJANGO_CSRF_TRUSTED_ORIGINS", "https://araz.me,https://www.araz.me,http://araz.me,http://www.araz.me").split(",") if o.strip()]
 SITE_URL = env("SITE_URL", "https://araz.me")
 
 # Admin lives on a non-default path; change via ADMIN_URL.

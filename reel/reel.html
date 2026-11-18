@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Araz Reel</title>
+<style>
+@font-face{font-family:Vaz;font-weight:400;src:url(fonts/vazirmatn-arabic-400-normal.woff2) format('woff2')}
+@font-face{font-family:Vaz;font-weight:700;src:url(fonts/vazirmatn-arabic-700-normal.woff2) format('woff2')}
+@font-face{font-family:Vaz;font-weight:900;src:url(fonts/vazirmatn-arabic-900-normal.woff2) format('woff2')}
+@font-face{font-family:VazL;font-weight:400;src:url(fonts/vazirmatn-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:VazL;font-weight:700;src:url(fonts/vazirmatn-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:VazL;font-weight:900;src:url(fonts/vazirmatn-latin-900-normal.woff2) format('woff2')}
+html,body{margin:0;background:#000}
+canvas{display:block;width:1080px;height:1920px}
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+/* =============================================================== config */
+const HANDLE = new URLSearchParams(location.search).get('ig') || '@arazshah';
+const W = 1080, H = 1920, FPS = 30;
+const BEAT = 60 / 128, BAR = 4 * BEAT, END = 30;
+const T1 = 2 * BAR, T2 = 4 * BAR, T3 = 6 * BAR, T4 = 10 * BAR, T5 = 13 * BAR;
+const QUESTION = 'کدام محله‌ها به بیمارستان دسترسی ندارند؟';   // must match music.py
+const TYPE_START = 0.35, TYPE_SPAN = 2.4;
+
+const C = {
+  bg: '#04080a', bg2: '#0b1417', ink: '#eef7f7', muted: '#8fa6ab',
+  teal: '#2dd4bf', cyan: '#22d3ee', deep: '#0f766e', amber: '#f59e0b', red: '#fb7185', line: '#18303a'
+};
+const FONT = (w, s) => `${w} ${s}px Vaz, VazL, Inter, sans-serif`;
+const MONO = (w, s) => `${w} ${s}px "JetBrains Mono", monospace`;
+
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const photo = new Image(); photo.src = '../static/img/araz.jpg';
+
+/* =============================================================== utils */
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOut3 = k => 1 - Math.pow(1 - k, 3);
+const eOut5 = k => 1 - Math.pow(1 - k, 5);
+const eIn3 = k => k * k * k;
+const eIO = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+const eBack = k => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(k - 1, 3) + c1 * Math.pow(k - 1, 2); };
+const fa = s => String(s).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+function rngf(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function hash(x, y) { const h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return h - Math.floor(h); }
+function noise(x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+  const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+  return (hash(xi, yi) * (1 - u) + hash(xi + 1, yi) * u) * (1 - v) + (hash(xi, yi + 1) * (1 - u) + hash(xi + 1, yi + 1) * u) * v;
+}
+function field(x, y, t) {
+  return .55 * noise(x * .0032 + t * .06, y * .0032 - t * .02) + .3 * noise(x * .0075 - t * .04, y * .0075 + 7) + .15 * noise(x * .017 + 3, y * .017 + t * .05);
+}
+/* beat helpers */
+const beatOf = t => t / BEAT;
+const kickEnv = (t, from, to) => { if (t < from || t >= to) return 0; const p = (t - from) % BEAT; return Math.exp(-p / .11); };
+
+function rrect(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+function setFont(f, dir = 'rtl') { ctx.font = f; ctx.direction = dir; }
+function text(s, x, y, f, color, align = 'center', dir = 'rtl', alpha = 1) {
+  if (alpha <= 0) return;
+  ctx.save(); ctx.globalAlpha *= alpha; setFont(f, dir); ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillStyle = color; ctx.fillText(s, x, y); ctx.restore();
+}
+function wrap(s, f, maxW) {
+  setFont(f); const words = s.split(' '), lines = []; let cur = '';
+  for (const w of words) { const test = cur ? cur + ' ' + w : w; if (ctx.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; } else cur = test; }
+  if (cur) lines.push(cur); return lines;
+}
+/* chromatic-aberration slam text */
+function slam(s, x, y, f, color, k, dir = 'ltr') {
+  const off = 18 * (1 - k) + 3;
+  ctx.save(); setFont(f, dir); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.globalAlpha = .55; ctx.fillStyle = '#ff2d6f'; ctx.fillText(s, x - off, y);
+  ctx.fillStyle = '#22d3ee'; ctx.fillText(s, x + off, y);
+  ctx.restore();
+  ctx.save(); setFont(f, dir); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = color; ctx.fillText(s, x, y); ctx.restore();
+}
+
+/* =============================================================== topo background */
+function topo(t, { alpha = .25, color = C.teal, lw = 1.6, levels = 11, zoom = 1, speed = 1, cx = W / 2, cy = H / 2, reveal = 1 } = {}) {
+  if (alpha <= 0) return;
+  const cell = 34, cols = Math.ceil(W / cell) + 1, rows = Math.ceil(H / cell) + 1, tt = t * speed;
+  const v = new Float32Array(cols * rows);
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const x = (i * cell - cx) / zoom + cx, y = (j * cell - cy) / zoom + cy;
+    v[j * cols + i] = field(x, y, tt);
+  }
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.globalAlpha = alpha; ctx.lineJoin = 'round';
+  const maxR = reveal * Math.hypot(W, H) * .6;
+  for (let l = 0; l < levels; l++) {
+    const L = .18 + l * (.64 / levels);
+    ctx.beginPath();
+    for (let j = 0; j < rows - 1; j++) for (let i = 0; i < cols - 1; i++) {
+      const x0 = i * cell, y0 = j * cell;
+      if (reveal < 1 && Math.hypot(x0 - cx, y0 - cy) > maxR) continue;
+      const a = v[j * cols + i], b = v[j * cols + i + 1], c = v[(j + 1) * cols + i + 1], d = v[(j + 1) * cols + i];
+      const idx = (a > L) | (b > L) << 1 | (c > L) << 2 | (d > L) << 3;
+      if (idx === 0 || idx === 15) continue;
+      const ip = (p, q) => (L - p) / (q - p);
+      const T = [x0 + cell * ip(a, b), y0], R = [x0 + cell, y0 + cell * ip(b, c)], B = [x0 + cell * ip(d, c), y0 + cell], Lf = [x0, y0 + cell * ip(a, d)];
+      const segs = { 1: [Lf, T], 2: [T, R], 3: [Lf, R], 4: [R, B], 5: [Lf, T, R, B], 6: [T, B], 7: [Lf, B], 8: [B, Lf], 9: [B, T], 10: [T, R, B, Lf], 11: [B, R], 12: [R, Lf], 13: [R, T], 14: [T, Lf] }[idx];
+      for (let s = 0; s < segs.length; s += 2) { ctx.moveTo(segs[s][0], segs[s][1]); ctx.lineTo(segs[s + 1][0], segs[s + 1][1]); }
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/* =============================================================== overlays */
+const grain = document.createElement('canvas'); grain.width = grain.height = 256;
+(() => { const g = grain.getContext('2d'), d = g.createImageData(256, 256), r = rngf(3); for (let i = 0; i < d.data.length; i += 4) { const v = r() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; } g.putImageData(d, 0, 0); })();
+function overlays(t) {
+  const f = Math.floor(t * FPS);
+  ctx.save(); ctx.globalAlpha = .045; ctx.globalCompositeOperation = 'overlay';
+  const ox = (f * 97) % 256, oy = (f * 61) % 256;
+  ctx.translate(-ox, -oy); ctx.fillStyle = ctx.createPattern(grain, 'repeat'); ctx.fillRect(0, 0, W + 256, H + 256); ctx.restore();
+  const g = ctx.createRadialGradient(W / 2, H / 2, H * .25, W / 2, H / 2, H * .75);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.55)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+/* impacts: flash + shake */
+const SLAMS = [0, 3, 6, 9, 12].map(b => T3 + b * BEAT);
+const IMPACTS = [[T1, 1], [T3, 1.2], [T5, 1], [13 * BAR + 0, 0], [15 * BAR, .7], ...SLAMS.slice(1).map(s => [s, .6])];
+function flashAmt(t) { let a = 0; for (const [ti, s] of IMPACTS) if (t >= ti) a = Math.max(a, s * .85 * Math.exp(-(t - ti) / .09)); return a; }
+function shake(t) {
+  let a = 0; for (const [ti, s] of IMPACTS) if (t >= ti) a += s * 26 * Math.exp(-(t - ti) / .14);
+  if (t > T2 + BAR && t < T3) a += 14 * eIn3(seg(t, T2 + BAR, T3)); // build-up tremble
+  return [a * (noise(t * 40, 1) - .5) * 2, a * (noise(1, t * 40) - .5) * 2];
+}
+
+/* =============================================================== scene 1: the question */
+function scene1(t) {
+  ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+  topo(t, { alpha: .10 + .06 * seg(t, 2, 3.7), speed: .6, lw: 1.3 });
+  const appear = eOut3(seg(t, 0, .45));
+  const press = seg(t, 3.05, 3.4), push = seg(t, 3.4, T1);
+  const s = (0.92 + .08 * appear) * (1 - .04 * eOut3(press)) * (1 + .5 * eIn3(push));
+  ctx.save(); ctx.translate(W / 2, 900); ctx.scale(s, s); ctx.translate(-W / 2, -900); ctx.globalAlpha = appear * (1 - push * .7);
+
+  text('یک سؤال، به زبان خودت', W / 2, 610, FONT(700, 40), C.muted, 'center', 'rtl', seg(t, .1, .5));
+
+  const x = 80, y = 690, w = 920, h = 400;
+  ctx.save(); ctx.shadowColor = C.teal; ctx.shadowBlur = 30 + 60 * press; rrect(x, y, w, h, 34); ctx.fillStyle = '#0a1619'; ctx.fill(); ctx.restore();
+  rrect(x, y, w, h, 34); ctx.lineWidth = 3; ctx.strokeStyle = `rgba(45,212,191,${.55 + .45 * press})`; ctx.stroke();
+  // window dots + label
+  ['#fb7185', '#fbbf24', '#34d399'].forEach((c, i) => { ctx.beginPath(); ctx.arc(x + 46 + i * 34, y + 46, 9, 0, 7); ctx.fillStyle = c; ctx.fill(); });
+  text('s3geo › ask', x + w - 40, y + 47, MONO(500, 28), C.teal, 'right', 'ltr');
+  ctx.fillStyle = C.line; ctx.fillRect(x + 30, y + 88, w - 60, 2);
+
+  const n = Math.floor(clamp((t - TYPE_START) / TYPE_SPAN) * QUESTION.length + (t > TYPE_START ? 1 : 0));
+  const typed = QUESTION.slice(0, Math.min(n, QUESTION.length));
+  const f = FONT(900, 70);
+  const lines = wrap(typed || ' ', f, w - 120);
+  lines.forEach((ln, i) => text(ln, x + w - 60, y + 175 + i * 105, f, C.ink, 'right'));
+  // caret
+  if (t > .5 && Math.floor(t * 2.4) % 2 === 0 || (t > TYPE_START && t < TYPE_START + TYPE_SPAN)) {
+    setFont(f); const last = lines[lines.length - 1], lw = typed ? ctx.measureText(last).width : 0;
+    ctx.fillStyle = C.teal; ctx.fillRect(x + w - 60 - lw - 18, y + 140 + (lines.length - 1) * 105, 7, 72);
+  }
+  // enter key
+  const ek = eBack(seg(t, 2.85, 3.2));
+  if (ek > 0) {
+    ctx.save(); ctx.translate(x + 90, y + h - 70); ctx.scale(ek * (1 - .15 * press), ek * (1 - .15 * press));
+    rrect(-60, -34, 120, 68, 16); ctx.fillStyle = press > 0 ? C.teal : '#12262b'; ctx.fill();
+    text('↵', 0, 2, FONT(700, 44), press > 0 ? '#04201d' : C.teal, 'center', 'ltr'); ctx.restore();
+    if (press > 0) { ctx.beginPath(); ctx.arc(x + 90, y + h - 70, 60 + 220 * eOut3(press), 0, 7); ctx.strokeStyle = `rgba(45,212,191,${1 - press})`; ctx.lineWidth = 4; ctx.stroke(); }
+  }
+  ctx.restore();
+}
+
+/* =============================================================== scene 2: question → map */
+const MAP = { x: 60, y: 500, w: 960, h: 800 };
+const HOSP = [[230, 690], [760, 640], [520, 980], [880, 1150], [190, 1200]];
+const BUF = 205;
+const HEXES = (() => {
+  const r = 30, out = [], hw = Math.sqrt(3) * r; let row = 0;
+  for (let y = MAP.y + r; y < MAP.y + MAP.h + r; y += r * 1.5, row++)
+    for (let x = MAP.x + (row % 2 ? hw / 2 : 0); x < MAP.x + MAP.w + hw; x += hw) {
+      const d = Math.min(...HOSP.map(([hx, hy]) => Math.hypot(x - hx, y - hy)));
+      out.push({ x, y, d, n: hash(x * .1, y * .1) });
+    }
+  return out;
+})();
+const ROADS = (() => {
+  const r = rngf(11), roads = [];
+  const mk = pts => { let L = 0; for (let i = 1; i < pts.length; i++) L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); roads.push({ pts, L, w: 2 + r() * 3 }); };
+  for (let k = 0; k < 7; k++) { const y = MAP.y + 60 + k * 115 + r() * 30, pts = []; for (let x = MAP.x - 20; x <= MAP.x + MAP.w + 20; x += 120) pts.push([x, y + (r() - .5) * 60]); mk(pts); }
+  for (let k = 0; k < 6; k++) { const x = MAP.x + 80 + k * 165 + r() * 30, pts = []; for (let y = MAP.y - 20; y <= MAP.y + MAP.h + 20; y += 120) pts.push([x + (r() - .5) * 60, y]); mk(pts); }
+  return roads;
+})();
+const DAG = ['parse', 'plan', 'validate', 'execute', 'map'];
+function scene2(t) {
+  const lt = t - T1;
+  ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+  topo(t, { alpha: .14, speed: .9, zoom: 1 + .3 * (1 - eOut5(seg(lt, 0, .8))), reveal: eOut3(seg(lt, 0, .9)) });
+  const k = kickEnv(t, T1, T2) * .012;
+  ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(1 + k, 1 + k); ctx.translate(-W / 2, -H / 2);
+
+  // query pill (question flew up)
+  const qk = eOut5(seg(lt, 0, .5));
+  ctx.save(); ctx.globalAlpha = qk;
+  rrect(60, 245 - 20 * (1 - qk), 960, 80, 40); ctx.fillStyle = '#0a1619'; ctx.fill(); ctx.strokeStyle = 'rgba(45,212,191,.5)'; ctx.lineWidth = 2; ctx.stroke();
+  text(QUESTION, 980, 286 - 20 * (1 - qk), FONT(700, 34), C.ink, 'right');
+  text('ask ›', 100, 286 - 20 * (1 - qk), MONO(500, 26), C.teal, 'left', 'ltr');
+  ctx.restore();
+
+  // DAG chips
+  const cw = 168, gap = 30, y0 = 360;
+  DAG.forEach((name, i) => {
+    const on = seg(lt, i * BEAT * .9, i * BEAT * .9 + .15), x = 60 + i * (cw + gap);
+    const pop = eBack(seg(lt, i * BEAT * .9 - .05, i * BEAT * .9 + .25));
+    ctx.save(); ctx.translate(x + cw / 2, y0 + 40); ctx.scale(.85 + .15 * pop, .85 + .15 * pop); ctx.translate(-x - cw / 2, -y0 - 40);
+    ctx.globalAlpha = .35 + .65 * on;
+    rrect(x, y0, cw, 80, 18); ctx.fillStyle = on > .5 ? (name === 'validate' ? C.teal : '#0f2a2e') : '#0a1417'; ctx.fill();
+    ctx.strokeStyle = C.teal; ctx.lineWidth = 2; ctx.stroke();
+    text((name === 'validate' && on > .5 ? '✓ ' : '') + name, x + cw / 2, y0 + 41, MONO(700, 23), name === 'validate' && on > .5 ? '#04201d' : C.ink, 'center', 'ltr');
+    ctx.restore();
+    if (i < DAG.length - 1) {
+      const ax = x + cw + 4, p = seg(lt, i * BEAT * .9 + .1, (i + 1) * BEAT * .9);
+      ctx.fillStyle = 'rgba(45,212,191,.35)'; ctx.fillRect(ax, y0 + 38, gap - 8, 4);
+      ctx.fillStyle = C.teal; ctx.fillRect(ax, y0 + 38, (gap - 8) * p, 4);
+    }
+  });
+
+  // map panel
+  const mk = eOut5(seg(lt, .05, .6));
+  ctx.save(); ctx.globalAlpha = mk; ctx.translate(W / 2, MAP.y + MAP.h / 2); ctx.scale(1.12 - .12 * mk, 1.12 - .12 * mk); ctx.translate(-W / 2, -MAP.y - MAP.h / 2);
+  rrect(MAP.x, MAP.y, MAP.w, MAP.h, 30); ctx.fillStyle = '#071114'; ctx.fill();
+  ctx.save(); rrect(MAP.x, MAP.y, MAP.w, MAP.h, 30); ctx.clip();
+  // roads draw-on
+  const rp = eOut3(seg(lt, .1, 1.3));
+  ROADS.forEach(r => {
+    ctx.beginPath(); r.pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+    ctx.setLineDash([r.L * rp, r.L]); ctx.strokeStyle = 'rgba(147,169,174,.35)'; ctx.lineWidth = r.w; ctx.stroke();
+  });
+  ctx.setLineDash([]);
+  // hexes
+  const R = BUF * eOut3(seg(lt, 1.1, 2.4));
+  const gapT = lt - 2.45;
+  HEXES.forEach(h => {
+    let fill = null, a = 0;
+    if (h.d < R) { fill = C.teal; a = .16; }
+    else if (h.d >= BUF && gapT > h.n * .7) { fill = C.amber; a = .62 * eOut3(clamp((gapT - h.n * .7) / .2)); }
+    if (!fill) return;
+    ctx.beginPath(); for (let i = 0; i < 6; i++) { const ang = Math.PI / 6 + i * Math.PI / 3; ctx.lineTo(h.x + 27 * Math.cos(ang), h.y + 27 * Math.sin(ang)); }
+    ctx.closePath(); ctx.globalAlpha = mk * a; ctx.fillStyle = fill; ctx.fill(); ctx.globalAlpha = mk;
+  });
+  // hospitals + buffers
+  HOSP.forEach(([x, y], i) => {
+    const p = eBack(seg(lt, .5 + i * .12, .8 + i * .12));
+    if (R > 0) { ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.strokeStyle = 'rgba(45,212,191,.8)'; ctx.lineWidth = 3; ctx.setLineDash([10, 10]); ctx.lineDashOffset = -t * 40; ctx.stroke(); ctx.setLineDash([]); }
+    const pulse = (t * 1.2 + i * .3) % 1;
+    ctx.beginPath(); ctx.arc(x, y, 20 + 40 * pulse, 0, 7); ctx.strokeStyle = `rgba(45,212,191,${(1 - pulse) * .7 * p})`; ctx.lineWidth = 3; ctx.stroke();
+    ctx.save(); ctx.translate(x, y); ctx.scale(p, p);
+    ctx.beginPath(); ctx.arc(0, 0, 22, 0, 7); ctx.fillStyle = C.teal; ctx.fill();
+    ctx.fillStyle = '#04201d'; ctx.fillRect(-4, -12, 8, 24); ctx.fillRect(-12, -4, 24, 8); ctx.restore();
+  });
+  ctx.restore();
+  rrect(MAP.x, MAP.y, MAP.w, MAP.h, 30); ctx.strokeStyle = 'rgba(45,212,191,.45)'; ctx.lineWidth = 2; ctx.stroke();
+  // legend
+  const lg = seg(lt, 2.7, 3.0);
+  ctx.save(); ctx.globalAlpha = lg * mk;
+  rrect(MAP.x + MAP.w - 330, MAP.y + MAP.h - 90, 300, 62, 31); ctx.fillStyle = 'rgba(4,8,10,.85)'; ctx.fill();
+  ctx.fillStyle = C.amber; ctx.fillRect(MAP.x + MAP.w - 80, MAP.y + MAP.h - 70, 22, 22);
+  text('بدون دسترسی', MAP.x + MAP.w - 100, MAP.y + MAP.h - 58, FONT(700, 30), C.ink, 'right');
+  ctx.restore();
+  ctx.restore();
+
+  // captions
+  const c1 = eOut3(seg(lt, .9, 1.3)), c2 = eOut3(seg(lt, 1.4, 1.8));
+  text('از سؤال تا نقشه، در چند ثانیه', W / 2, 1385 + 30 * (1 - c1), FONT(900, 66), C.ink, 'center', 'rtl', c1);
+  text('هر برنامه‌ی LLM قبل از اجرا اعتبارسنجی می‌شود', W / 2, 1465 + 30 * (1 - c2), FONT(400, 36), C.teal, 'center', 'rtl', c2);
+  ctx.restore();
+}
+
+/* =============================================================== scene 3: portrait */
+function portrait(cx, cy, r, t, ring = 1) {
+  ctx.save(); ctx.shadowColor = C.teal; ctx.shadowBlur = 70; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.fillStyle = '#0a1619'; ctx.fill(); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.clip();
+  ctx.imageSmoothingQuality = 'high'; ctx.drawImage(photo, cx - r, cy - r * 1.04, 2 * r, 2 * r);
+  const g = ctx.createLinearGradient(0, cy - r, 0, cy + r); g.addColorStop(.6, 'rgba(4,8,10,0)'); g.addColorStop(1, 'rgba(15,118,110,.45)');
+  ctx.fillStyle = g; ctx.fillRect(cx - r, cy - r, 2 * r, 2 * r); ctx.restore();
+  if (ring <= 0) return;
+  ctx.save(); ctx.globalAlpha = ring; ctx.lineCap = 'round';
+  ctx.lineWidth = 6; ctx.strokeStyle = C.teal;
+  ctx.beginPath(); ctx.arc(cx, cy, r + 26, t * 1.6, t * 1.6 + 4.2 * ring); ctx.stroke();
+  ctx.lineWidth = 3; ctx.strokeStyle = C.cyan; ctx.setLineDash([4, 18]);
+  ctx.beginPath(); ctx.arc(cx, cy, r + 52, -t * 1.1, -t * 1.1 + Math.PI * 2 * ring); ctx.stroke(); ctx.setLineDash([]);
+  for (let i = 0; i < 3; i++) { const a = t * 2.2 + i * 2.09; ctx.beginPath(); ctx.arc(cx + (r + 26) * Math.cos(a + 4.2), cy + (r + 26) * Math.sin(a + 4.2), 10, 0, 7); ctx.fillStyle = C.ink; ctx.globalAlpha = ring * (i ? .5 : 1); ctx.fill(); }
+  ctx.restore();
+}
+function scene3(t) {
+  const lt = t - T2, build = seg(t, T2 + BAR, T3);
+  ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+  topo(t, { alpha: .16 + .2 * build, speed: 1.2 + 6 * eIn3(build), zoom: 1 + .5 * build });
+  const k = kickEnv(t, T2, T3) * .014, z = 1 + k + .12 * eIn3(build);
+  ctx.save(); ctx.translate(W / 2, 800); ctx.scale(z, z); ctx.translate(-W / 2, -800);
+
+  text('کسی که این را می‌سازد', W / 2, 360, FONT(700, 42), C.muted, 'center', 'rtl', eOut3(seg(lt, .1, .45)));
+  const pk = eBack(seg(lt, 0, .6));
+  ctx.save(); ctx.translate(W / 2, 800); ctx.scale(.3 + .7 * pk, .3 + .7 * pk); ctx.translate(-W / 2, -800);
+  portrait(W / 2, 800, 250, t, eOut3(seg(lt, .2, 1)));
+  ctx.restore();
+
+  // name: RTL wipe reveal
+  const nk = eOut5(seg(lt, .45, 1.05));
+  ctx.save(); ctx.beginPath(); ctx.rect(W - W * nk, 1080, W * nk, 160); ctx.clip();
+  slam('آراز شاه‌کرمی', W / 2, 1160, FONT(900, 120), C.ink, nk, 'rtl'); ctx.restore();
+  const sk = eOut3(seg(lt, .95, 1.35));
+  text('مهندس هوش مکانی · GeoAI Engineer', W / 2, 1275 + 20 * (1 - sk), FONT(700, 50), C.teal, 'center', 'rtl', sk);
+
+  const chips = ['Python', 'PostGIS', 'LLM', 'MCP', 'FastAPI'];
+  setFont(MONO(700, 32), 'ltr'); const ws = chips.map(c => ctx.measureText(c).width + 48), total = ws.reduce((a, b) => a + b, 0) + 16 * (chips.length - 1);
+  let x = (W - total) / 2;
+  chips.forEach((c, i) => {
+    const p = eBack(seg(lt, 1.4 + i * BEAT / 2, 1.4 + i * BEAT / 2 + .3));
+    if (p > 0) {
+      ctx.save(); ctx.translate(x + ws[i] / 2, 1395); ctx.scale(p, p);
+      rrect(-ws[i] / 2, -32, ws[i], 64, 32); ctx.fillStyle = '#0f2a2e'; ctx.fill(); ctx.strokeStyle = C.teal; ctx.lineWidth = 2; ctx.stroke();
+      text(c, 0, 2, MONO(700, 32), C.ink, 'center', 'ltr'); ctx.restore();
+    }
+    x += ws[i] + 16;
+  });
+  ctx.restore();
+  // build-up flicker + whiteout
+  if (build > 0) { ctx.fillStyle = `rgba(45,212,191,${.10 * build * (Math.floor(t * 16) % 2)})`; ctx.fillRect(0, 0, W, H); }
+  const wo = eIn3(seg(t, T3 - BEAT / 2, T3)); if (wo > 0) { ctx.fillStyle = `rgba(238,247,247,${wo * .9})`; ctx.fillRect(0, 0, W, H); }
+}
+
+/* =============================================================== scene 4: the drop — stats */
+const STATS = [
+  { to: 12, fmt: v => '+' + fa(v), label: 'سال تجربه در مهندسی نرم‌افزار' },
+  { to: 100, fmt: v => fa(v), label: 'قابلیت تحلیل مکانی در s3geo' },
+  { to: 1800, fmt: v => '+' + fa(v.toLocaleString('en').replace(',', '٬')), label: 'تست خودکار در CI' },
+  { to: 20, fmt: v => fa(v) + '/۲۰', label: 'اجرای LLM با نتیجه‌ای دقیقاً برابر کارشناس' },
+  { to: 20, fmt: v => '×' + fa(v), label: 'سریع‌تر: پایپ‌لاین رستر قاهره' },
+];
+function scene4(t) {
+  const lt = t - T3, b = lt / BEAT, i = Math.min(4, Math.floor(b / 3)), st = STATS[i], sl = t - SLAMS[i];
+  const inv = i % 2 === 1;
+  ctx.fillStyle = inv ? C.teal : C.bg; ctx.fillRect(0, 0, W, H);
+  topo(t, { alpha: inv ? .22 : .2, color: inv ? '#04201d' : C.teal, speed: 2.2, zoom: 1.3 + .15 * Math.sin(i), lw: 2 });
+  const kk = kickEnv(t, T3, T4), z = 1 + kk * .03;
+  ctx.save(); ctx.translate(W / 2, 880); ctx.scale(z, z); ctx.translate(-W / 2, -880);
+  const ink = inv ? '#04201d' : C.ink, acc = inv ? '#04201d' : C.teal;
+
+  text(`${fa('0' + (i + 1))} / ۰۵`, W / 2, 430, MONO(700, 36), inv ? 'rgba(4,32,29,.7)' : C.muted, 'center', 'ltr');
+  const k = eOut5(seg(sl, 0, .28)), cnt = eOut3(seg(sl, 0, .5));
+  const sc = 2.3 - 1.3 * k;
+  ctx.save(); ctx.translate(W / 2, 800); ctx.scale(sc, sc); ctx.globalAlpha = seg(sl, 0, .08);
+  slam(st.fmt(Math.round(st.to * cnt)), 0, 0, FONT(900, st.to >= 1000 ? 290 : 380), acc, k, 'ltr');
+  ctx.restore();
+  const lk = eOut3(seg(sl, .15, .45));
+  const lines = wrap(st.label, FONT(900, 64), 900);
+  lines.forEach((ln, j) => text(ln, W / 2, 1080 + j * 92 + 40 * (1 - lk), FONT(900, 64), ink, 'center', 'rtl', lk));
+  // underline swipe
+  ctx.fillStyle = acc; ctx.fillRect(W / 2 - 160 * lk, 1010, 320 * lk, 8);
+
+  if (i === 4) { // before/after bars
+    const p = eOut3(seg(sl, .5, 1.1)), y = 1290;
+    text('قبل', 960, y, FONT(700, 34), C.muted, 'right', 'rtl', p); text('۱۸٫۵ دقیقه', 120, y, FONT(700, 34), C.muted, 'left', 'rtl', p);
+    rrect(120, y + 28, 840 * p, 30, 15); ctx.fillStyle = '#334a50'; ctx.fill();
+    const q = eOut5(seg(sl, .9, 1.3));
+    text('بعد', 960, y + 110, FONT(700, 34), C.teal, 'right', 'rtl', q); text('۵۵ ثانیه', 120, y + 110, FONT(900, 34), C.teal, 'left', 'rtl', q);
+    rrect(120, y + 138, Math.max(30, 840 * p / 20) * q, 30, 15); ctx.fillStyle = C.teal; ctx.fill();
+  }
+  ctx.restore();
+}
+
+/* =============================================================== scene 5: products */
+function icon(kind, x, y, s, col) {
+  ctx.save(); ctx.translate(x, y); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 6; ctx.lineCap = 'round';
+  if (kind === 'pin') { ctx.beginPath(); ctx.arc(0, -10, 26, Math.PI * .85, Math.PI * .15); ctx.lineTo(0, 38); ctx.closePath(); ctx.stroke(); ctx.beginPath(); ctx.arc(0, -10, 9, 0, 7); ctx.fill(); }
+  if (kind === 'db') { for (const yy of [-24, 0, 24]) { ctx.beginPath(); ctx.ellipse(0, yy, 30, 11, 0, 0, 7); ctx.stroke(); } ctx.beginPath(); ctx.moveTo(-30, -24); ctx.lineTo(-30, 24); ctx.moveTo(30, -24); ctx.lineTo(30, 24); ctx.stroke(); }
+  if (kind === 'mcp') { const P = [[-26, -22], [26, -22], [0, 26]]; ctx.beginPath(); P.forEach(([a, b], i) => i ? ctx.lineTo(a, b) : ctx.moveTo(a, b)); ctx.closePath(); ctx.stroke(); P.forEach(([a, b]) => { ctx.beginPath(); ctx.arc(a, b, 10, 0, 7); ctx.fill(); }); }
+  ctx.restore();
+}
+const CARDS = [
+  { t: 's3geo', tag: 'Open Source · MIT', ic: 'pin', d: 'پرسش مکانی به فارسی یا انگلیسی ← گردش‌کار، نقشه و گزارش' },
+  { t: 'postgis.ir', tag: 'Founder', ic: 'db', d: 'PostGIS ابری؛ پایگاه‌داده‌ی آماده در کمتر از یک دقیقه' },
+  { t: 'MCP for GIS', tag: 'AI Agents', ic: 'mcp', d: 'ابزارهای GIS در دست عامل‌های هوش مصنوعی' },
+];
+function scene5(t) {
+  const lt = t - T4;
+  ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+  topo(t, { alpha: .13, speed: 1.4, zoom: 1.1 });
+  const kk = kickEnv(t, T4, T5) * .01;
+  ctx.save(); ctx.translate(W / 2, H / 2); ctx.scale(1 + kk, 1 + kk); ctx.translate(-W / 2, -H / 2);
+  const hk = eOut5(seg(lt, 0, .4));
+  text('BUILT BY ARAZ', W / 2, 290, MONO(700, 30), C.teal, 'center', 'ltr', hk);
+  text('ساخته‌های من', W / 2, 365 + 40 * (1 - hk), FONT(900, 84), C.ink, 'center', 'rtl', hk);
+
+  CARDS.forEach((c, i) => {
+    const t0 = i * 3 * BEAT, p = eOut5(seg(lt, t0, t0 + .45)), dir = i % 2 ? -1 : 1;
+    if (p <= 0) return;
+    const y = 470 + i * 255, x = 70 + dir * (1 - p) * 1100;
+    for (let g = 2; g >= 0; g--) { // motion ghosts
+      const gx = x + dir * g * 50 * (1 - p);
+      ctx.save(); ctx.globalAlpha = g ? .18 * (1 - p) : 1;
+      rrect(gx, y, 940, 220, 30); ctx.fillStyle = '#0b1a1d'; ctx.fill();
+      if (!g) { ctx.strokeStyle = 'rgba(45,212,191,.55)'; ctx.lineWidth = 2; ctx.stroke(); }
+      ctx.restore();
+    }
+    ctx.save(); ctx.globalAlpha = p;
+    ctx.fillStyle = C.teal; ctx.fillRect(x + 940 - 10, y + 40, 10, 140);
+    icon(c.ic, x + 830, y + 110, 1, C.teal);
+    text(c.t, x + 740, y + 75, FONT(900, 58), C.ink, 'right', 'ltr');
+    setFont(MONO(700, 24), 'ltr'); const tw = ctx.measureText(c.tag).width + 36;
+    rrect(x + 40, y + 50, tw, 48, 24); ctx.fillStyle = 'rgba(45,212,191,.15)'; ctx.fill();
+    text(c.tag, x + 40 + tw / 2, y + 75, MONO(700, 24), C.teal, 'center', 'ltr');
+    const dl = wrap(c.d, FONT(400, 36), 680);
+    dl.forEach((ln, j) => text(ln, x + 740, y + 140 + j * 50, FONT(400, 36), '#c3d6d9', 'right'));
+    ctx.restore();
+  });
+
+  // terminal
+  const tt = lt - 9 * BEAT, tp = eOut5(seg(tt, -.1, .3));
+  if (tp > 0) {
+    const y = 1250;
+    ctx.save(); ctx.globalAlpha = tp; ctx.translate(0, 40 * (1 - tp));
+    rrect(70, y, 940, 190, 26); ctx.fillStyle = '#020506'; ctx.fill(); ctx.strokeStyle = '#1e3037'; ctx.lineWidth = 2; ctx.stroke();
+    const cmd = 'pip install smart-spatial-system', n = Math.floor(clamp(tt / .9) * cmd.length);
+    text('$ ' + cmd.slice(0, n) + (Math.floor(t * 4) % 2 ? '▌' : ' '), 110, y + 70, MONO(500, 36), C.ink, 'left', 'ltr');
+    if (tt > 1.0) text('✓ ready · 100 spatial capabilities', 110, y + 130, MONO(700, 32), '#34d399', 'left', 'ltr', seg(tt, 1.0, 1.2));
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+/* =============================================================== scene 6: call to action */
+const ASK = 'دنبال مهندسی هستید که نقشه، داده و هوش مصنوعی را به نرم‌افزار قابل‌اعتماد تبدیل کند؟';
+function igGlyph(x, y, s, col) {
+  ctx.save(); ctx.translate(x, y); ctx.strokeStyle = col; ctx.lineWidth = s * .11;
+  rrect(-s / 2, -s / 2, s, s, s * .3); ctx.stroke(); ctx.beginPath(); ctx.arc(0, 0, s * .23, 0, 7); ctx.stroke();
+  ctx.beginPath(); ctx.arc(s * .27, -s * .27, s * .06, 0, 7); ctx.fillStyle = col; ctx.fill(); ctx.restore();
+}
+function scene6(t) {
+  const lt = t - T5, phaseB = 14 * BAR - T5, hit = 15 * BAR - T5;
+  ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+  topo(t, { alpha: .16, speed: .7, zoom: 1 + .1 * seg(lt, 0, 6) });
+  // phase A: the employer question, word by word
+  const out = eIO(seg(lt, phaseB - .35, phaseB + .1));
+  if (out < 1) {
+    const f = FONT(900, 76), lines = wrap(ASK, f, 900);
+    let wi = 0;
+    ctx.save(); ctx.globalAlpha = 1 - out; ctx.translate(0, -120 * out);
+    lines.forEach((ln, j) => {
+      const words = ln.split(' '); setFont(f); let x = W / 2 + ctx.measureText(ln).width / 2;
+      words.forEach(w => {
+        const ww = ctx.measureText(w).width, p = eOut3(seg(lt, .1 + wi * BEAT / 2.2, .35 + wi * BEAT / 2.2));
+        const hl = /نقشه|داده|هوش|مصنوعی|قابل‌اعتماد/.test(w);
+        text(w, x, 760 + j * 112 + 30 * (1 - p), f, hl ? C.teal : C.ink, 'right', 'rtl', p);
+        setFont(f); x -= ww + ctx.measureText(' ').width; wi++;
+      });
+    });
+    ctx.restore();
+  }
+  // phase B: identity + handles
+  const b = lt - phaseB;
+  if (b > -.1) {
+    const pk = eBack(seg(b, 0, .5));
+    ctx.save(); ctx.translate(W / 2, 560); ctx.scale(pk, pk); ctx.translate(-W / 2, -560); portrait(W / 2, 560, 150, t, 1); ctx.restore();
+    const n = eOut3(seg(b, .2, .55));
+    text('بیایید با هم بسازیم', W / 2, 830 + 30 * (1 - n), FONT(900, 92), C.ink, 'center', 'rtl', n);
+    const s2 = eOut3(seg(b, .45, .8));
+    text('Senior Software Engineer · Team Lead · M.Sc. GIS', W / 2, 935, MONO(500, 29), C.muted, 'center', 'ltr', s2);
+    text('آماده‌ی همکاری تمام‌وقت و مهاجرت کاری', W / 2, 1005, FONT(700, 44), C.teal, 'center', 'rtl', s2);
+    // url pill
+    const u = eBack(seg(b, .75, 1.2)), pulse = 1 + .06 * Math.exp(-Math.max(0, lt - hit) / .25) * (lt >= hit);
+    if (u > 0) {
+      ctx.save(); ctx.translate(W / 2, 1170); ctx.scale(u * pulse, u * pulse);
+      ctx.save(); ctx.shadowColor = C.teal; ctx.shadowBlur = 60 + 40 * Math.sin(t * 6); rrect(-330, -88, 660, 176, 88); ctx.fillStyle = C.teal; ctx.fill(); ctx.restore();
+      text('araz.me', 0, 4, FONT(900, 112), '#04201d', 'center', 'ltr');
+      ctx.restore();
+    }
+    const ig = eOut3(seg(b, 1.15, 1.5));
+    if (ig > 0) {
+      ctx.save(); ctx.globalAlpha = ig; setFont(FONT(700, 52), 'ltr'); const w = ctx.measureText(HANDLE).width, x0 = W / 2 - (w + 80) / 2;
+      igGlyph(x0 + 26, 1340 + 20 * (1 - ig), 52, C.ink);
+      text(HANDLE, x0 + 80, 1342 + 20 * (1 - ig), FONT(700, 52), C.ink, 'left', 'ltr'); ctx.restore();
+    }
+    // sparks on final hit
+    if (lt >= hit) {
+      const h = lt - hit, r = rngf(5);
+      for (let i = 0; i < 40; i++) {
+        const a = r() * Math.PI * 2, sp = 300 + r() * 700, d = sp * eOut3(clamp(h / 1.2));
+        ctx.beginPath(); ctx.arc(W / 2 + Math.cos(a) * (340 + d), 1170 + Math.sin(a) * (100 + d * .8), 4 + r() * 5, 0, 7);
+        ctx.fillStyle = `rgba(45,212,191,${(1 - clamp(h / 1.4)) * .9})`; ctx.fill();
+      }
+    }
+  }
+}
+
+/* =============================================================== main */
+function render(t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  const [sx, sy] = shake(t);
+  ctx.save(); ctx.translate(sx, sy);
+  if (t < T1) scene1(t); else if (t < T2) scene2(t); else if (t < T3) scene3(t); else if (t < T4) scene4(t); else if (t < T5) scene5(t); else scene6(t);
+  ctx.restore();
+  // corner brand (outside hook & CTA)
+  if (t > T1 && t < T5) text('araz.me', 60, 140, MONO(700, 30), (t > T3 && t < T4 && Math.min(4, Math.floor((t - T3) / BEAT / 3)) % 2) ? '#04201d' : C.teal, 'left', 'ltr', .85);
+  const fl = flashAmt(t); if (fl > 0) { ctx.fillStyle = `rgba(238,247,247,${fl})`; ctx.fillRect(0, 0, W, H); }
+  overlays(t);
+  const fo = seg(t, END - .5, END); if (fo > 0) { ctx.fillStyle = `rgba(0,0,0,${fo})`; ctx.fillRect(0, 0, W, H); }
+}
+window.render = render;
+window.ready = Promise.all([document.fonts.load('400 40px Vaz'), document.fonts.load('700 40px Vaz'), document.fonts.load('900 40px Vaz'),
+  document.fonts.load('900 40px VazL'), document.fonts.load('700 40px VazL'), document.fonts.load('400 40px VazL'),
+  document.fonts.load('700 40px "JetBrains Mono"'), document.fonts.load('500 40px "JetBrains Mono"'),
+  new Promise(r => photo.complete ? r() : (photo.onload = r))]).then(() => {
+    const q = new URLSearchParams(location.search);
+    if (q.has('t')) render(parseFloat(q.get('t')));
+    else if (q.has('play')) { const s = performance.now(); const loop = () => { render(((performance.now() - s) / 1000) % END); requestAnimationFrame(loop); }; loop(); }
+    else render(0);
+    return true;
+  });
+</script>
+</body>
+</html>

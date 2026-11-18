@@ -92,7 +92,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
                     if not DEBUG else "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
 MEDIA_URL = "/media/"
@@ -134,3 +134,12 @@ JAZZMIN_SETTINGS = {
     },
 }
 JAZZMIN_UI_TWEAKS = {"theme": "flatly", "navbar_small_text": True, "default_theme_mode": "auto"}
+
+# Make server errors visible in the container logs (Coolify -> Logs).
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "root": {"handlers": ["console"], "level": "WARNING"},
+    "loggers": {"django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False}},
+}
